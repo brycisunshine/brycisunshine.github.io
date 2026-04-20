@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Places — Brycis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rust);}
+    .page-hero{padding:9rem 5rem 5rem;background:var(--paper2);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent,transparent 79px,var(--border) 79px,var(--border) 80px);opacity:0.35;}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+    .eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;animation:fadeUp 0.8s ease both;}
+    .eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.0;margin-bottom:1.25rem;animation:fadeUp 0.8s ease 0.1s both;}
+    h1.page-title em{font-style:italic;color:var(--rust);}
+    .page-desc{color:var(--muted);font-size:1rem;line-height:1.75;max-width:520px;animation:fadeUp 0.8s ease 0.2s both;}
+    .wrap{max-width:900px;margin:0 auto;padding:6rem 5rem 8rem;}
+
+    /* PLACE ENTRY */
+    .place{margin-bottom:6rem;padding-bottom:6rem;border-bottom:1px solid var(--border);}
+    .place:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+    .place-header{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;margin-bottom:2.5rem;}
+    .place-num{font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--rust);opacity:0.2;line-height:1;font-style:italic;}
+    .place-tag{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:0.5rem;}
+    .place-title{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;line-height:1.1;margin-bottom:0.4rem;}
+    .place-title em{font-style:italic;color:var(--rust);}
+    .place-meta{font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;}
+    .place-img{width:100%;aspect-ratio:16/9;background:var(--paper3);border:1px solid var(--border);overflow:hidden;position:relative;margin-bottom:2.5rem;display:flex;align-items:center;justify-content:center;font-size:5rem;}
+    .place-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .place-body p{font-size:1.05rem;line-height:1.95;color:#5a5450;margin-bottom:1.75rem;}
+    .place-body p em{font-style:italic;color:var(--ink);}
+    .place-body p strong{color:var(--ink);font-weight:500;}
+    .place-memory{margin:2.5rem 0;padding:1.75rem 2rem;background:var(--paper2);border-left:3px solid var(--rust);}
+    .place-memory-label{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--rust);margin-bottom:0.6rem;}
+    .place-memory p{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--ink);line-height:1.6;margin:0;}
+    .place-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2rem;}
+    .place-tag-pill{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:0.3rem 0.7rem;color:var(--muted);}
+
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    @media(max-width:900px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}.page-hero{padding:7rem 1.5rem 3rem;}.wrap{padding:4rem 1.5rem 6rem;}.place-header{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}}
+  </style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li><a href="currently.html">Currently</a></li>
+    <li><a href="places.html" class="active">Places</a></li>
+    <li><a href="letters.html">Letters</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><div class="eyebrow-line"></div><span>Places</span></div>
+    <h1 class="page-title">Cities that<br/><em>changed me.</em></h1>
+    <p class="page-desc">Not travel writing. Not itineraries. Just honest stories about the places that left something behind in me — or took something away.</p>
+  </div>
+</div>
+<div class="wrap">
+
+  <!-- SINGAPORE -->
+  <div class="place rev">
+    <div class="place-header">
+      <div>
+        <div class="place-tag">01 · June–July 2025</div>
+        <h2 class="place-title">Singapore —<br/><em>the city that felt like a dream</em></h2>
+        <div class="place-meta">NUS Young Fellowship Programme · 5 weeks</div>
+      </div>
+      <div class="place-num">01</div>
+    </div>
+    <div class="place-img">🇸🇬</div>
+    <div class="place-body">
+      <p>I remember stepping out of Changi Airport at night and feeling like someone had turned the saturation up on the world. Everything was clean and lit and moving quietly and efficiently, and I stood there with my bags thinking — okay, this is a different kind of city.</p>
+      <p>Singapore was my first time outside India. I don't think I understood what that would feel like until I was actually there — surrounded by people from every country, in a city that seemed to have figured out something about coexistence that most places are still arguing about. It was disorienting in the best way.</p>
+      <p>The NUS campus felt like a small country of its own. I spent five weeks in classrooms and labs and cafeterias talking to researchers from places I'd only seen on maps. I attended lectures on things I didn't understand and asked questions anyway. I gave a research presentation and survived. I saw what graduate research actually looked like up close — not the sanitised version from brochures but the real, uncertain, exciting, sometimes exhausting version.</p>
+      <div class="place-memory">
+        <div class="place-memory-label">A memory I keep</div>
+        <p>"Walking along the waterfront at night after a long day, the city reflecting in the bay, eating something I couldn't name and didn't care to — just being completely, quietly present in a place I never expected to be."</p>
+      </div>
+      <p>But more than the programme, more than the city itself — Singapore taught me what it feels like to be genuinely outside your comfort zone and discover you're okay there. That you can navigate something unfamiliar. That curiosity is enough to get you through most things.</p>
+      <p>I came back different. Not dramatically. Not in a way anyone else would notice. But something had shifted — some quiet confidence that hadn't been there before.</p>
+    </div>
+    <div class="place-tags">
+      <span class="place-tag-pill">Research</span>
+      <span class="place-tag-pill">First time abroad</span>
+      <span class="place-tag-pill">NUS</span>
+      <span class="place-tag-pill">Growth</span>
+    </div>
+  </div>
+
+  <!-- MUMBAI -->
+  <div class="place rev">
+    <div class="place-header">
+      <div>
+        <div class="place-tag">02 · 2022 – Present</div>
+        <h2 class="place-title">Mumbai —<br/><em>the city that raised me again</em></h2>
+        <div class="place-meta">IIT Bombay · Home for the past 4 years</div>
+      </div>
+      <div class="place-num">02</div>
+    </div>
+    <div class="place-img">🌊</div>
+    <div class="place-body">
+      <p>I arrived in Mumbai in 2022 with two bags and a confidence that lasted approximately three days before the city humbled me completely. IIT Bombay is its own universe — loud, brilliant, exhausting, occasionally magical — and it took me a while to stop feeling like I was visiting and start feeling like I belonged.</p>
+      <p>The thing about Mumbai is that it never asks if you're ready. It just moves, and you either move with it or you fall behind. I've done both. Some semesters I kept up. Some I didn't. The city doesn't judge you either way — it's too busy being itself.</p>
+      <p>But it's given me things I didn't know to ask for. Friends who became family. Late nights that felt more alive than most daytime hours. The specific exhaustion of caring deeply about something hard. The weird joy of walking back from the mess at midnight and feeling — despite everything — like you're exactly where you're supposed to be.</p>
+      <div class="place-memory">
+        <div class="place-memory-label">A memory I keep</div>
+        <p>"Sitting on the hostel roof at 2am with people I loved, the whole campus quiet below us, not talking about anything important — just being together in that particular way that only happens at that particular age, in that particular place."</p>
+      </div>
+      <p>Mumbai hasn't finished with me yet. I'm still here. Still figuring it out. Still getting surprised by it. I think that's the most honest thing I can say about this city — it keeps surprising you.</p>
+    </div>
+    <div class="place-tags">
+      <span class="place-tag-pill">Home</span>
+      <span class="place-tag-pill">IIT Bombay</span>
+      <span class="place-tag-pill">College years</span>
+      <span class="place-tag-pill">Becoming</span>
+    </div>
+  </div>
+
+  <!-- ALIGARH -->
+  <div class="place rev">
+    <div class="place-header">
+      <div>
+        <div class="place-tag">03 · The Beginning</div>
+        <h2 class="place-title">Aligarh —<br/><em>where everything started</em></h2>
+        <div class="place-meta">Hometown · The place that made me</div>
+      </div>
+      <div class="place-num">03</div>
+    </div>
+    <div class="place-img">🌳</div>
+    <div class="place-body">
+      <p>Aligarh doesn't make it onto many travel lists. It's not the kind of place people visit — it's the kind of place people are from. And being from somewhere is a different thing entirely from visiting it.</p>
+      <p>I grew up there. I went to school there. I had my first real conversations there — the kind where you stay up late arguing about things that feel enormously important even if you can't quite articulate why. I made friends there who knew me before I knew what kind of person I was going to be.</p>
+      <p>There's a particular kind of nostalgia for a hometown that isn't straightforward. You miss it and outgrow it at the same time. You love it and feel constrained by it simultaneously. Aligarh gave me the foundation — the family, the values, the early version of who I am — and then, in the way all hometowns eventually do, it gave me the hunger to go further.</p>
+      <div class="place-memory">
+        <div class="place-memory-label">A memory I keep</div>
+        <p>"Early morning before any exam, the house quiet, my grandmother making chai in the kitchen. That specific silence — warm and certain — that I've never quite found anywhere else."</p>
+      </div>
+      <p>I go back less than I should. Every time I do, something is the same and something is different and I can never tell which one I feel more strongly about. That's probably what home means.</p>
+    </div>
+    <div class="place-tags">
+      <span class="place-tag-pill">Home</span>
+      <span class="place-tag-pill">Childhood</span>
+      <span class="place-tag-pill">Roots</span>
+      <span class="place-tag-pill">Where it started</span>
+    </div>
+  </div>
+
+</div>
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="index.html">Home</a><a href="blog.html">Blog</a><a href="collection.html">Collection</a>
+    <a href="currently.html">Currently</a><a href="places.html">Places</a>
+    <a href="letters.html">Letters</a><a href="thoughts.html">Thoughts</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.06});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

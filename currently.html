@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currently — Brycis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rust);}
+
+    .page-hero{padding:9rem 5rem 5rem;background:var(--paper2);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--border) 39px,var(--border) 40px);opacity:0.4;}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+    .eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;animation:fadeUp 0.8s ease both;}
+    .eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.0;margin-bottom:1.25rem;animation:fadeUp 0.8s ease 0.1s both;}
+    h1.page-title em{font-style:italic;color:var(--rust);}
+    .page-desc{color:var(--muted);font-size:1rem;line-height:1.75;max-width:520px;animation:fadeUp 0.8s ease 0.2s both;}
+    .last-updated{display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.25rem;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);animation:fadeUp 0.8s ease 0.3s both;}
+    .pulse{width:7px;height:7px;border-radius:50%;background:var(--rust);animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:5rem 5rem 7rem;}
+
+    /* CURRENTLY GRID */
+    .currently-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:5rem;}
+    .c-card{padding:2rem;background:var(--paper2);border:1px solid var(--border);border-top:3px solid var(--rust);transition:transform 0.3s;}
+    .c-card:hover{transform:translateY(-4px);}
+    .c-type{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+    .c-icon{font-size:1.1rem;}
+    .c-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;line-height:1.2;margin-bottom:0.3rem;}
+    .c-sub{font-size:0.8rem;color:var(--muted);margin-bottom:0.9rem;}
+    .c-note{font-size:0.85rem;color:var(--ink);line-height:1.7;font-style:italic;}
+    .c-progress{margin-top:1rem;}
+    .c-progress-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;}
+    .c-bar{height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
+    .c-bar-fill{height:100%;background:var(--rust);border-radius:1px;}
+
+    /* LATELY SECTION */
+    .lately-head{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:0.5rem;}
+    .lately-sub{color:var(--muted);font-size:0.88rem;margin-bottom:2rem;line-height:1.7;}
+    .lately-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+    .lately-item{display:flex;gap:1.25rem;padding:1.25rem;background:var(--paper2);border:1px solid var(--border);transition:border-color 0.3s;}
+    .lately-item:hover{border-color:var(--rust);}
+    .lately-emoji{font-size:1.8rem;flex-shrink:0;margin-top:0.1rem;}
+    .lately-info{}
+    .lately-label{font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--rust);margin-bottom:0.25rem;}
+    .lately-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:0.2rem;}
+    .lately-note{font-size:0.78rem;color:var(--muted);line-height:1.55;}
+
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem;}.nav-links{display:none;}
+      .page-hero{padding:7rem 1.5rem 3rem;}
+      .wrap{padding:3rem 1.5rem 5rem;}
+      .currently-grid,.lately-grid{grid-template-columns:1fr;}
+      footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+    }
+  </style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li><a href="currently.html" class="active">Currently</a></li>
+    <li><a href="places.html">Places</a></li>
+    <li><a href="letters.html">Letters</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><div class="eyebrow-line"></div><span>Currently</span></div>
+    <h1 class="page-title">What I'm<br/><em>into right now.</em></h1>
+    <p class="page-desc">A living snapshot of this exact moment — what I'm reading, watching, listening to, thinking about. Updated whenever something new takes over my brain.</p>
+    <div class="last-updated"><span class="pulse"></span><span>Last updated — April 2026</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- RIGHT NOW -->
+  <div class="currently-grid">
+    <div class="c-card rev">
+      <div class="c-type"><span class="c-icon">📖</span>Reading</div>
+      <div class="c-title">Man's Search for Meaning</div>
+      <div class="c-sub">Viktor Frankl</div>
+      <div class="c-note">"The last of human freedoms is to choose one's attitude in any given set of circumstances." I read that line three times in a row.</div>
+      <div class="c-progress">
+        <div class="c-progress-label">Progress</div>
+        <div class="c-bar"><div class="c-bar-fill" style="width:65%"></div></div>
+      </div>
+    </div>
+    <div class="c-card rev d1">
+      <div class="c-type"><span class="c-icon">📺</span>Watching</div>
+      <div class="c-title">Gilmore Girls</div>
+      <div class="c-sub">Season 4 — rewatch</div>
+      <div class="c-note">I keep coming back to Stars Hollow when everything else feels like too much. There's something about that town that just settles me.</div>
+      <div class="c-progress">
+        <div class="c-progress-label">Season 4 of 7</div>
+        <div class="c-bar"><div class="c-bar-fill" style="width:57%"></div></div>
+      </div>
+    </div>
+    <div class="c-card rev d2">
+      <div class="c-type"><span class="c-icon">🎵</span>On Repeat</div>
+      <div class="c-title">Sweet Heat Lightning</div>
+      <div class="c-sub">Gregory Alan Isakov</div>
+      <div class="c-note">This song sounds like driving at dusk when you don't really know where you're going and you're okay with that. On repeat for two weeks now.</div>
+    </div>
+  </div>
+
+  <!-- LATELY -->
+  <h2 class="lately-head rev">Also lately —</h2>
+  <p class="lately-sub rev">Other things occupying my brain this month.</p>
+  <div class="lately-grid">
+    <div class="lately-item rev">
+      <div class="lately-emoji">🤔</div>
+      <div class="lately-info">
+        <div class="lately-label">Thinking about</div>
+        <div class="lately-title">What it means to actually rest</div>
+        <div class="lately-note">Not scrolling. Not napping with guilt. Actually stopping. I'm bad at it but I'm trying.</div>
+      </div>
+    </div>
+    <div class="lately-item rev d1">
+      <div class="lately-emoji">🎧</div>
+      <div class="lately-info">
+        <div class="lately-label">Discovered</div>
+        <div class="lately-title">Aditya Rikhari's whole discography</div>
+        <div class="lately-note">How did I not find this earlier. Sahiba alone was worth it but then there's the rest of it.</div>
+      </div>
+    </div>
+    <div class="lately-item rev">
+      <div class="lately-emoji">✍️</div>
+      <div class="lately-info">
+        <div class="lately-label">Working on</div>
+        <div class="lately-title">Writing more honestly</div>
+        <div class="lately-note">Less polished. More real. The kind of writing that makes you nervous to post but feels right after.</div>
+      </div>
+    </div>
+    <div class="lately-item rev d1">
+      <div class="lately-emoji">🌱</div>
+      <div class="lately-info">
+        <div class="lately-label">Learning</div>
+        <div class="lately-title">That slow progress is still progress</div>
+        <div class="lately-note">I keep having to relearn this. This month was a good reminder.</div>
+      </div>
+    </div>
+    <div class="lately-item rev">
+      <div class="lately-emoji">🎬</div>
+      <div class="lately-info">
+        <div class="lately-label">Just watched</div>
+        <div class="lately-title">Your Name (again)</div>
+        <div class="lately-note">I cry every time at the same moment and I'm not even embarrassed about it anymore.</div>
+      </div>
+    </div>
+    <div class="lately-item rev d1">
+      <div class="lately-emoji">💭</div>
+      <div class="lately-info">
+        <div class="lately-label">Feeling</div>
+        <div class="lately-title">Like something is about to shift</div>
+        <div class="lately-note">Can't explain it. Just that specific feeling before things start moving. Holding onto it.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="collection.html">Collection</a>
+    <a href="currently.html">Currently</a>
+    <a href="places.html">Places</a>
+    <a href="letters.html">Letters</a>
+    <a href="thoughts.html">Thoughts</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
+
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

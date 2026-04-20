@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Letters — Brycis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rust);}
+    .page-hero{padding:9rem 5rem 5rem;background:var(--paper2);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--border) 39px,var(--border) 40px);opacity:0.4;}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+    .eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;animation:fadeUp 0.8s ease both;}
+    .eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.0;margin-bottom:1.25rem;animation:fadeUp 0.8s ease 0.1s both;}
+    h1.page-title em{font-style:italic;color:var(--rust);}
+    .page-desc{color:var(--muted);font-size:1rem;line-height:1.75;max-width:520px;animation:fadeUp 0.8s ease 0.2s both;}
+    .wrap{max-width:780px;margin:0 auto;padding:6rem 2rem 8rem;}
+
+    /* LETTER */
+    .letter{margin-bottom:7rem;padding-bottom:7rem;border-bottom:1px solid var(--border);}
+    .letter:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+    .letter-envelope{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;}
+    .letter-icon{font-size:1.5rem;}
+    .letter-to{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+    .letter-to span{color:var(--rust);}
+    .letter-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.1;margin-bottom:0.5rem;}
+    .letter-date{font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:2.5rem;}
+    .letter-body p{font-size:1.05rem;line-height:1.95;color:#5a5450;margin-bottom:1.75rem;}
+    .letter-body p em{font-style:italic;color:var(--ink);}
+    .letter-body p strong{color:var(--ink);font-weight:500;}
+    .letter-sign{margin-top:2.5rem;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--muted);}
+    .letter-sign strong{display:block;color:var(--ink);font-style:normal;font-weight:400;margin-top:0.3rem;}
+
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    @media(max-width:900px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}.page-hero{padding:7rem 1.5rem 3rem;}.wrap{padding:4rem 1.5rem 6rem;}footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}}
+  </style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li><a href="currently.html">Currently</a></li>
+    <li><a href="places.html">Places</a></li>
+    <li><a href="letters.html" class="active">Letters</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><div class="eyebrow-line"></div><span>Letters</span></div>
+    <h1 class="page-title">Things I never<br/><em>got to say.</em></h1>
+    <p class="page-desc">Unsent letters. To people who won't read them. To versions of myself that no longer exist. To abstract things that deserve to be spoken to. Writing as a way of letting go.</p>
+  </div>
+</div>
+<div class="wrap">
+
+  <!-- LETTER 1: LOST FRIEND -->
+  <div class="letter rev">
+    <div class="letter-envelope">
+      <span class="letter-icon">✉️</span>
+      <span class="letter-to">To — <span>the friend I lost somewhere along the way</span></span>
+    </div>
+    <h2 class="letter-title">I miss who we were when we were us.</h2>
+    <div class="letter-date">Unsent · Written April 2026</div>
+    <div class="letter-body">
+      <p>I don't know exactly when it happened. That's the thing that gets me. There wasn't a fight, wasn't a big moment I can point to and say — that's where it broke. It just quietly became less and less until one day I realised I was scrolling past your name without stopping.</p>
+      <p>We were so good at being friends. Do you remember that? The kind of friends who could talk about anything — genuinely anything — for hours without running out of things to say. You knew things about me that I hadn't told anyone else. Not because I consciously chose to tell you, but because things just came out around you. You were that kind of person. The kind that makes honesty feel easy.</p>
+      <p>I think about you on specific days. Random Tuesdays, mostly. Some song comes on or something happens that would have been a perfect thing to text you about and I reach for my phone and then I remember.</p>
+      <p><em>You were my safe zone.</em> That's the most accurate thing I can say. Not a friend in the casual sense — a safe zone. A place I could put down whatever I was carrying and just be. I didn't know how rare that was until it was gone.</p>
+      <p>I hope you're doing well. I hope you have people around you who make honesty feel easy. I hope some random Tuesday, something happens that makes you think of me too — not with sadness, just with the simple warmth of remembering that we were good together for a while.</p>
+      <p>That was real. Whatever happened after, that was real.</p>
+    </div>
+    <div class="letter-sign">With love and a little grief,<strong>— Brycis</strong></div>
+  </div>
+
+  <!-- LETTER 2: PAST SELF -->
+  <div class="letter rev">
+    <div class="letter-envelope">
+      <span class="letter-icon">🪞</span>
+      <span class="letter-to">To — <span>myself, a few years ago</span></span>
+    </div>
+    <h2 class="letter-title">You're going to be okay. But not in the way you think.</h2>
+    <div class="letter-date">Unsent · Written March 2026</div>
+    <div class="letter-body">
+      <p>I know you're scared. You won't admit it to anyone — you're pretty good at performing confidence you don't have — but I know. I was there. The nights where you couldn't sleep because your brain wouldn't stop running worst-case scenarios. The days where you smiled through everything and came back to your room and just sat in the quiet feeling absolutely exhausted from the performance.</p>
+      <p>Here's what I want to tell you: it gets better, yes. But not because the hard things stop. It gets better because <strong>you get better at being with the hard things.</strong> You learn to carry weight without hunching. You learn that uncertainty isn't the same as failure. You learn that you can not know what comes next and still show up for today.</p>
+      <p>You're going to get into some things you won't finish. That's okay. You're going to care deeply about people who don't care back equally. That's going to hurt but it's going to teach you things about yourself that nothing else could. You're going to make decisions you're unsure about and some of them will work out and some won't, and the world will keep moving either way.</p>
+      <p><em>The comparing — please try to do less of it.</em> Every time you measure your progress against someone else's, you're measuring the wrong thing. Your path isn't theirs. Your timeline isn't theirs. Your version of success doesn't have to look like anyone else's version.</p>
+      <p>Also — call home more. I'm serious. You'll wish you had.</p>
+      <p>You're not behind. You're not broken. You're right on time, in the only way that actually matters.</p>
+    </div>
+    <div class="letter-sign">From someone who's starting to believe it,<strong>— you, eventually</strong></div>
+  </div>
+
+  <!-- LETTER 3: LATE NIGHTS -->
+  <div class="letter rev">
+    <div class="letter-envelope">
+      <span class="letter-icon">🌙</span>
+      <span class="letter-to">To — <span>late nights</span></span>
+    </div>
+    <h2 class="letter-title">Thank you for being the only time I'm fully honest.</h2>
+    <div class="letter-date">Unsent · Written at 1:47am</div>
+    <div class="letter-body">
+      <p>I should be asleep. I say this almost every time we meet and yet here I am, and you're here too, and honestly — I'm not that mad about it.</p>
+      <p>You do something to me that the rest of the day doesn't. There's something about the specific quality of quiet you bring — the way the world goes small and close and manageable — that makes me more myself than I am in daylight. Like I can finally hear what I'm actually thinking underneath all the noise I generate to get through the day.</p>
+      <p>My best ideas happen with you. So does my worst overthinking. You give me both, equally, and I'm starting to think that's just the deal.</p>
+      <p><em>I've said things at 2am that I couldn't say at 2pm.</em> Things to myself, mostly — admissions I wasn't ready to make in full daylight. That I'm lonely sometimes. That I'm not as sure about things as I pretend. That I miss people I've lost in different ways. That I'm scared of wasting the life I've been given. That some nights I feel the weight of all the unlived versions of myself pressing up against the one I'm actually living.</p>
+      <p>You hold all of that without judgment. You don't ask me to resolve it or perform wellness or explain myself. You just let it exist, and then eventually the sun comes up and I feel lighter — not because anything changed, but because I finally said it out loud to the dark.</p>
+      <p>So. Thank you. For the honesty. For the quiet. For being the only time I'm not editing myself in real time.</p>
+      <p>I'll see you tomorrow night. Probably.</p>
+    </div>
+    <div class="letter-sign">With complicated affection,<strong>— someone who should really sleep</strong></div>
+  </div>
+
+</div>
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="index.html">Home</a><a href="blog.html">Blog</a><a href="collection.html">Collection</a>
+    <a href="currently.html">Currently</a><a href="places.html">Places</a>
+    <a href="letters.html">Letters</a><a href="thoughts.html">Thoughts</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.05});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

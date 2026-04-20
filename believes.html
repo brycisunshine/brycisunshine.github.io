@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Things I Believe — Brycis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rust);}
+    .page-hero{padding:9rem 5rem 5rem;background:var(--paper2);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent,transparent 79px,var(--border) 79px,var(--border) 80px);opacity:0.35;}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+    .eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;animation:fadeUp 0.8s ease both;}
+    .eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.0;margin-bottom:1.25rem;animation:fadeUp 0.8s ease 0.1s both;}
+    h1.page-title em{font-style:italic;color:var(--rust);}
+    .page-desc{color:var(--muted);font-size:1rem;line-height:1.75;max-width:520px;animation:fadeUp 0.8s ease 0.2s both;}
+    .wrap{max-width:1000px;margin:0 auto;padding:6rem 5rem 8rem;}
+
+    /* BELIEVES GRID */
+    .believes-intro{font-size:1rem;color:var(--muted);line-height:1.85;max-width:620px;margin-bottom:4rem;}
+    .believes-intro em{font-style:italic;color:var(--ink);}
+
+    .believe-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:5rem;}
+    .believe{padding:2.25rem;background:var(--paper2);border:1px solid var(--border);border-top:3px solid var(--border);transition:border-top-color 0.3s,transform 0.3s;}
+    .believe:hover{border-top-color:var(--rust);transform:translateY(-3px);}
+    .believe-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--rust);opacity:0.25;line-height:1;margin-bottom:0.75rem;}
+    .believe-statement{font-family:'Cormorant Garamond',serif;font-size:1.3rem;line-height:1.35;margin-bottom:0.75rem;color:var(--ink);}
+    .believe-note{font-size:0.83rem;color:var(--muted);line-height:1.7;}
+
+    /* THINGS I'M STILL FIGURING OUT */
+    .figuring-section{margin-top:5rem;}
+    .figuring-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:0.5rem;}
+    .figuring-sub{color:var(--muted);font-size:0.88rem;margin-bottom:2rem;line-height:1.7;}
+    .figuring-list{display:flex;flex-direction:column;gap:0.75rem;}
+    .figuring-item{display:flex;align-items:baseline;gap:1rem;padding:1.1rem 1.5rem;background:var(--paper2);border:1px solid var(--border);transition:border-color 0.2s;}
+    .figuring-item:hover{border-color:var(--rust);}
+    .figuring-dash{color:var(--rust);font-family:'Cormorant Garamond',serif;font-size:1.2rem;}
+    .figuring-text{font-size:0.9rem;color:var(--muted);line-height:1.6;}
+    .figuring-text em{font-style:italic;color:var(--ink);}
+
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}.d4{transition-delay:0.32s}
+    @media(max-width:900px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}.page-hero{padding:7rem 1.5rem 3rem;}.wrap{padding:4rem 1.5rem 6rem;}.believe-grid{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}}
+  </style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li><a href="currently.html">Currently</a></li>
+    <li><a href="places.html">Places</a></li>
+    <li><a href="letters.html">Letters</a></li>
+    <li><a href="believes.html" class="active">Believes</a></li>
+  </ul>
+</nav>
+<div class="page-hero">
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><div class="eyebrow-line"></div><span>Things I Believe</span></div>
+    <h1 class="page-title">My philosophy —<br/><em>such as it is.</em></h1>
+    <p class="page-desc">Not rules. Not advice. Just things I've come to believe — slowly, through experience, through being wrong, through watching people I admire. Subject to change. Always.</p>
+  </div>
+</div>
+<div class="wrap">
+
+  <p class="believes-intro rev">I'm twenty years old. Everything I believe is provisional. I'm writing this not because I have answers but because <em>naming what you believe forces you to actually believe it</em> — and I think that's worth doing even when you're still figuring it out.</p>
+
+  <div class="believe-grid">
+    <div class="believe rev">
+      <div class="believe-num">01</div>
+      <div class="believe-statement">Curiosity is the most important thing you can be.</div>
+      <div class="believe-note">Not smart. Not hardworking. Curious. Everything else follows from being genuinely interested in how things work and why people are the way they are.</div>
+    </div>
+    <div class="believe rev d1">
+      <div class="believe-num">02</div>
+      <div class="believe-statement">Most growth happens in rooms nobody else is in.</div>
+      <div class="believe-note">The quiet moments of working through something hard, being wrong and correcting it, choosing to try again — that's where you actually become someone. No audience required.</div>
+    </div>
+    <div class="believe rev">
+      <div class="believe-num">03</div>
+      <div class="believe-statement">Depth beats breadth, almost every time.</div>
+      <div class="believe-note">Knowing one thing deeply — really deeply — is more valuable than knowing many things shallowly. The world is full of people who know a little about a lot. Fewer know a lot about something.</div>
+    </div>
+    <div class="believe rev d1">
+      <div class="believe-num">04</div>
+      <div class="believe-statement">Consistency is more powerful than intensity.</div>
+      <div class="believe-note">One good hour every day beats ten spectacular hours once a month. This is the thing I believe most clearly and practice most poorly.</div>
+    </div>
+    <div class="believe rev">
+      <div class="believe-num">05</div>
+      <div class="believe-statement">The quality of your attention is the quality of your life.</div>
+      <div class="believe-note">Where you put your attention is where your life goes. This sounds simple and is actually very hard. Most of us give our best attention to things that don't deserve it.</div>
+    </div>
+    <div class="believe rev d1">
+      <div class="believe-num">06</div>
+      <div class="believe-statement">Being kind costs almost nothing and changes a lot.</div>
+      <div class="believe-note">Not performatively kind. Actually kind — in the small, unspectacular ways that make someone's day slightly better. This is underrated as a value and underrated as a skill.</div>
+    </div>
+    <div class="believe rev">
+      <div class="believe-num">07</div>
+      <div class="believe-statement">You don't need to have it figured out to start.</div>
+      <div class="believe-note">Ready is largely a myth. Most people who did something meaningful started before they felt qualified. The figuring out happens during, not before.</div>
+    </div>
+    <div class="believe rev d1">
+      <div class="believe-num">08</div>
+      <div class="believe-statement">Your relationship with yourself is the longest one you'll have.</div>
+      <div class="believe-note">Worth investing in. Worth being honest in. Worth showing up for — especially on the days when being someone else would be easier.</div>
+    </div>
+  </div>
+
+  <!-- STILL FIGURING OUT -->
+  <div class="figuring-section">
+    <h2 class="figuring-title rev">Things I'm still figuring out —</h2>
+    <p class="figuring-sub rev">Honest questions I don't have answers to yet. Listed here so I don't pretend otherwise.</p>
+    <div class="figuring-list">
+      <div class="figuring-item rev"><span class="figuring-dash">—</span><span class="figuring-text">How to want things badly <em>and</em> be okay if they don't happen. Both at once.</span></div>
+      <div class="figuring-item rev"><span class="figuring-dash">—</span><span class="figuring-text">What the difference is between patience and giving up. It changes depending on the day.</span></div>
+      <div class="figuring-item rev"><span class="figuring-dash">—</span><span class="figuring-text">How to rest without guilt. Still working on this one.</span></div>
+      <div class="figuring-item rev"><span class="figuring-dash">—</span><span class="figuring-text">Whether ambition and contentment can coexist or if you have to keep choosing one.</span></div>
+      <div class="figuring-item rev"><span class="figuring-dash">—</span><span class="figuring-text">How to miss people without letting it hollow you out.</span></div>
+      <div class="figuring-item rev"><span class="figuring-dash">—</span><span class="figuring-text">What I actually want — not what I think I should want, not what looks good, but <em>actually want</em>.</span></div>
+    </div>
+  </div>
+
+</div>
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="index.html">Home</a><a href="blog.html">Blog</a><a href="collection.html">Collection</a>
+    <a href="currently.html">Currently</a><a href="places.html">Places</a>
+    <a href="letters.html">Letters</a><a href="believes.html">Believes</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Collection — Brycis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rust);}
+
+    /* PAGE HERO */
+    .page-hero{padding:9rem 5rem 5rem;background:var(--paper2);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent,transparent 79px,var(--border) 79px,var(--border) 80px);opacity:0.4;}
+    .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;}
+    .eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;animation:fadeUp 0.8s ease both;}
+    .eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.0;margin-bottom:1.25rem;animation:fadeUp 0.8s ease 0.1s both;}
+    h1.page-title em{font-style:italic;color:var(--rust);}
+    .page-desc{color:var(--muted);font-size:0.95rem;line-height:1.75;animation:fadeUp 0.8s ease 0.2s both;}
+    .hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;animation:fadeUp 0.8s ease 0.3s both;}
+    .hero-stat{padding:1.25rem;border:1px solid var(--border);background:var(--paper);}
+    .hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--rust);display:block;line-height:1;}
+    .hero-stat-label{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:0.3rem;display:block;}
+
+    /* TAB BAR */
+    .tab-bar{position:sticky;top:72px;z-index:100;background:var(--paper);border-bottom:1px solid var(--border);}
+    .tab-bar-inner{max-width:1100px;margin:0 auto;padding:0 5rem;display:flex;gap:0;overflow-x:auto;}
+    .tab-btn{padding:1.1rem 1.8rem;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;border:none;background:none;color:var(--muted);cursor:none;transition:all 0.2s;font-family:'Outfit',sans-serif;white-space:nowrap;border-bottom:2px solid transparent;position:relative;top:1px;}
+    .tab-btn:hover{color:var(--ink);}
+    .tab-btn.active{color:var(--rust);border-bottom-color:var(--rust);}
+
+    /* TAB PANELS */
+    .tab-content{max-width:1100px;margin:0 auto;padding:4rem 5rem 7rem;}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;}
+
+    /* SHARED */
+    .sec-label{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--rust);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.75rem;}
+    .sec-label::before{content:'';width:24px;height:1px;background:var(--rust);}
+    h2.sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;line-height:1.1;margin-bottom:0.75rem;}
+    .sec-sub{color:var(--muted);font-size:0.88rem;line-height:1.7;max-width:500px;margin-bottom:2.5rem;}
+    .more-pill{display:inline-block;padding:0.5rem 1.2rem;border:1px dashed var(--border);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1.5rem;}
+
+    /* IMAGE BOX FIX */
+    .ibox{position:relative;overflow:hidden;background:var(--paper3);}
+    .ibox .fb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0;}
+    .ibox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
+
+    /* ARTISTS */
+    .artists-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:1rem;}
+    .artist-card{background:var(--paper2);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
+    .artist-card:hover{transform:translateY(-4px);border-color:var(--rust);}
+    .artist-img{aspect-ratio:1/1;font-size:2.2rem;}
+    .artist-body{padding:0.85rem 1rem 1rem;}
+    .artist-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.15rem;}
+    .artist-genre{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+
+    /* SONGS */
+    .songs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.55rem;}
+    .song-row{display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--paper2);border:1px solid var(--border);transition:border-color 0.2s,background 0.2s;}
+    .song-row:hover{border-color:var(--rust);background:var(--paper3);}
+    .song-num{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--rust);min-width:1.8rem;opacity:0.5;line-height:1;}
+    .song-info{flex:1;}
+    .song-title{font-size:0.86rem;font-weight:400;margin-bottom:0.1rem;}
+    .song-artist{font-size:0.72rem;color:var(--muted);}
+    .song-fav{font-size:0.68rem;color:var(--rust);margin-left:auto;}
+
+    /* SHOWS & MOVIES */
+    .shelf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;}
+    .shelf-card{background:var(--paper2);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
+    .shelf-card:hover{transform:translateY(-5px);border-color:var(--rust);}
+    .shelf-img{aspect-ratio:2/3;font-size:2.5rem;position:relative;}
+    .shelf-badge{position:absolute;top:0.5rem;right:0.5rem;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--rust);color:var(--paper);padding:0.18rem 0.4rem;z-index:2;}
+    .shelf-body{padding:0.9rem 1rem 1.1rem;}
+    .shelf-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.25rem;}
+    .shelf-note{font-size:0.73rem;color:var(--muted);line-height:1.5;margin-bottom:0.5rem;}
+    .shelf-stars{color:var(--rust);font-size:0.72rem;}
+
+    /* BOOKS */
+    .books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+    .book-card{padding:1.75rem;background:var(--paper2);border:1px solid var(--border);border-left:3px solid var(--border);transition:border-color 0.3s,transform 0.3s;}
+    .book-card:hover{border-color:var(--rust);border-left-color:var(--rust);transform:translateY(-3px);}
+    .book-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:0.3rem;line-height:1.3;}
+    .book-author{font-size:0.72rem;color:var(--rust);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .book-note{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+    .book-tag{display:inline-block;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);padding:0.18rem 0.5rem;color:var(--muted);margin-top:0.75rem;}
+
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}.d4{transition-delay:0.32s}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem;}.nav-links{display:none;}
+      .page-hero{padding:7rem 1.5rem 3rem;}
+      .hero-inner{grid-template-columns:1fr;}
+      .tab-bar-inner{padding:0 1.5rem;}
+      .tab-content{padding:3rem 1.5rem 5rem;}
+      .artists-grid,.shelf-grid{grid-template-columns:1fr 1fr;}
+      .songs-grid,.books-grid{grid-template-columns:1fr;}
+      footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+    }
+  </style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="collection.html" class="active">Collection</a></li>
+    <li><a href="currently.html">Currently</a></li>
+    <li><a href="places.html">Places</a></li>
+    <li><a href="letters.html">Letters</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>The Collection</span></div>
+      <h1 class="page-title">Everything<br/>I <em>love.</em></h1>
+      <p class="page-desc">Artists, songs, shows, movies, books — curated over years of very strong opinions and an inability to be casual about the things I like. This is the shelf.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">8+</span><span class="hero-stat-label">Artists on repeat</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">23+</span><span class="hero-stat-label">Top songs</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">6+</span><span class="hero-stat-label">Shows watched obsessively</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">∞</span><span class="hero-stat-label">More being added</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" data-tab="artists">🎤 Artists</button>
+    <button class="tab-btn" data-tab="songs">🎵 Top Songs</button>
+    <button class="tab-btn" data-tab="shows">📺 Shows</button>
+    <button class="tab-btn" data-tab="movies">🎬 Movies</button>
+    <button class="tab-btn" data-tab="books">📖 Books</button>
+  </div>
+</div>
+
+<div class="tab-content">
+
+  <!-- ARTISTS TAB -->
+  <div class="tab-panel active" id="tab-artists">
+    <p class="sec-label rev">Artists</p>
+    <h2 class="sec-h rev">People whose music<br/><em style="font-style:italic">I know by heart.</em></h2>
+    <p class="sec-sub rev">Coldplay at sunrise. Radiohead at midnight. AR Rahman when I'm homesick. Billie Eilish when I need to feel something. No apologies.</p>
+    <div class="artists-grid">
+      <div class="artist-card rev">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">🎤</div><img src="images/music/singer1.jpg" alt="Troye Sivan" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">Troye Sivan</div><div class="artist-genre">Pop · Indie</div></div>
+      </div>
+      <div class="artist-card rev d1">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">🎸</div><img src="images/music/singer2.jpg" alt="Joshua Bassett" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">Joshua Bassett</div><div class="artist-genre">Pop · Singer-Songwriter</div></div>
+      </div>
+      <div class="artist-card rev d2">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">🎵</div><img src="images/music/singer3.jpg" alt="Billie Eilish" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">Billie Eilish</div><div class="artist-genre">Alt-Pop · Dark Pop</div></div>
+      </div>
+      <div class="artist-card rev d3">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">🎙️</div><img src="images/music/singer4.jpg" alt="Shawn Mendes" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">Shawn Mendes</div><div class="artist-genre">Pop · Acoustic</div></div>
+      </div>
+      <div class="artist-card rev">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">🎸</div><img src="images/music/singer5.jpg" alt="The Smiths" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">The Smiths</div><div class="artist-genre">Indie Rock · Post-Punk</div></div>
+      </div>
+      <div class="artist-card rev d1">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">🎹</div><img src="images/music/singer6.jpg" alt="Mitski" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">Mitski</div><div class="artist-genre">Indie Rock · Art Rock</div></div>
+      </div>
+      <div class="artist-card rev d2">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">🎶</div><img src="images/music/singer7.jpg" alt="Shreya Ghoshal" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">Shreya Ghoshal</div><div class="artist-genre">Bollywood · Classical</div></div>
+      </div>
+      <div class="artist-card rev d3">
+        <div class="ibox artist-img"><div class="fb" style="font-size:2.2rem;">✨</div><img src="images/music/singer8.jpg" alt="ABBA" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="artist-body"><div class="artist-name">ABBA</div><div class="artist-genre">Pop · Disco</div></div>
+      </div>
+    </div>
+    <div class="more-pill rev">+ Coldplay · AR Rahman · Lana Del Rey · Radiohead · Adele · Gregory Alan Isakov · Aditya Rikhari · HONNE · RADWIMPS · Lata Mangeshkar · The Beatles & more</div>
+  </div>
+
+  <!-- SONGS TAB -->
+  <div class="tab-panel" id="tab-songs">
+    <p class="sec-label rev">Spotify Wrapped 2025</p>
+    <h2 class="sec-h rev">Songs that lived<br/><em style="font-style:italic">in my head all year.</em></h2>
+    <p class="sec-sub rev">These aren't just songs. Each one is attached to a specific mood, a specific night, a specific version of me.</p>
+    <div class="songs-grid">
+      <div class="song-row rev"><span class="song-num">01</span><div class="song-info"><div class="song-title">The Greatest</div><div class="song-artist">Sia</div></div><span class="song-fav">♥ fav</span></div>
+      <div class="song-row rev d1"><span class="song-num">02</span><div class="song-info"><div class="song-title">Back to Friends</div><div class="song-artist">Somber</div></div></div>
+      <div class="song-row rev"><span class="song-num">03</span><div class="song-info"><div class="song-title">Ava</div><div class="song-artist">Famy</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">04</span><div class="song-info"><div class="song-title">Farq Hai</div><div class="song-artist">Suzonn</div></div></div>
+      <div class="song-row rev"><span class="song-num">05</span><div class="song-info"><div class="song-title">Sweet Heat Lightning</div><div class="song-artist">Gregory Alan Isakov</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">06</span><div class="song-info"><div class="song-title">We Hug Now</div><div class="song-artist">Sydney Rose</div></div></div>
+      <div class="song-row rev"><span class="song-num">07</span><div class="song-info"><div class="song-title">What's Up?</div><div class="song-artist">4 Non Blondes</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">08</span><div class="song-info"><div class="song-title">Sahiba</div><div class="song-artist">Aditya Rikhari</div></div></div>
+      <div class="song-row rev"><span class="song-num">09</span><div class="song-info"><div class="song-title">WILDFLOWER</div><div class="song-artist">Billie Eilish</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">10</span><div class="song-info"><div class="song-title">Summertime Sadness</div><div class="song-artist">Lana Del Rey</div></div></div>
+      <div class="song-row rev"><span class="song-num">11</span><div class="song-info"><div class="song-title">Deslocado</div><div class="song-artist">NAPA</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">12</span><div class="song-info"><div class="song-title">Tu Bin Bataye</div><div class="song-artist">A.R. Rahman, Madhushree</div></div></div>
+      <div class="song-row rev"><span class="song-num">13</span><div class="song-info"><div class="song-title">la la la that's how it goes</div><div class="song-artist">HONNE</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">14</span><div class="song-info"><div class="song-title">Unse Jaake Kehdo</div><div class="song-artist">Justh</div></div></div>
+      <div class="song-row rev"><span class="song-num">15</span><div class="song-info"><div class="song-title">Creep</div><div class="song-artist">Radiohead</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">16</span><div class="song-info"><div class="song-title">Tera Mera Pyar Amar</div><div class="song-artist">Lata Mangeshkar</div></div></div>
+      <div class="song-row rev"><span class="song-num">17</span><div class="song-info"><div class="song-title">I Bet on Losing Dogs</div><div class="song-artist">Mitski</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">18</span><div class="song-info"><div class="song-title">Sparkle (movie ver.)</div><div class="song-artist">RADWIMPS</div></div></div>
+      <div class="song-row rev"><span class="song-num">19</span><div class="song-info"><div class="song-title">Set Fire to the Rain</div><div class="song-artist">Adele</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">20</span><div class="song-info"><div class="song-title">american wedding</div><div class="song-artist">dopuu</div></div></div>
+      <div class="song-row rev"><span class="song-num">21</span><div class="song-info"><div class="song-title">Two Of Us — Remastered</div><div class="song-artist">The Beatles</div></div></div>
+      <div class="song-row rev d1"><span class="song-num">22</span><div class="song-info"><div class="song-title">In This Shirt</div><div class="song-artist">The Irrepressibles</div></div></div>
+      <div class="song-row rev"><span class="song-num">23</span><div class="song-info"><div class="song-title">Jhol — Acoustic</div><div class="song-artist">Maanu, Annural Khalid</div></div></div>
+    </div>
+    <div class="more-pill rev">+ The list never really ends 🎧</div>
+  </div>
+
+  <!-- SHOWS TAB -->
+  <div class="tab-panel" id="tab-shows">
+    <p class="sec-label rev">Shows</p>
+    <h2 class="sec-h rev">TV that<br/><em style="font-style:italic">wrecked me (in the best way).</em></h2>
+    <p class="sec-sub rev">I watch shows the way some people read literature — slowly, with opinions, and way too much emotional investment in fictional people.</p>
+    <div class="shelf-grid">
+      <div class="shelf-card rev">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">🏠</div><img src="images/shows/modern-family.jpg" alt="Modern Family" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/><span class="shelf-badge">Comedy</span></div>
+        <div class="shelf-body"><div class="shelf-name">Modern Family</div><div class="shelf-note">Jay Pritchett is one of the best written characters on TV. Change my mind.</div><div class="shelf-stars">★★★★★ · Rewatch forever</div></div>
+      </div>
+      <div class="shelf-card rev d1">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">⚖️</div><img src="images/shows/suits.jpg" alt="Suits" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/><span class="shelf-badge">Drama</span></div>
+        <div class="shelf-body"><div class="shelf-name">Suits</div><div class="shelf-note">Harvey Specter taught me more about confidence than most real people I've met.</div><div class="shelf-stars">★★★★★ · Peak writing</div></div>
+      </div>
+      <div class="shelf-card rev d2">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">🗽</div><img src="images/shows/gossip-girl.jpg" alt="Gossip Girl" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/><span class="shelf-badge">Drama</span></div>
+        <div class="shelf-body"><div class="shelf-name">Gossip Girl</div><div class="shelf-note">Blair Waldorf is iconic. I will die on this hill.</div><div class="shelf-stars">★★★★☆ · Guilty pleasure</div></div>
+      </div>
+      <div class="shelf-card rev d3">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">☕</div><img src="images/shows/gilmore-girls.jpg" alt="Gilmore Girls" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/><span class="shelf-badge">Drama</span></div>
+        <div class="shelf-body"><div class="shelf-name">Gilmore Girls</div><div class="shelf-note">Made me want to live in Stars Hollow and drink coffee all day.</div><div class="shelf-stars">★★★★★ · Comfort show</div></div>
+      </div>
+    </div>
+    <div class="more-pill rev">+ Always open to recommendations 📺</div>
+  </div>
+
+  <!-- MOVIES TAB -->
+  <div class="tab-panel" id="tab-movies">
+    <p class="sec-label rev">Movies</p>
+    <h2 class="sec-h rev">Films that<br/><em style="font-style:italic">stayed with me.</em></h2>
+    <p class="sec-sub rev">Not a film critic. Just someone who watches movies and feels things about them and can't always explain why.</p>
+    <div class="shelf-grid">
+      <div class="shelf-card rev">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">🌌</div><span class="shelf-badge">Sci-Fi</span></div>
+        <div class="shelf-body"><div class="shelf-name">Interstellar</div><div class="shelf-note">The scene in the tesseract broke something in me and rebuilt it differently. Still thinking about it.</div><div class="shelf-stars">★★★★★ · Changed me</div></div>
+      </div>
+      <div class="shelf-card rev d1">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">🍜</div><span class="shelf-badge">Animation</span></div>
+        <div class="shelf-body"><div class="shelf-name">Your Name</div><div class="shelf-note">Watched it once and sat in silence for fifteen minutes after. Then watched it again.</div><div class="shelf-stars">★★★★★ · Masterpiece</div></div>
+      </div>
+      <div class="shelf-card rev d2">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">🎭</div><span class="shelf-badge">Drama</span></div>
+        <div class="shelf-body"><div class="shelf-name">Dead Poets Society</div><div class="shelf-note">O Captain, my Captain. The film that made me take poetry seriously for the first time.</div><div class="shelf-stars">★★★★★ · Essential</div></div>
+      </div>
+      <div class="shelf-card rev d3">
+        <div class="ibox shelf-img"><div class="fb" style="font-size:2.5rem;">🌀</div><span class="shelf-badge">Thriller</span></div>
+        <div class="shelf-body"><div class="shelf-name">Inception</div><div class="shelf-note">The kind of movie that makes you feel smarter for watching it — and then immediately makes you question everything.</div><div class="shelf-stars">★★★★★ · Rewatchable forever</div></div>
+      </div>
+    </div>
+    <div class="more-pill rev">+ More being added — the shelf is always growing 🎬</div>
+  </div>
+
+  <!-- BOOKS TAB -->
+  <div class="tab-panel" id="tab-books">
+    <p class="sec-label rev">Books</p>
+    <h2 class="sec-h rev">Books that<br/><em style="font-style:italic">rewired how I think.</em></h2>
+    <p class="sec-sub rev">I don't read fast. I read slowly and argue with the pages. These are the ones that won.</p>
+    <div class="books-grid">
+      <div class="book-card rev">
+        <div class="book-title">Thinking, Fast and Slow</div>
+        <div class="book-author">Daniel Kahneman</div>
+        <div class="book-note">Completely changed how I understand my own decisions. The chapter on loss aversion alone was worth the whole book.</div>
+        <span class="book-tag">Psychology · Non-fiction</span>
+      </div>
+      <div class="book-card rev d1">
+        <div class="book-title">The Almanack of Naval Ravikant</div>
+        <div class="book-author">Eric Jorgenson</div>
+        <div class="book-note">I've come back to this more than any other book. It's not self-help. It's something quieter and more honest than that.</div>
+        <span class="book-tag">Philosophy · Life</span>
+      </div>
+      <div class="book-card rev d2">
+        <div class="book-title">Atomic Habits</div>
+        <div class="book-author">James Clear</div>
+        <div class="book-note">The 1% better every day idea sounds obvious until you actually apply it and watch what happens over months.</div>
+        <span class="book-tag">Productivity · Behaviour</span>
+      </div>
+      <div class="book-card rev">
+        <div class="book-title">Surely You're Joking, Mr. Feynman</div>
+        <div class="book-author">Richard Feynman</div>
+        <div class="book-note">The most convincing argument I've ever read for being genuinely, unashamedly curious about everything.</div>
+        <span class="book-tag">Science · Memoir</span>
+      </div>
+      <div class="book-card rev d1">
+        <div class="book-title">The Alchemist</div>
+        <div class="book-author">Paulo Coelho</div>
+        <div class="book-note">Read it at exactly the right time. The idea that the universe conspires in your favour when you really want something — I've thought about that a lot.</div>
+        <span class="book-tag">Fiction · Philosophy</span>
+      </div>
+      <div class="book-card rev d2">
+        <div class="book-title">Man's Search for Meaning</div>
+        <div class="book-author">Viktor Frankl</div>
+        <div class="book-note">The most important book I've read about what makes a life worth living. Short. Dense. Stays with you.</div>
+        <span class="book-tag">Psychology · Philosophy</span>
+      </div>
+    </div>
+    <div class="more-pill rev">+ Always reading something new — list grows 📚</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="collection.html">Collection</a>
+    <a href="currently.html">Currently</a>
+    <a href="places.html">Places</a>
+    <a href="letters.html">Letters</a>
+    <a href="thoughts.html">Thoughts</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
+
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+
+  // Tabs
+  const tabBtns=document.querySelectorAll('.tab-btn');
+  const tabPanels=document.querySelectorAll('.tab-panel');
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      tabBtns.forEach(b=>b.classList.remove('active'));
+      tabPanels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+      // Re-trigger reveal for newly visible items
+      document.querySelectorAll('.tab-panel.active .rev').forEach(el=>{
+        el.classList.remove('vis');
+        setTimeout(()=>el.classList.add('vis'),50);
+      });
+    });
+  });
+
+  // Scroll reveal
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
