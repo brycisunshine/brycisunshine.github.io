@@ -4,147 +4,163 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Brycis — A Life in Progress</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=DM+Mono:wght@300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --ink: #1a1612;
-      --paper: #f5f0e8;
-      --paper2: #ede8dc;
-      --paper3: #e4ddd0;
-      --rust: #b5451b;
-      --rust2: #d4622e;
-      --sage: #4a5e4f;
-      --muted: #8a8075;
-      --border: rgba(26,22,18,0.12);
+      --ink:#1a1612; --paper:#f5f0e8; --paper2:#ede8dc; --paper3:#e4ddd0;
+      --rust:#b5451b; --rust2:#d4622e; --muted:#8a8075; --border:rgba(26,22,18,0.12);
     }
-    html { scroll-behavior: smooth; }
-    body { background:var(--paper); color:var(--ink); font-family:'Outfit',sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
 
-    .cur { width:8px; height:8px; background:var(--rust); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9999; }
-    .cur-ring { width:32px; height:32px; border:1.5px solid var(--rust); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; opacity:0.4; }
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover{color:var(--rust);}
 
-    nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; justify-content:space-between; align-items:center; padding:1.25rem 5rem; background:rgba(245,240,232,0.93); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
-    .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--rust); text-decoration:none; }
-    .nav-links { display:flex; gap:2.5rem; list-style:none; }
-    .nav-links a { color:var(--muted); text-decoration:none; font-size:0.8rem; letter-spacing:0.14em; text-transform:uppercase; transition:color 0.3s; }
-    .nav-links a:hover { color:var(--rust); }
+    /* HERO */
+    #home{min-height:100vh;display:flex;align-items:center;padding:8rem 5rem 5rem;position:relative;overflow:hidden;}
+    .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--border) 39px,var(--border) 40px);opacity:0.5;}
+    .hero-glow{position:absolute;right:-5%;top:5%;width:600px;height:600px;background:radial-gradient(ellipse,rgba(181,69,27,0.07) 0%,transparent 70%);border-radius:50%;}
+    .hero-inner{position:relative;z-index:1;max-width:860px;}
+    .eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;animation:fadeUp 0.9s ease both;}
+    .eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.big{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7.5rem);font-weight:300;line-height:1.0;margin-bottom:2rem;animation:fadeUp 0.9s ease 0.12s both;}
+    h1.big em{font-style:italic;color:var(--rust);}
+    h1.big .out{-webkit-text-stroke:1.5px var(--ink);color:transparent;}
+    .hero-p{max-width:480px;font-size:1.05rem;line-height:1.8;color:var(--muted);margin-bottom:3rem;animation:fadeUp 0.9s ease 0.24s both;}
+    .hero-btns{display:flex;gap:1rem;animation:fadeUp 0.9s ease 0.36s both;}
+    .btn{padding:0.8rem 2rem;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;cursor:none;transition:all 0.3s;font-family:'Outfit',sans-serif;}
+    .btn-fill{background:var(--rust);color:var(--paper);}
+    .btn-fill:hover{background:var(--rust2);transform:translateY(-2px);}
+    .btn-out{border:1px solid var(--border);color:var(--ink);}
+    .btn-out:hover{border-color:var(--rust);color:var(--rust);transform:translateY(-2px);}
+    .scroll-hint{position:absolute;bottom:2.5rem;left:5rem;display:flex;align-items:center;gap:1rem;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);animation:fadeUp 1s ease 0.6s both;}
+    .scroll-line{width:50px;height:1px;background:var(--muted);}
 
-    #home { min-height:100vh; display:flex; align-items:center; padding:8rem 5rem 5rem; position:relative; overflow:hidden; }
-    .hero-lines { position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--border) 39px,var(--border) 40px); opacity:0.5; }
-    .hero-glow { position:absolute; right:-5%; top:5%; width:600px; height:600px; background:radial-gradient(ellipse,rgba(181,69,27,0.07) 0%,transparent 70%); border-radius:50%; }
-    .hero-inner { position:relative; z-index:1; max-width:860px; }
-    .eyebrow { display:flex; align-items:center; gap:1rem; margin-bottom:2rem; animation:fadeUp 0.9s ease both; }
-    .eyebrow-line { width:40px; height:1px; background:var(--rust); }
-    .eyebrow span { font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--rust); }
-    h1.big { font-family:'Cormorant Garamond',serif; font-size:clamp(3.5rem,8vw,7.5rem); font-weight:300; line-height:1.0; margin-bottom:2rem; animation:fadeUp 0.9s ease 0.12s both; }
-    h1.big em { font-style:italic; color:var(--rust); }
-    h1.big .out { -webkit-text-stroke:1.5px var(--ink); color:transparent; }
-    .hero-p { max-width:480px; font-size:1.05rem; line-height:1.8; color:var(--muted); margin-bottom:3rem; animation:fadeUp 0.9s ease 0.24s both; }
-    .hero-btns { display:flex; gap:1rem; animation:fadeUp 0.9s ease 0.36s both; }
-    .btn { padding:0.8rem 2rem; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; cursor:none; transition:all 0.3s; font-family:'Outfit',sans-serif; }
-    .btn-fill { background:var(--rust); color:var(--paper); }
-    .btn-fill:hover { background:var(--rust2); transform:translateY(-2px); }
-    .btn-out { border:1px solid var(--border); color:var(--ink); }
-    .btn-out:hover { border-color:var(--rust); color:var(--rust); transform:translateY(-2px); }
-    .scroll-hint { position:absolute; bottom:2.5rem; left:5rem; display:flex; align-items:center; gap:1rem; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); animation:fadeUp 1s ease 0.6s both; }
-    .scroll-hint-line { width:50px; height:1px; background:var(--muted); }
-
-    section.padded { padding:7rem 5rem; }
-    .sec-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--rust); margin-bottom:1rem; display:flex; align-items:center; gap:0.75rem; }
-    .sec-label::before { content:''; width:24px; height:1px; background:var(--rust); }
-    h2.sec-h { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4vw,3.8rem); font-weight:300; line-height:1.1; margin-bottom:1.5rem; }
-    .wrap { max-width:1100px; margin:0 auto; }
-    .bg2 { background:var(--paper2); }
+    /* SHARED */
+    .padded{padding:7rem 5rem;}
+    .wrap{max-width:1100px;margin:0 auto;}
+    .bg2{background:var(--paper2);}
+    .sec-label{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+    .sec-label::before{content:'';width:24px;height:1px;background:var(--rust);}
+    h2.sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem;}
+    .sub-p{color:var(--muted);font-size:0.9rem;line-height:1.7;max-width:460px;margin-bottom:2.5rem;}
+    .cat-label{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin:3rem 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
 
     /* ABOUT */
-    .about-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:6rem; align-items:start; margin-bottom:5rem; }
-    .about-p { font-size:1rem; color:var(--muted); line-height:1.85; margin-bottom:1rem; }
-    .about-p strong { color:var(--ink); font-weight:500; }
-    .about-img { aspect-ratio:4/5; background:var(--paper3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:6rem; position:relative; overflow:hidden; }
-    .about-img::after { content:'Add your photo here'; position:absolute; bottom:1.5rem; left:0; right:0; text-align:center; font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
-    .about-img-wrap { position:relative; }
-    .about-img-deco { position:absolute; bottom:-1.5rem; right:-1.5rem; width:85%; aspect-ratio:4/5; border:1px solid var(--border); z-index:-1; }
-    .traits { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
-    .trait { padding:1.75rem; background:var(--paper); border:1px solid var(--border); transition:border-color 0.3s,transform 0.3s; }
-    .trait:hover { border-color:var(--rust); transform:translateY(-4px); }
-    .trait-icon { font-size:1.8rem; margin-bottom:1rem; }
-    .trait-name { font-family:'Cormorant Garamond',serif; font-size:1.15rem; margin-bottom:0.5rem; }
-    .trait-desc { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+    .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:6rem;align-items:start;margin-bottom:5rem;}
+    .about-p{font-size:1rem;color:var(--muted);line-height:1.85;margin-bottom:1rem;}
+    .about-p strong{color:var(--ink);font-weight:500;}
+    .about-img-wrap{position:relative;}
+    .about-img{aspect-ratio:4/5;background:var(--paper3);border:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;}
+    .about-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .about-img-hint{position:absolute;bottom:0;left:0;right:0;background:rgba(26,22,18,0.6);text-align:center;padding:0.75rem;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.7);}
+    .about-img-deco{position:absolute;bottom:-1.5rem;right:-1.5rem;width:85%;aspect-ratio:4/5;border:1px solid var(--border);z-index:-1;}
+    .traits{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+    .trait{padding:1.75rem;background:var(--paper);border:1px solid var(--border);transition:border-color 0.3s,transform 0.3s;}
+    .trait:hover{border-color:var(--rust);transform:translateY(-4px);}
+    .trait-icon{font-size:1.8rem;margin-bottom:1rem;}
+    .trait-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;margin-bottom:0.5rem;}
+    .trait-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;}
 
     /* SHOWS */
-    .shows { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:4rem; }
-    .show { background:var(--paper2); border:1px solid var(--border); overflow:hidden; transition:transform 0.3s,border-color 0.3s; cursor:none; }
-    .show:hover { transform:translateY(-5px); border-color:var(--rust); }
-    .show-top { aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; font-size:3rem; background:var(--paper3); position:relative; }
-    .show-badge { position:absolute; top:0.75rem; right:0.75rem; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:var(--rust); color:var(--paper); padding:0.2rem 0.5rem; }
-    .show-body { padding:1.25rem; }
-    .show-name { font-family:'Cormorant Garamond',serif; font-size:1.3rem; margin-bottom:0.4rem; }
-    .show-note { font-size:0.8rem; color:var(--muted); line-height:1.55; }
-    .show-stars { margin-top:0.75rem; color:var(--rust); font-size:0.8rem; }
+    .shows-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:1rem;}
+    .show-card{background:var(--paper2);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
+    .show-card:hover{transform:translateY(-5px);border-color:var(--rust);}
+    .show-img{aspect-ratio:2/3;background:var(--paper3);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+    .show-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .show-badge{position:absolute;top:0.6rem;right:0.6rem;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--rust);color:var(--paper);padding:0.2rem 0.45rem;}
+    .show-body{padding:1rem 1.1rem 1.25rem;}
+    .show-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;margin-bottom:0.3rem;}
+    .show-note{font-size:0.75rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;}
+    .show-stars{color:var(--rust);font-size:0.75rem;}
+    .more-tag{display:inline-block;padding:0.5rem 1.2rem;border:1px dashed var(--border);font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1rem;}
 
-    .other-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-    .other-block { padding:2rem; background:var(--paper2); border:1px solid var(--border); }
-    .other-title { font-family:'Cormorant Garamond',serif; font-size:1.35rem; margin-bottom:1.25rem; }
-    .other-item { display:flex; align-items:baseline; gap:0.5rem; margin-bottom:0.55rem; }
-    .other-item::before { content:'—'; color:var(--rust); font-size:0.8rem; flex-shrink:0; }
-    .other-item span { font-size:0.87rem; color:var(--muted); }
+    /* MUSIC */
+    .music-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:1.5rem;}
+    .singer-card{background:var(--paper2);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
+    .singer-card:hover{transform:translateY(-4px);border-color:var(--rust);}
+    .singer-img{aspect-ratio:1/1;background:var(--paper3);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+    .singer-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .singer-body{padding:0.9rem 1rem;}
+    .singer-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.2rem;}
+    .singer-genre{font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+
+    /* TOP SONGS */
+    .songs-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;margin-bottom:1.5rem;}
+    .song-item{display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--paper2);border:1px solid var(--border);transition:border-color 0.3s;}
+    .song-item:hover{border-color:var(--rust);}
+    .song-num{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--rust);min-width:1.8rem;opacity:0.6;}
+    .song-info{flex:1;}
+    .song-title{font-size:0.88rem;font-weight:400;margin-bottom:0.15rem;}
+    .song-artist{font-size:0.75rem;color:var(--muted);}
+    .song-note{font-size:0.7rem;color:var(--rust);margin-left:auto;letter-spacing:0.05em;}
 
     /* BLOG */
-    .blog-grid { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:1.5rem; }
-    .bcard { background:var(--paper); border:1px solid var(--border); overflow:hidden; transition:transform 0.3s,border-color 0.3s; cursor:none; }
-    .bcard:hover { transform:translateY(-5px); border-color:var(--rust); }
-    .bcard.feat { grid-row:span 2; }
-    .bthumb { aspect-ratio:16/9; background:var(--paper3); display:flex; align-items:center; justify-content:center; font-size:3rem; position:relative; }
-    .bcard.feat .bthumb { aspect-ratio:4/3; font-size:5rem; }
-    .btag { position:absolute; bottom:1rem; left:1rem; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; background:var(--rust); color:var(--paper); padding:0.2rem 0.6rem; }
-    .bbody { padding:1.5rem; }
-    .bdate { font-size:0.7rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem; }
-    .btitle { font-family:'Cormorant Garamond',serif; font-size:1.3rem; line-height:1.25; margin-bottom:0.6rem; }
-    .bcard.feat .btitle { font-size:1.7rem; }
-    .bexcerpt { font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:1rem; }
-    .blink { font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--rust); text-decoration:none; }
+    .blog-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:1.5rem;}
+    .bcard{background:var(--paper);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
+    .bcard:hover{transform:translateY(-5px);border-color:var(--rust);}
+    .bcard.feat{grid-row:span 2;}
+    .bthumb{aspect-ratio:16/9;background:var(--paper3);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+    .bcard.feat .bthumb{aspect-ratio:4/3;font-size:4rem;}
+    .bthumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .btag{position:absolute;bottom:1rem;left:1rem;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--rust);color:var(--paper);padding:0.2rem 0.55rem;}
+    .bbody{padding:1.5rem;}
+    .bdate{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.45rem;}
+    .btitle{font-family:'Cormorant Garamond',serif;font-size:1.25rem;line-height:1.25;margin-bottom:0.6rem;}
+    .bcard.feat .btitle{font-size:1.65rem;}
+    .bexcerpt{font-size:0.82rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
+    .blink{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);text-decoration:none;}
+    .blink:hover{text-decoration:underline;}
 
     /* GALLERY */
-    .gallery-grid { columns:3; gap:1.2rem; }
-    .gitem { break-inside:avoid; margin-bottom:1.2rem; background:var(--paper2); border:1px solid var(--border); overflow:hidden; position:relative; cursor:none; }
-    .gitem:hover .gover { opacity:1; }
-    .ginner { display:flex; align-items:center; justify-content:center; font-size:2.5rem; color:var(--muted); background:var(--paper3); }
-    .ginner.t { height:260px; } .ginner.m { height:190px; } .ginner.s { height:150px; }
-    .gover { position:absolute; inset:0; background:rgba(26,22,18,0.6); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s; }
-    .gover span { font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--paper); }
-    .gallery-hint { margin-top:2rem; padding:1.5rem; border:1px dashed var(--border); text-align:center; color:var(--muted); font-size:0.82rem; line-height:1.8; }
-    .gallery-hint strong { color:var(--rust); }
+    .gallery-section-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;}
+    .gallery-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+    .gallery-grid{columns:3;gap:1.2rem;margin-bottom:3rem;}
+    .gitem{break-inside:avoid;margin-bottom:1.2rem;background:var(--paper2);border:1px solid var(--border);overflow:hidden;position:relative;cursor:none;}
+    .gitem:hover .gover{opacity:1;}
+    .ginner{display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:var(--paper3);}
+    .ginner.t{height:260px;} .ginner.m{height:190px;} .ginner.s{height:150px;}
+    .ginner img{width:100%;height:100%;object-fit:cover;}
+    .gover{position:absolute;inset:0;background:rgba(26,22,18,0.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;}
+    .gover span{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--paper);}
 
     /* CONTACT */
-    .cform { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; max-width:700px; }
-    .fg { display:flex; flex-direction:column; gap:0.45rem; }
-    .fg.full { grid-column:span 2; }
-    label { font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
-    input, textarea { background:var(--paper); border:1px solid var(--border); color:var(--ink); padding:0.85rem 1rem; font-family:'Outfit',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.3s; resize:none; }
-    input:focus, textarea:focus { border-color:var(--rust); }
-    textarea { height:130px; }
-    .csub { grid-column:span 2; justify-self:start; background:var(--rust); color:var(--paper); border:none; padding:0.9rem 2.5rem; font-family:'Outfit',sans-serif; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; font-weight:500; cursor:none; transition:all 0.3s; }
-    .csub:hover { background:var(--rust2); transform:translateY(-2px); }
+    .cform{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:700px;}
+    .fg{display:flex;flex-direction:column;gap:0.45rem;}
+    .fg.full{grid-column:span 2;}
+    label{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+    input,textarea{background:var(--paper);border:1px solid var(--border);color:var(--ink);padding:0.85rem 1rem;font-family:'Outfit',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.3s;resize:none;}
+    input:focus,textarea:focus{border-color:var(--rust);}
+    textarea{height:130px;}
+    .csub{grid-column:span 2;justify-self:start;background:var(--rust);color:var(--paper);border:none;padding:0.9rem 2.5rem;font-family:'Outfit',sans-serif;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:500;cursor:none;transition:all 0.3s;}
+    .csub:hover{background:var(--rust2);transform:translateY(-2px);}
 
-    footer { background:var(--ink); color:var(--paper); padding:3rem 5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
-    .fl { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--rust2); }
-    .fn { display:flex; gap:2rem; }
-    .fn a { color:rgba(245,240,232,0.5); text-decoration:none; font-size:0.78rem; letter-spacing:0.1em; transition:color 0.3s; }
-    .fn a:hover { color:var(--rust2); }
-    .fc { font-size:0.75rem; color:rgba(245,240,232,0.35); }
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
 
-    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-    .rev { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease,transform 0.7s ease; }
-    .rev.vis { opacity:1; transform:translateY(0); }
-    .d1{transition-delay:0.1s} .d2{transition-delay:0.2s} .d3{transition-delay:0.3s}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
 
     @media(max-width:900px){
       nav{padding:1rem 1.5rem;} .nav-links{display:none;}
-      #home,section.padded{padding:4rem 1.5rem;}
+      #home,.padded{padding:4rem 1.5rem;}
       .about-grid{grid-template-columns:1fr;gap:3rem;}
-      .traits{grid-template-columns:1fr 1fr;}
-      .shows,.other-grid,.blog-grid{grid-template-columns:1fr;}
+      .traits,.shows-grid,.music-grid{grid-template-columns:1fr 1fr;}
+      .songs-list,.blog-grid{grid-template-columns:1fr;}
       .bcard.feat{grid-row:auto;}
       .gallery-grid{columns:2;}
       .cform{grid-template-columns:1fr;}
@@ -158,12 +174,14 @@
 <div class="cur" id="cur"></div>
 <div class="cur-ring" id="curRing"></div>
 
+<!-- NAV -->
 <nav>
   <a href="#home" class="nav-logo">Brycis</a>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#interests">Interests</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#music">Music</a></li>
     <li><a href="#blog">Blog</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -183,7 +201,7 @@
       <a href="#blog" class="btn btn-out">Read my blog</a>
     </div>
   </div>
-  <div class="scroll-hint"><div class="scroll-hint-line"></div><span>Scroll to explore</span></div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll to explore</span></div>
 </section>
 
 <!-- ABOUT -->
@@ -193,117 +211,197 @@
       <div>
         <p class="sec-label rev">About Me</p>
         <h2 class="sec-h rev">More than just<br/><em style="font-style:italic">an engineer.</em></h2>
-        <p class="about-p rev">I'm someone who genuinely can't pick just one thing to be passionate about — and I've stopped trying. By training I'm an <strong>electrical engineer</strong> at IIT Bombay, deep in the world of circuits, signals, and silicon. But that's only part of the story.</p>
-        <p class="about-p rev">The other part? I'm obsessed with <strong>how stories work</strong> — in TV shows, in books, in conversations at odd hours. The same curiosity that makes me want to understand a circuit also makes me want to understand a character's motivation at 2am.</p>
-        <p class="about-p rev">I've done research at IIT Bombay and NUS Singapore, built things from RC planes to chip-level equalizers, and somewhere in between learned that <strong>the best engineers are also the most curious humans</strong>. That's what this space is about.</p>
-        <p class="about-p rev" style="color:var(--rust);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.1rem;">"Figure it out as you go — that's the only plan worth having."</p>
+        <p class="about-p rev">I'm someone who genuinely can't pick just one thing to be passionate about — and I've stopped trying. By training I'm an <strong>electrical engineer at IIT Bombay</strong>, deep in the world of circuits, signals, and silicon. But that's only part of the story.</p>
+        <p class="about-p rev">The other part? I'm obsessed with <strong>how stories work</strong> — in TV shows, in songs, in books, in conversations at odd hours. The same curiosity that pulls me toward a circuit also pulls me toward a character's emotional arc at 2am.</p>
+        <p class="about-p rev">I've done research at IIT Bombay and <strong>NUS Singapore</strong>, built things from RC planes to chip-level signal equalizers, and somewhere in between also learned that the best engineers are the most curious humans. That's what this space is about.</p>
+        <p class="about-p rev" style="color:var(--rust);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;">"Figure it out as you go — that's the only plan worth having."</p>
       </div>
       <div class="about-img-wrap rev">
-        <div class="about-img">🧑‍💻</div>
+        <div class="about-img">
+          🧑‍💻
+          <!-- TO ADD YOUR PHOTO: replace the emoji above with: <img src="images/me.jpg" alt="Brycis"/> -->
+          <div class="about-img-hint">Add your photo → images/me.jpg</div>
+        </div>
         <div class="about-img-deco"></div>
       </div>
     </div>
     <div class="traits">
-      <div class="trait rev"><div class="trait-icon">⚡</div><div class="trait-name">The Engineer</div><div class="trait-desc">VLSI, analog circuits, high-speed signal chains — I spend a lot of time making electrons behave.</div></div>
-      <div class="trait rev d1"><div class="trait-icon">📖</div><div class="trait-name">The Reader</div><div class="trait-desc">Books are how I travel without moving. I'll read anything that makes me think differently about something.</div></div>
-      <div class="trait rev d2"><div class="trait-icon">🎬</div><div class="trait-name">The Binge-Watcher</div><div class="trait-desc">I take shows seriously — the writing, the arcs, the characters. I'm that person who analyses everything.</div></div>
-      <div class="trait rev d3"><div class="trait-icon">🌍</div><div class="trait-name">The Explorer</div><div class="trait-desc">New cities, new food, new perspectives. Singapore taught me the world is bigger than any textbook.</div></div>
+      <div class="trait rev"><div class="trait-icon">⚡</div><div class="trait-name">The Engineer</div><div class="trait-desc">VLSI, analog circuits, high-speed signal chains — I spend a lot of time making electrons behave exactly as I want.</div></div>
+      <div class="trait rev d1"><div class="trait-icon">📖</div><div class="trait-name">The Reader</div><div class="trait-desc">Books are how I travel without moving. I'll read anything that rewires how I think about something.</div></div>
+      <div class="trait rev d2"><div class="trait-icon">🎬</div><div class="trait-name">The Binge-Watcher</div><div class="trait-desc">I take shows seriously — the writing, the arcs, the characters. I'm absolutely that person who over-analyses everything.</div></div>
+      <div class="trait rev d3"><div class="trait-icon">🌍</div><div class="trait-name">The Explorer</div><div class="trait-desc">New cities, new food, new perspectives. Singapore taught me the world is bigger and more interesting than any textbook.</div></div>
     </div>
   </div>
 </section>
 
-<!-- INTERESTS -->
-<section id="interests" class="padded">
+<!-- SHOWS -->
+<section id="shows" class="padded">
   <div class="wrap">
-    <p class="sec-label rev">What I Love</p>
-    <h2 class="sec-h rev">The things that<br/><em style="font-style:italic">fill my free time.</em></h2>
-    <p style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin:2.5rem 0 1.25rem;" class="rev">Shows & Series</p>
-    <div class="shows">
-      <div class="show rev">
-        <div class="show-top">🏠<span class="show-badge">Comedy</span></div>
+    <p class="sec-label rev">What I Watch</p>
+    <h2 class="sec-h rev">Shows that<br/><em style="font-style:italic">wrecked me (in the best way).</em></h2>
+    <p class="sub-p rev">I watch TV the way some people read literature — slowly, with opinions, and too much emotional investment in fictional people.</p>
+
+    <div class="shows-grid">
+      <div class="show-card rev">
+        <div class="show-img">
+          <img src="images/shows/modern-family.jpg" alt="Modern Family" onerror="this.style.display='none'"/>
+          🏠<span class="show-badge">Comedy</span>
+        </div>
         <div class="show-body">
           <div class="show-name">Modern Family</div>
-          <div class="show-note">The show that proves family is chaotic, hilarious, and the realest thing you'll ever have. Jay Pritchett is one of the best written characters on TV — change my mind.</div>
+          <div class="show-note">Proof that family is chaotic, hilarious, and the realest thing you'll ever have. Jay Pritchett is one of TV's best written characters — change my mind.</div>
           <div class="show-stars">★★★★★ · Will rewatch forever</div>
         </div>
       </div>
-      <div class="show rev d1">
-        <div class="show-top">⚖️<span class="show-badge">Drama</span></div>
+      <div class="show-card rev d1">
+        <div class="show-img">
+          <img src="images/shows/suits.jpg" alt="Suits" onerror="this.style.display='none'"/>
+          ⚖️<span class="show-badge">Drama</span>
+        </div>
         <div class="show-body">
           <div class="show-name">Suits</div>
-          <div class="show-note">Harvey Specter taught me more about confidence and sharp thinking than most people I've met. The dialogue in this show is genuinely elite-level writing.</div>
+          <div class="show-note">Harvey Specter taught me more about sharp thinking and confidence than most real people I've met. The dialogue is genuinely elite-level writing.</div>
           <div class="show-stars">★★★★★ · Peak TV writing</div>
         </div>
       </div>
-      <div class="show rev d2">
-        <div class="show-top">🗽<span class="show-badge">Drama</span></div>
+      <div class="show-card rev d2">
+        <div class="show-img">
+          <img src="images/shows/gossip-girl.jpg" alt="Gossip Girl" onerror="this.style.display='none'"/>
+          🗽<span class="show-badge">Drama</span>
+        </div>
         <div class="show-body">
           <div class="show-name">Gossip Girl</div>
-          <div class="show-note">Guilty pleasure? Absolutely. But the plotting, the fashion, the drama — it's a masterclass in keeping you hooked. Blair Waldorf is iconic. No debate.</div>
+          <div class="show-note">Guilty pleasure? Absolutely. But the plotting, the fashion, the drama — Blair Waldorf is iconic and I will die on that hill.</div>
           <div class="show-stars">★★★★☆ · Unironically great</div>
         </div>
       </div>
-    </div>
-    <div class="other-grid">
-      <div class="other-block rev">
-        <div class="other-title">🎵 Music I Live By</div>
-        <div class="other-item"><span>Anything with a good baseline</span></div>
-        <div class="other-item"><span>Lo-fi for late night problem sets</span></div>
-        <div class="other-item"><span>Bollywood classics (no shame)</span></div>
-        <div class="other-item"><span>Movie & show soundtracks</span></div>
-        <div class="other-item"><span>Whatever matches the mood at 1am</span></div>
-      </div>
-      <div class="other-block rev d1">
-        <div class="other-title">📚 Books That Stayed</div>
-        <div class="other-item"><span>Thinking, Fast and Slow — Kahneman</span></div>
-        <div class="other-item"><span>The Almanack of Naval Ravikant</span></div>
-        <div class="other-item"><span>Atomic Habits — James Clear</span></div>
-        <div class="other-item"><span>Surely You're Joking, Mr. Feynman</span></div>
-        <div class="other-item"><span>Whatever I pick up next</span></div>
-      </div>
-      <div class="other-block rev d2">
-        <div class="other-title">✈️ Places I've Been</div>
-        <div class="other-item"><span>Singapore — NUS Fellowship '25</span></div>
-        <div class="other-item"><span>Mumbai — home base for years now</span></div>
-        <div class="other-item"><span>Aligarh — where it all started</span></div>
-        <div class="other-item"><span>More cities on the list...</span></div>
-        <div class="other-item"><span>The world is big. I'm working on it.</span></div>
+      <div class="show-card rev d3">
+        <div class="show-img">
+          <img src="images/shows/gilmore-girls.jpg" alt="Gilmore Girls" onerror="this.style.display='none'"/>
+          ☕<span class="show-badge">Drama</span>
+        </div>
+        <div class="show-body">
+          <div class="show-name">Gilmore Girls</div>
+          <div class="show-note">Coffee, books, fast dialogue, and complicated mother-daughter love. Lorelai and Rory made me want to live in Stars Hollow and drink more coffee.</div>
+          <div class="show-stars">★★★★★ · Comfort show forever</div>
+        </div>
       </div>
     </div>
+    <div class="more-tag rev">+ Many more on the watchlist — always open to recommendations 📺</div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section id="music" class="padded bg2">
+  <div class="wrap">
+    <p class="sec-label rev">What I Listen To</p>
+    <h2 class="sec-h rev">Music that<br/><em style="font-style:italic">lives in my head rent-free.</em></h2>
+    <p class="sub-p rev">My taste is all over the place — Coldplay at sunrise, Radiohead at midnight, AR Rahman when I'm homesick, Billie Eilish when I need to feel something. No apologies.</p>
+
+    <div class="cat-label rev">Artists I Love</div>
+    <div class="music-grid">
+      <div class="singer-card rev">
+        <div class="singer-img"><img src="images/music/singer1.jpg" alt="Troye Sivan" onerror="this.style.display='none'"/>🎤</div>
+        <div class="singer-body"><div class="singer-name">Troye Sivan</div><div class="singer-genre">Pop · Indie</div></div>
+      </div>
+      <div class="singer-card rev d1">
+        <div class="singer-img"><img src="images/music/singer2.jpg" alt="Joshua Bassett" onerror="this.style.display='none'"/>🎸</div>
+        <div class="singer-body"><div class="singer-name">Joshua Bassett</div><div class="singer-genre">Pop · Singer-Songwriter</div></div>
+      </div>
+      <div class="singer-card rev d2">
+        <div class="singer-img"><img src="images/music/singer3.jpg" alt="Billie Eilish" onerror="this.style.display='none'"/>🎵</div>
+        <div class="singer-body"><div class="singer-name">Billie Eilish</div><div class="singer-genre">Alt-Pop · Dark Pop</div></div>
+      </div>
+      <div class="singer-card rev d3">
+        <div class="singer-img"><img src="images/music/singer4.jpg" alt="Shawn Mendes" onerror="this.style.display='none'"/>🎙️</div>
+        <div class="singer-body"><div class="singer-name">Shawn Mendes</div><div class="singer-genre">Pop · Acoustic</div></div>
+      </div>
+      <div class="singer-card rev">
+        <div class="singer-img"><img src="images/music/singer5.jpg" alt="The Smiths" onerror="this.style.display='none'"/>🎸</div>
+        <div class="singer-body"><div class="singer-name">The Smiths</div><div class="singer-genre">Indie Rock · Post-Punk</div></div>
+      </div>
+      <div class="singer-card rev d1">
+        <div class="singer-img"><img src="images/music/singer6.jpg" alt="Mitski" onerror="this.style.display='none'"/>🎹</div>
+        <div class="singer-body"><div class="singer-name">Mitski</div><div class="singer-genre">Indie Rock · Art Rock</div></div>
+      </div>
+      <div class="singer-card rev d2">
+        <div class="singer-img"><img src="images/music/singer7.jpg" alt="Shreya Ghoshal" onerror="this.style.display='none'"/>🎶</div>
+        <div class="singer-body"><div class="singer-name">Shreya Ghoshal</div><div class="singer-genre">Bollywood · Classical</div></div>
+      </div>
+      <div class="singer-card rev d3">
+        <div class="singer-img"><img src="images/music/singer8.jpg" alt="ABBA" onerror="this.style.display='none'"/>✨</div>
+        <div class="singer-body"><div class="singer-name">ABBA</div><div class="singer-genre">Pop · Disco</div></div>
+      </div>
+    </div>
+    <div class="more-tag rev">+ Coldplay, AR Rahman, Lana Del Rey, Radiohead, Adele, Gregory Alan Isakov, Aditya Rikhari, HONNE, RADWIMPS, Lata Mangeshkar & many more 🎵</div>
+
+    <div class="cat-label rev" style="margin-top:3.5rem;">My Top Songs — Spotify Wrapped 2025</div>
+    <div class="songs-list">
+      <div class="song-item rev"><span class="song-num">01</span><div class="song-info"><div class="song-title">The Greatest</div><div class="song-artist">Sia</div></div><span class="song-note">♥ favourite</span></div>
+      <div class="song-item rev d1"><span class="song-num">02</span><div class="song-info"><div class="song-title">Back to Friends</div><div class="song-artist">Somber</div></div></div>
+      <div class="song-item rev"><span class="song-num">03</span><div class="song-info"><div class="song-title">Ava</div><div class="song-artist">Famy</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">04</span><div class="song-info"><div class="song-title">Farq Hai</div><div class="song-artist">Suzonn</div></div></div>
+      <div class="song-item rev"><span class="song-num">05</span><div class="song-info"><div class="song-title">Sweet Heat Lightning</div><div class="song-artist">Gregory Alan Isakov</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">06</span><div class="song-info"><div class="song-title">We Hug Now</div><div class="song-artist">Sydney Rose</div></div></div>
+      <div class="song-item rev"><span class="song-num">07</span><div class="song-info"><div class="song-title">What's Up?</div><div class="song-artist">4 Non Blondes</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">08</span><div class="song-info"><div class="song-title">Sahiba</div><div class="song-artist">Aditya Rikhari</div></div></div>
+      <div class="song-item rev"><span class="song-num">09</span><div class="song-info"><div class="song-title">WILDFLOWER</div><div class="song-artist">Billie Eilish</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">10</span><div class="song-info"><div class="song-title">Deslocado</div><div class="song-artist">NAPA</div></div></div>
+      <div class="song-item rev"><span class="song-num">11</span><div class="song-info"><div class="song-title">Tu Bin Bataye</div><div class="song-artist">A.R. Rahman, Madhushree</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">12</span><div class="song-info"><div class="song-title">la la la that's how it goes</div><div class="song-artist">HONNE</div></div></div>
+      <div class="song-item rev"><span class="song-num">13</span><div class="song-info"><div class="song-title">Unse Jaake Kehdo</div><div class="song-artist">Justh</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">14</span><div class="song-info"><div class="song-title">Summertime Sadness</div><div class="song-artist">Lana Del Rey</div></div></div>
+      <div class="song-item rev"><span class="song-num">15</span><div class="song-info"><div class="song-title">Creep</div><div class="song-artist">Radiohead</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">16</span><div class="song-info"><div class="song-title">Tera Mera Pyar Amar</div><div class="song-artist">Lata Mangeshkar</div></div></div>
+      <div class="song-item rev"><span class="song-num">17</span><div class="song-info"><div class="song-title">I Bet on Losing Dogs</div><div class="song-artist">Mitski</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">18</span><div class="song-info"><div class="song-title">Sparkle (movie ver.)</div><div class="song-artist">RADWIMPS</div></div></div>
+      <div class="song-item rev"><span class="song-num">19</span><div class="song-info"><div class="song-title">Set Fire to the Rain</div><div class="song-artist">Adele</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">20</span><div class="song-info"><div class="song-title">american wedding</div><div class="song-artist">dopuu</div></div></div>
+    </div>
+    <div class="more-tag rev">+ Two Of Us (The Beatles), In This Shirt (The Irrepressibles), Jhol Acoustic (Maanu, Annural Khalid) & many more 🎧</div>
   </div>
 </section>
 
 <!-- BLOG -->
-<section id="blog" class="padded bg2">
+<section id="blog" class="padded">
   <div class="wrap">
     <p class="sec-label rev">Writing</p>
     <h2 class="sec-h rev">From the blog —<br/><em style="font-style:italic">thoughts out loud.</em></h2>
-    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem;max-width:460px;line-height:1.7;" class="rev">Things I find interesting, things that confused me, things that made me laugh. No fixed topic. Just honest writing.</p>
+    <p class="sub-p rev">Things I find interesting, things that confused me, things that made me feel something. No fixed topic. Just honest writing.</p>
     <div class="blog-grid">
       <div class="bcard feat rev">
-        <div class="bthumb">🌱<span class="btag">Life</span></div>
+        <div class="bthumb">
+          <img src="images/blog/blog1.jpg" alt="A seed in spring" onerror="this.style.display='none'"/>
+          🌱<span class="btag">Life</span>
+        </div>
         <div class="bbody">
           <p class="bdate">April 12, 2026</p>
           <h3 class="btitle">A seed in spring</h3>
-          <p class="bexcerpt">Through lifeless winter, under layers of snow, a seed lay curled in — feeling cold, feeling alone. But come spring, the sun's golden light stirred something in its heart deep inside...</p>
+          <p class="bexcerpt">There's something quietly miraculous about a seed. It sits in the dark all winter — cold, still, seemingly dead — and yet somewhere inside it, something is waiting. Not impatiently. Just waiting. I think about that a lot. About the seasons in a person's life that look like nothing from the outside, but are secretly everything on the inside. The winter before the bloom.</p>
           <a href="#" class="blink">Read more →</a>
         </div>
       </div>
       <div class="bcard rev d1">
-        <div class="bthumb" style="font-size:2.2rem;">🌳<span class="btag">Nature</span></div>
+        <div class="bthumb" style="font-size:2.2rem;">
+          <img src="images/blog/blog2.jpg" alt="The 2am version of you" onerror="this.style.display='none'"/>
+          🌙<span class="btag">Thoughts</span>
+        </div>
         <div class="bbody">
-          <p class="bdate">Feb 15, 2026</p>
-          <h3 class="btitle">A swing in the park</h3>
-          <p class="bexcerpt">Amidst peals of laughter, one little child on a swing caught my eye...</p>
+          <p class="bdate">March 3, 2026</p>
+          <h3 class="btitle">The 2am version of you</h3>
+          <p class="bexcerpt">There's a version of you that only shows up late at night. More honest. More scared. More real. I've been trying to listen to that person more.</p>
           <a href="#" class="blink">Read more →</a>
         </div>
       </div>
       <div class="bcard rev d2">
-        <div class="bthumb" style="font-size:2.2rem;">✨<span class="btag">Thoughts</span></div>
+        <div class="bthumb" style="font-size:2.2rem;">
+          <img src="images/blog/blog3.jpg" alt="On the art of beginning" onerror="this.style.display='none'"/>
+          ✨<span class="btag">Musings</span>
+        </div>
         <div class="bbody">
-          <p class="bdate">Jan 5, 2026</p>
-          <h3 class="btitle">On finding stillness</h3>
-          <p class="bexcerpt">In a world that never stops, learning to simply sit with yourself might be the hardest thing...</p>
+          <p class="bdate">Jan 18, 2026</p>
+          <h3 class="btitle">On the art of beginning</h3>
+          <p class="bexcerpt">Starting is the hardest part. Not because you don't know how — but because beginning means admitting you care. And caring is terrifying.</p>
           <a href="#" class="blink">Read more →</a>
         </div>
       </div>
@@ -312,32 +410,33 @@
 </section>
 
 <!-- GALLERY -->
-<section id="gallery" class="padded">
+<section id="gallery" class="padded bg2">
   <div class="wrap">
-    <p class="sec-label rev">Photos</p>
+    <p class="sec-label rev">Visual World</p>
     <h2 class="sec-h rev">Gallery —<br/><em style="font-style:italic">moments, not poses.</em></h2>
-    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem;max-width:460px;line-height:1.7;" class="rev">Places I've been. Things I've seen. Photos tell the stories words can't.</p>
+
+    <div class="gallery-section-title rev">🌿 Nature</div>
     <div class="gallery-grid rev">
-      <div class="gitem"><div class="ginner t">🌅</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner s">🏙️</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner m">🌿</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner m">🌊</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner t">🌸</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner s">🦋</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner s">🌙</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner m">⛰️</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner t">🌻</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner t"><img src="images/nature/nature1.jpg" alt="Nature 1" onerror="this.style.display='none'"/>🌅</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner m"><img src="images/nature/nature2.jpg" alt="Nature 2" onerror="this.style.display='none'"/>🌿</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner s"><img src="images/nature/nature3.jpg" alt="Nature 3" onerror="this.style.display='none'"/>🌊</div><div class="gover"><span>View</span></div></div>
     </div>
-    <div class="gallery-hint rev">📸 <strong>Ready to add your real photos?</strong> Just tell me and I'll walk you through replacing these placeholders with your actual images — step by step, no experience needed.</div>
+
+    <div class="gallery-section-title rev">🎨 Arts & Creative</div>
+    <div class="gallery-grid rev">
+      <div class="gitem"><div class="ginner t"><img src="images/arts/art1.jpg" alt="Art 1" onerror="this.style.display='none'"/>🎨</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner m"><img src="images/arts/art2.jpg" alt="Art 2" onerror="this.style.display='none'"/>✏️</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner s" style="background:var(--paper3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;">More coming soon</div></div>
+    </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="padded bg2">
+<section id="contact" class="padded">
   <div class="wrap">
     <p class="sec-label rev">Contact</p>
     <h2 class="sec-h rev">Say hello —<br/><em style="font-style:italic">I don't bite.</em></h2>
-    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem;max-width:460px;line-height:1.7;" class="rev">Whether you want to talk about circuits, shows, books, or just life in general — I'm always happy to hear from someone interesting.</p>
+    <p class="sub-p rev">Whether you want to talk about circuits, shows, music, books, or just life in general — I'm always happy to hear from someone interesting.</p>
     <form class="cform rev" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
       <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Jane Doe" required/></div>
       <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
@@ -351,8 +450,8 @@
 <footer>
   <div class="fl">Brycis</div>
   <nav class="fn">
-    <a href="#home">Home</a><a href="#about">About</a><a href="#interests">Interests</a>
-    <a href="#blog">Blog</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>
+    <a href="#home">Home</a><a href="#about">About</a><a href="#shows">Shows</a>
+    <a href="#music">Music</a><a href="#blog">Blog</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>
   </nav>
   <p class="fc">© 2026 Brycis. Built with curiosity.</p>
 </footer>
@@ -360,18 +459,12 @@
 <script>
   const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
   let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    cur.style.transform=`translate(${mx-4}px,${my-4}px)`;
-  });
+  document.addEventListener('mousemove',e=>{ mx=e.clientX;my=e.clientY; cur.style.transform=`translate(${mx-4}px,${my-4}px)`; });
   (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
-  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.08});
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
   document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
   const secs=document.querySelectorAll('section[id]'),nas=document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll',()=>{
-    let c='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;});
-    nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--rust)':'';});
-  });
+  window.addEventListener('scroll',()=>{ let c=''; secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;}); nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--rust)':'';}); });
 </script>
 </body>
 </html>
