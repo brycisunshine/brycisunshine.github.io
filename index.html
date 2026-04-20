@@ -1,577 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brycis — My World</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet"/>
+  <title>Brycis — A Life in Progress</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=DM+Mono:wght@300&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --bg: #0a0a0f;
-      --bg2: #12121a;
-      --bg3: #1a1a26;
-      --accent: #c8a96e;
-      --accent2: #7c6fd4;
-      --text: #e8e4d9;
-      --muted: #7a7a8a;
-      --border: rgba(200,169,110,0.15);
+      --ink: #1a1612;
+      --paper: #f5f0e8;
+      --paper2: #ede8dc;
+      --paper3: #e4ddd0;
+      --rust: #b5451b;
+      --rust2: #d4622e;
+      --sage: #4a5e4f;
+      --muted: #8a8075;
+      --border: rgba(26,22,18,0.12);
     }
-
     html { scroll-behavior: smooth; }
+    body { background:var(--paper); color:var(--ink); font-family:'Outfit',sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      cursor: none;
-      overflow-x: hidden;
-    }
+    .cur { width:8px; height:8px; background:var(--rust); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9999; }
+    .cur-ring { width:32px; height:32px; border:1.5px solid var(--rust); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; opacity:0.4; }
 
-    /* Custom cursor */
-    .cursor {
-      width: 10px; height: 10px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9999;
-      transition: transform 0.1s;
-    }
-    .cursor-ring {
-      width: 36px; height: 36px;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9998;
-      transition: transform 0.15s, width 0.2s, height 0.2s;
-      opacity: 0.5;
-    }
+    nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; justify-content:space-between; align-items:center; padding:1.25rem 5rem; background:rgba(245,240,232,0.93); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+    .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--rust); text-decoration:none; }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:0.8rem; letter-spacing:0.14em; text-transform:uppercase; transition:color 0.3s; }
+    .nav-links a:hover { color:var(--rust); }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.5rem 4rem;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      text-decoration: none;
-    }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: color 0.3s;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent);
-      transition: width 0.3s;
-    }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-links a:hover::after { width: 100%; }
+    #home { min-height:100vh; display:flex; align-items:center; padding:8rem 5rem 5rem; position:relative; overflow:hidden; }
+    .hero-lines { position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--border) 39px,var(--border) 40px); opacity:0.5; }
+    .hero-glow { position:absolute; right:-5%; top:5%; width:600px; height:600px; background:radial-gradient(ellipse,rgba(181,69,27,0.07) 0%,transparent 70%); border-radius:50%; }
+    .hero-inner { position:relative; z-index:1; max-width:860px; }
+    .eyebrow { display:flex; align-items:center; gap:1rem; margin-bottom:2rem; animation:fadeUp 0.9s ease both; }
+    .eyebrow-line { width:40px; height:1px; background:var(--rust); }
+    .eyebrow span { font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--rust); }
+    h1.big { font-family:'Cormorant Garamond',serif; font-size:clamp(3.5rem,8vw,7.5rem); font-weight:300; line-height:1.0; margin-bottom:2rem; animation:fadeUp 0.9s ease 0.12s both; }
+    h1.big em { font-style:italic; color:var(--rust); }
+    h1.big .out { -webkit-text-stroke:1.5px var(--ink); color:transparent; }
+    .hero-p { max-width:480px; font-size:1.05rem; line-height:1.8; color:var(--muted); margin-bottom:3rem; animation:fadeUp 0.9s ease 0.24s both; }
+    .hero-btns { display:flex; gap:1rem; animation:fadeUp 0.9s ease 0.36s both; }
+    .btn { padding:0.8rem 2rem; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; cursor:none; transition:all 0.3s; font-family:'Outfit',sans-serif; }
+    .btn-fill { background:var(--rust); color:var(--paper); }
+    .btn-fill:hover { background:var(--rust2); transform:translateY(-2px); }
+    .btn-out { border:1px solid var(--border); color:var(--ink); }
+    .btn-out:hover { border-color:var(--rust); color:var(--rust); transform:translateY(-2px); }
+    .scroll-hint { position:absolute; bottom:2.5rem; left:5rem; display:flex; align-items:center; gap:1rem; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); animation:fadeUp 1s ease 0.6s both; }
+    .scroll-hint-line { width:50px; height:1px; background:var(--muted); }
 
-    /* HERO */
-    #home {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      padding: 6rem 4rem 4rem;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 20% 50%, rgba(124,111,212,0.12) 0%, transparent 60%),
-                  radial-gradient(ellipse at 80% 20%, rgba(200,169,110,0.08) 0%, transparent 50%);
-    }
-    .hero-grid {
-      position: absolute; inset: 0;
-      background-image: linear-gradient(var(--border) 1px, transparent 1px),
-                        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.4;
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
-    .hero-tag {
-      display: inline-block;
-      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--accent); border: 1px solid var(--border);
-      padding: 0.4rem 1rem; border-radius: 2px;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.8s ease both;
-    }
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 7rem);
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.8s ease 0.15s both;
-    }
-    .hero-title em { font-style: italic; color: var(--accent); }
-    .hero-sub {
-      font-size: 1.1rem; color: var(--muted); max-width: 500px;
-      line-height: 1.7; margin-bottom: 3rem;
-      animation: fadeUp 0.8s ease 0.3s both;
-    }
-    .hero-cta {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      animation: fadeUp 0.8s ease 0.45s both;
-    }
-    .btn {
-      padding: 0.85rem 2rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
-      text-decoration: none; cursor: none;
-      transition: all 0.3s;
-    }
-    .btn-primary {
-      background: var(--accent); color: var(--bg);
-      font-weight: 500;
-    }
-    .btn-primary:hover { background: #e0bf80; transform: translateY(-2px); }
-    .btn-ghost {
-      border: 1px solid var(--border); color: var(--text);
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-
-    .scroll-hint {
-      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      color: var(--muted); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
-      animation: fadeUp 1s ease 1s both;
-    }
-    .scroll-line {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2s ease infinite;
-    }
-
-    /* SECTIONS COMMON */
-    section { padding: 6rem 4rem; }
-    .section-label {
-      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 1rem;
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      margin-bottom: 1rem; line-height: 1.1;
-    }
-    .section-sub { color: var(--muted); max-width: 500px; line-height: 1.7; margin-bottom: 3rem; }
+    section.padded { padding:7rem 5rem; }
+    .sec-label { font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--rust); margin-bottom:1rem; display:flex; align-items:center; gap:0.75rem; }
+    .sec-label::before { content:''; width:24px; height:1px; background:var(--rust); }
+    h2.sec-h { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4vw,3.8rem); font-weight:300; line-height:1.1; margin-bottom:1.5rem; }
+    .wrap { max-width:1100px; margin:0 auto; }
+    .bg2 { background:var(--paper2); }
 
     /* ABOUT */
-    #about { background: var(--bg2); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-      max-width: 1100px; margin: 0 auto;
-    }
-    .about-image-wrap {
-      position: relative;
-    }
-    .about-image-box {
-      width: 100%; aspect-ratio: 3/4;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 5rem; position: relative; overflow: hidden;
-    }
-    .about-image-box::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(200,169,110,0.1), transparent);
-    }
-    .about-deco {
-      position: absolute; bottom: -1.5rem; right: -1.5rem;
-      width: 80%; aspect-ratio: 3/4;
-      border: 1px solid var(--border); z-index: -1;
-    }
-    .about-stats {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem;
-    }
-    .stat-box {
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      background: var(--bg);
-    }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem; color: var(--accent); display: block;
-    }
-    .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .about-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:6rem; align-items:start; margin-bottom:5rem; }
+    .about-p { font-size:1rem; color:var(--muted); line-height:1.85; margin-bottom:1rem; }
+    .about-p strong { color:var(--ink); font-weight:500; }
+    .about-img { aspect-ratio:4/5; background:var(--paper3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:6rem; position:relative; overflow:hidden; }
+    .about-img::after { content:'Add your photo here'; position:absolute; bottom:1.5rem; left:0; right:0; text-align:center; font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
+    .about-img-wrap { position:relative; }
+    .about-img-deco { position:absolute; bottom:-1.5rem; right:-1.5rem; width:85%; aspect-ratio:4/5; border:1px solid var(--border); z-index:-1; }
+    .traits { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+    .trait { padding:1.75rem; background:var(--paper); border:1px solid var(--border); transition:border-color 0.3s,transform 0.3s; }
+    .trait:hover { border-color:var(--rust); transform:translateY(-4px); }
+    .trait-icon { font-size:1.8rem; margin-bottom:1rem; }
+    .trait-name { font-family:'Cormorant Garamond',serif; font-size:1.15rem; margin-bottom:0.5rem; }
+    .trait-desc { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+
+    /* SHOWS */
+    .shows { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:4rem; }
+    .show { background:var(--paper2); border:1px solid var(--border); overflow:hidden; transition:transform 0.3s,border-color 0.3s; cursor:none; }
+    .show:hover { transform:translateY(-5px); border-color:var(--rust); }
+    .show-top { aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; font-size:3rem; background:var(--paper3); position:relative; }
+    .show-badge { position:absolute; top:0.75rem; right:0.75rem; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:var(--rust); color:var(--paper); padding:0.2rem 0.5rem; }
+    .show-body { padding:1.25rem; }
+    .show-name { font-family:'Cormorant Garamond',serif; font-size:1.3rem; margin-bottom:0.4rem; }
+    .show-note { font-size:0.8rem; color:var(--muted); line-height:1.55; }
+    .show-stars { margin-top:0.75rem; color:var(--rust); font-size:0.8rem; }
+
+    .other-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .other-block { padding:2rem; background:var(--paper2); border:1px solid var(--border); }
+    .other-title { font-family:'Cormorant Garamond',serif; font-size:1.35rem; margin-bottom:1.25rem; }
+    .other-item { display:flex; align-items:baseline; gap:0.5rem; margin-bottom:0.55rem; }
+    .other-item::before { content:'—'; color:var(--rust); font-size:0.8rem; flex-shrink:0; }
+    .other-item span { font-size:0.87rem; color:var(--muted); }
 
     /* BLOG */
-    #blog { max-width: 1200px; margin: 0 auto; }
-    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-    .blog-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      overflow: hidden; transition: transform 0.3s, border-color 0.3s;
-      cursor: none;
-    }
-    .blog-card:hover { transform: translateY(-6px); border-color: var(--accent); }
-    .blog-card-top {
-      aspect-ratio: 16/9;
-      background: var(--bg3);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem; position: relative; overflow: hidden;
-    }
-    .blog-cat {
-      position: absolute; top: 1rem; left: 1rem;
-      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-      background: var(--accent); color: var(--bg);
-      padding: 0.25rem 0.6rem;
-    }
-    .blog-body { padding: 1.5rem; }
-    .blog-date { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-    .blog-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; margin-bottom: 0.75rem; line-height: 1.3;
-    }
-    .blog-excerpt { font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
-    .blog-read {
-      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); text-decoration: none;
-      display: inline-flex; align-items: center; gap: 0.4rem;
-    }
-    .blog-read::after { content: '→'; transition: transform 0.2s; }
-    .blog-read:hover::after { transform: translateX(4px); }
+    .blog-grid { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:1.5rem; }
+    .bcard { background:var(--paper); border:1px solid var(--border); overflow:hidden; transition:transform 0.3s,border-color 0.3s; cursor:none; }
+    .bcard:hover { transform:translateY(-5px); border-color:var(--rust); }
+    .bcard.feat { grid-row:span 2; }
+    .bthumb { aspect-ratio:16/9; background:var(--paper3); display:flex; align-items:center; justify-content:center; font-size:3rem; position:relative; }
+    .bcard.feat .bthumb { aspect-ratio:4/3; font-size:5rem; }
+    .btag { position:absolute; bottom:1rem; left:1rem; font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; background:var(--rust); color:var(--paper); padding:0.2rem 0.6rem; }
+    .bbody { padding:1.5rem; }
+    .bdate { font-size:0.7rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem; }
+    .btitle { font-family:'Cormorant Garamond',serif; font-size:1.3rem; line-height:1.25; margin-bottom:0.6rem; }
+    .bcard.feat .btitle { font-size:1.7rem; }
+    .bexcerpt { font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:1rem; }
+    .blink { font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--rust); text-decoration:none; }
 
     /* GALLERY */
-    #gallery { background: var(--bg2); }
-    .gallery-wrap { max-width: 1200px; margin: 0 auto; }
-    .gallery-grid {
-      columns: 3; gap: 1rem;
-    }
-    .gallery-item {
-      break-inside: avoid; margin-bottom: 1rem;
-      background: var(--bg3); border: 1px solid var(--border);
-      overflow: hidden; cursor: none;
-      position: relative;
-    }
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-inner {
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem; color: var(--muted);
-    }
-    .gallery-inner.tall { height: 280px; }
-    .gallery-inner.short { height: 180px; }
-    .gallery-inner.mid { height: 220px; }
-    .gallery-overlay {
-      position: absolute; inset: 0;
-      background: rgba(10,10,15,0.7);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.3s;
-      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
-    }
+    .gallery-grid { columns:3; gap:1.2rem; }
+    .gitem { break-inside:avoid; margin-bottom:1.2rem; background:var(--paper2); border:1px solid var(--border); overflow:hidden; position:relative; cursor:none; }
+    .gitem:hover .gover { opacity:1; }
+    .ginner { display:flex; align-items:center; justify-content:center; font-size:2.5rem; color:var(--muted); background:var(--paper3); }
+    .ginner.t { height:260px; } .ginner.m { height:190px; } .ginner.s { height:150px; }
+    .gover { position:absolute; inset:0; background:rgba(26,22,18,0.6); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s; }
+    .gover span { font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--paper); }
+    .gallery-hint { margin-top:2rem; padding:1.5rem; border:1px dashed var(--border); text-align:center; color:var(--muted); font-size:0.82rem; line-height:1.8; }
+    .gallery-hint strong { color:var(--rust); }
 
     /* CONTACT */
-    #contact { max-width: 700px; margin: 0 auto; }
-    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    .form-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-    .form-input, .form-textarea {
-      background: var(--bg2); border: 1px solid var(--border);
-      color: var(--text); padding: 0.85rem 1rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-      transition: border-color 0.3s; outline: none; resize: none;
-    }
-    .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
-    .form-textarea { height: 140px; }
-    .form-submit {
-      align-self: flex-start;
-      background: var(--accent); color: var(--bg);
-      border: none; padding: 0.9rem 2.5rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
-      font-weight: 500; cursor: none; transition: all 0.3s;
-    }
-    .form-submit:hover { background: #e0bf80; transform: translateY(-2px); }
+    .cform { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; max-width:700px; }
+    .fg { display:flex; flex-direction:column; gap:0.45rem; }
+    .fg.full { grid-column:span 2; }
+    label { font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); }
+    input, textarea { background:var(--paper); border:1px solid var(--border); color:var(--ink); padding:0.85rem 1rem; font-family:'Outfit',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.3s; resize:none; }
+    input:focus, textarea:focus { border-color:var(--rust); }
+    textarea { height:130px; }
+    .csub { grid-column:span 2; justify-self:start; background:var(--rust); color:var(--paper); border:none; padding:0.9rem 2.5rem; font-family:'Outfit',sans-serif; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; font-weight:500; cursor:none; transition:all 0.3s; }
+    .csub:hover { background:var(--rust2); transform:translateY(-2px); }
 
-    /* FOOTER */
-    footer {
-      background: var(--bg2); border-top: 1px solid var(--border);
-      padding: 3rem 4rem;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; color: var(--accent);
-    }
-    .footer-links { display: flex; gap: 2rem; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
-    .footer-links a:hover { color: var(--accent); }
-    .footer-copy { color: var(--muted); font-size: 0.8rem; }
+    footer { background:var(--ink); color:var(--paper); padding:3rem 5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .fl { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--rust2); }
+    .fn { display:flex; gap:2rem; }
+    .fn a { color:rgba(245,240,232,0.5); text-decoration:none; font-size:0.78rem; letter-spacing:0.1em; transition:color 0.3s; }
+    .fn a:hover { color:var(--rust2); }
+    .fc { font-size:0.75rem; color:rgba(245,240,232,0.35); }
 
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
-    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .rev { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease,transform 0.7s ease; }
+    .rev.vis { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:0.1s} .d2{transition-delay:0.2s} .d3{transition-delay:0.3s}
 
-    .reveal {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      section { padding: 4rem 1.5rem; }
-      #home { padding: 5rem 1.5rem 3rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .blog-grid { grid-template-columns: 1fr; }
-      .gallery-grid { columns: 2; }
-      .form-row { grid-template-columns: 1fr; }
-      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem;} .nav-links{display:none;}
+      #home,section.padded{padding:4rem 1.5rem;}
+      .about-grid{grid-template-columns:1fr;gap:3rem;}
+      .traits{grid-template-columns:1fr 1fr;}
+      .shows,.other-grid,.blog-grid{grid-template-columns:1fr;}
+      .bcard.feat{grid-row:auto;}
+      .gallery-grid{columns:2;}
+      .cform{grid-template-columns:1fr;}
+      .fg.full,.csub{grid-column:auto;}
+      footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
     }
   </style>
 </head>
 <body>
 
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#home" class="nav-logo">Brycis</a>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<nav>
+  <a href="#home" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#interests">Interests</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-  <!-- HERO -->
-  <section id="home">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-content">
-      <div class="hero-tag">Welcome to my world</div>
-      <h1 class="hero-title">
-        Stories,<br/>
-        <em>thoughts</em> &<br/>
-        moments.
-      </h1>
-      <p class="hero-sub">A personal space where I write about life, share photography, and explore ideas that matter to me.</p>
-      <div class="hero-cta">
-        <a href="#blog" class="btn btn-primary">Read the Blog</a>
-        <a href="#about" class="btn btn-ghost">About Me</a>
-      </div>
+<!-- HERO -->
+<section id="home">
+  <div class="hero-lines"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="eyebrow"><div class="eyebrow-line"></div><span>A life in progress</span></div>
+    <h1 class="big">Curious.<br/><em>Creative.</em><br/><span class="out">Human.</span></h1>
+    <p class="hero-p">Engineering circuits by day, chasing stories by night. I build things, break things, read things, watch things — and occasionally write about all of it here.</p>
+    <div class="hero-btns">
+      <a href="#about" class="btn btn-fill">Get to know me</a>
+      <a href="#blog" class="btn btn-out">Read my blog</a>
     </div>
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
+  </div>
+  <div class="scroll-hint"><div class="scroll-hint-line"></div><span>Scroll to explore</span></div>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about">
+<!-- ABOUT -->
+<section id="about" class="padded bg2">
+  <div class="wrap">
     <div class="about-grid">
-      <div class="about-image-wrap reveal">
-        <div class="about-image-box">🌿</div>
-        <div class="about-deco"></div>
+      <div>
+        <p class="sec-label rev">About Me</p>
+        <h2 class="sec-h rev">More than just<br/><em style="font-style:italic">an engineer.</em></h2>
+        <p class="about-p rev">I'm someone who genuinely can't pick just one thing to be passionate about — and I've stopped trying. By training I'm an <strong>electrical engineer</strong> at IIT Bombay, deep in the world of circuits, signals, and silicon. But that's only part of the story.</p>
+        <p class="about-p rev">The other part? I'm obsessed with <strong>how stories work</strong> — in TV shows, in books, in conversations at odd hours. The same curiosity that makes me want to understand a circuit also makes me want to understand a character's motivation at 2am.</p>
+        <p class="about-p rev">I've done research at IIT Bombay and NUS Singapore, built things from RC planes to chip-level equalizers, and somewhere in between learned that <strong>the best engineers are also the most curious humans</strong>. That's what this space is about.</p>
+        <p class="about-p rev" style="color:var(--rust);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.1rem;">"Figure it out as you go — that's the only plan worth having."</p>
       </div>
-      <div class="reveal">
-        <p class="section-label">About Me</p>
-        <h2 class="section-title">Hello, I'm <em style="font-style:italic;color:var(--accent)">Brycis</em></h2>
-        <p style="color:var(--muted);line-height:1.8;margin-bottom:1rem;">
-          I'm a curious soul who loves writing, photography, and finding beauty in everyday moments. This website is my little corner of the internet — a place to share stories, ideas, and things I find interesting.
-        </p>
-        <p style="color:var(--muted);line-height:1.8;">
-          When I'm not writing, you'll find me exploring new places, reading books, or chasing the perfect light for a photograph.
-        </p>
-        <div class="about-stats">
-          <div class="stat-box">
-            <span class="stat-num">42+</span>
-            <span class="stat-label">Blog Posts</span>
-          </div>
-          <div class="stat-box">
-            <span class="stat-num">8+</span>
-            <span class="stat-label">Years Writing</span>
-          </div>
-          <div class="stat-box">
-            <span class="stat-num">200+</span>
-            <span class="stat-label">Photos</span>
-          </div>
-          <div class="stat-box">
-            <span class="stat-num">∞</span>
-            <span class="stat-label">Stories to Tell</span>
-          </div>
+      <div class="about-img-wrap rev">
+        <div class="about-img">🧑‍💻</div>
+        <div class="about-img-deco"></div>
+      </div>
+    </div>
+    <div class="traits">
+      <div class="trait rev"><div class="trait-icon">⚡</div><div class="trait-name">The Engineer</div><div class="trait-desc">VLSI, analog circuits, high-speed signal chains — I spend a lot of time making electrons behave.</div></div>
+      <div class="trait rev d1"><div class="trait-icon">📖</div><div class="trait-name">The Reader</div><div class="trait-desc">Books are how I travel without moving. I'll read anything that makes me think differently about something.</div></div>
+      <div class="trait rev d2"><div class="trait-icon">🎬</div><div class="trait-name">The Binge-Watcher</div><div class="trait-desc">I take shows seriously — the writing, the arcs, the characters. I'm that person who analyses everything.</div></div>
+      <div class="trait rev d3"><div class="trait-icon">🌍</div><div class="trait-name">The Explorer</div><div class="trait-desc">New cities, new food, new perspectives. Singapore taught me the world is bigger than any textbook.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+<section id="interests" class="padded">
+  <div class="wrap">
+    <p class="sec-label rev">What I Love</p>
+    <h2 class="sec-h rev">The things that<br/><em style="font-style:italic">fill my free time.</em></h2>
+    <p style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin:2.5rem 0 1.25rem;" class="rev">Shows & Series</p>
+    <div class="shows">
+      <div class="show rev">
+        <div class="show-top">🏠<span class="show-badge">Comedy</span></div>
+        <div class="show-body">
+          <div class="show-name">Modern Family</div>
+          <div class="show-note">The show that proves family is chaotic, hilarious, and the realest thing you'll ever have. Jay Pritchett is one of the best written characters on TV — change my mind.</div>
+          <div class="show-stars">★★★★★ · Will rewatch forever</div>
+        </div>
+      </div>
+      <div class="show rev d1">
+        <div class="show-top">⚖️<span class="show-badge">Drama</span></div>
+        <div class="show-body">
+          <div class="show-name">Suits</div>
+          <div class="show-note">Harvey Specter taught me more about confidence and sharp thinking than most people I've met. The dialogue in this show is genuinely elite-level writing.</div>
+          <div class="show-stars">★★★★★ · Peak TV writing</div>
+        </div>
+      </div>
+      <div class="show rev d2">
+        <div class="show-top">🗽<span class="show-badge">Drama</span></div>
+        <div class="show-body">
+          <div class="show-name">Gossip Girl</div>
+          <div class="show-note">Guilty pleasure? Absolutely. But the plotting, the fashion, the drama — it's a masterclass in keeping you hooked. Blair Waldorf is iconic. No debate.</div>
+          <div class="show-stars">★★★★☆ · Unironically great</div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- BLOG -->
-  <section id="blog" style="padding:6rem 4rem;">
-    <div style="max-width:1200px;margin:0 auto;">
-      <div class="reveal">
-        <p class="section-label">Latest Writing</p>
-        <h2 class="section-title">From the Blog</h2>
-        <p class="section-sub">Thoughts, stories, and observations from my daily life and beyond.</p>
+    <div class="other-grid">
+      <div class="other-block rev">
+        <div class="other-title">🎵 Music I Live By</div>
+        <div class="other-item"><span>Anything with a good baseline</span></div>
+        <div class="other-item"><span>Lo-fi for late night problem sets</span></div>
+        <div class="other-item"><span>Bollywood classics (no shame)</span></div>
+        <div class="other-item"><span>Movie & show soundtracks</span></div>
+        <div class="other-item"><span>Whatever matches the mood at 1am</span></div>
       </div>
-      <div class="blog-grid">
-        <div class="blog-card reveal">
-          <div class="blog-card-top">
-            <span>🌱</span>
-            <span class="blog-cat">Life</span>
-          </div>
-          <div class="blog-body">
-            <p class="blog-date">April 12, 2026</p>
-            <h3 class="blog-title">A seed in spring</h3>
-            <p class="blog-excerpt">Through lifeless winter, under layers of snow, a seed lay curled in, feeling cold, alone...</p>
-            <a href="#" class="blog-read">Read more</a>
-          </div>
+      <div class="other-block rev d1">
+        <div class="other-title">📚 Books That Stayed</div>
+        <div class="other-item"><span>Thinking, Fast and Slow — Kahneman</span></div>
+        <div class="other-item"><span>The Almanack of Naval Ravikant</span></div>
+        <div class="other-item"><span>Atomic Habits — James Clear</span></div>
+        <div class="other-item"><span>Surely You're Joking, Mr. Feynman</span></div>
+        <div class="other-item"><span>Whatever I pick up next</span></div>
+      </div>
+      <div class="other-block rev d2">
+        <div class="other-title">✈️ Places I've Been</div>
+        <div class="other-item"><span>Singapore — NUS Fellowship '25</span></div>
+        <div class="other-item"><span>Mumbai — home base for years now</span></div>
+        <div class="other-item"><span>Aligarh — where it all started</span></div>
+        <div class="other-item"><span>More cities on the list...</span></div>
+        <div class="other-item"><span>The world is big. I'm working on it.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" class="padded bg2">
+  <div class="wrap">
+    <p class="sec-label rev">Writing</p>
+    <h2 class="sec-h rev">From the blog —<br/><em style="font-style:italic">thoughts out loud.</em></h2>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem;max-width:460px;line-height:1.7;" class="rev">Things I find interesting, things that confused me, things that made me laugh. No fixed topic. Just honest writing.</p>
+    <div class="blog-grid">
+      <div class="bcard feat rev">
+        <div class="bthumb">🌱<span class="btag">Life</span></div>
+        <div class="bbody">
+          <p class="bdate">April 12, 2026</p>
+          <h3 class="btitle">A seed in spring</h3>
+          <p class="bexcerpt">Through lifeless winter, under layers of snow, a seed lay curled in — feeling cold, feeling alone. But come spring, the sun's golden light stirred something in its heart deep inside...</p>
+          <a href="#" class="blink">Read more →</a>
         </div>
-        <div class="blog-card reveal">
-          <div class="blog-card-top">
-            <span>🌳</span>
-            <span class="blog-cat">Nature</span>
-          </div>
-          <div class="blog-body">
-            <p class="blog-date">February 15, 2026</p>
-            <h3 class="blog-title">A swing in the park</h3>
-            <p class="blog-excerpt">I ambled in the park on a bright spring day. What joy it is to watch the children play...</p>
-            <a href="#" class="blog-read">Read more</a>
-          </div>
+      </div>
+      <div class="bcard rev d1">
+        <div class="bthumb" style="font-size:2.2rem;">🌳<span class="btag">Nature</span></div>
+        <div class="bbody">
+          <p class="bdate">Feb 15, 2026</p>
+          <h3 class="btitle">A swing in the park</h3>
+          <p class="bexcerpt">Amidst peals of laughter, one little child on a swing caught my eye...</p>
+          <a href="#" class="blink">Read more →</a>
         </div>
-        <div class="blog-card reveal">
-          <div class="blog-card-top">
-            <span>✨</span>
-            <span class="blog-cat">Thoughts</span>
-          </div>
-          <div class="blog-body">
-            <p class="blog-date">January 5, 2026</p>
-            <h3 class="blog-title">On finding stillness</h3>
-            <p class="blog-excerpt">In a world that never stops moving, learning to be still is perhaps the greatest art of all...</p>
-            <a href="#" class="blog-read">Read more</a>
-          </div>
+      </div>
+      <div class="bcard rev d2">
+        <div class="bthumb" style="font-size:2.2rem;">✨<span class="btag">Thoughts</span></div>
+        <div class="bbody">
+          <p class="bdate">Jan 5, 2026</p>
+          <h3 class="btitle">On finding stillness</h3>
+          <p class="bexcerpt">In a world that never stops, learning to simply sit with yourself might be the hardest thing...</p>
+          <a href="#" class="blink">Read more →</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- GALLERY -->
-  <section id="gallery">
-    <div class="gallery-wrap">
-      <div class="reveal">
-        <p class="section-label">Visual Stories</p>
-        <h2 class="section-title">Gallery</h2>
-        <p class="section-sub">Moments captured through my lens — places, people, and the poetry of light.</p>
-      </div>
-      <div class="gallery-grid reveal">
-        <div class="gallery-item"><div class="gallery-inner tall">🌅</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner short">🏙️</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner mid">🌿</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner short">🌊</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner tall">🌸</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner mid">🦋</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner short">🌙</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner mid">⛰️</div><div class="gallery-overlay">View</div></div>
-        <div class="gallery-item"><div class="gallery-inner short">🌻</div><div class="gallery-overlay">View</div></div>
-      </div>
+<!-- GALLERY -->
+<section id="gallery" class="padded">
+  <div class="wrap">
+    <p class="sec-label rev">Photos</p>
+    <h2 class="sec-h rev">Gallery —<br/><em style="font-style:italic">moments, not poses.</em></h2>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem;max-width:460px;line-height:1.7;" class="rev">Places I've been. Things I've seen. Photos tell the stories words can't.</p>
+    <div class="gallery-grid rev">
+      <div class="gitem"><div class="ginner t">🌅</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner s">🏙️</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner m">🌿</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner m">🌊</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner t">🌸</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner s">🦋</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner s">🌙</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner m">⛰️</div><div class="gover"><span>View</span></div></div>
+      <div class="gitem"><div class="ginner t">🌻</div><div class="gover"><span>View</span></div></div>
     </div>
-  </section>
+    <div class="gallery-hint rev">📸 <strong>Ready to add your real photos?</strong> Just tell me and I'll walk you through replacing these placeholders with your actual images — step by step, no experience needed.</div>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact" style="padding:6rem 4rem;">
-    <div style="max-width:700px;margin:0 auto;">
-      <div class="reveal">
-        <p class="section-label">Get in Touch</p>
-        <h2 class="section-title">Say Hello</h2>
-        <p class="section-sub">Have a thought, a question, or just want to connect? I'd love to hear from you.</p>
-      </div>
-      <form class="contact-form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Your Name</label>
-            <input type="text" class="form-input" name="name" placeholder="Jane Doe" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Your Email</label>
-            <input type="email" class="form-input" name="email" placeholder="jane@email.com" required/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Subject</label>
-          <input type="text" class="form-input" name="subject" placeholder="What's on your mind?"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" name="message" placeholder="Your message..." required></textarea>
-        </div>
-        <button type="submit" class="form-submit">Send Message</button>
-      </form>
-    </div>
-  </section>
+<!-- CONTACT -->
+<section id="contact" class="padded bg2">
+  <div class="wrap">
+    <p class="sec-label rev">Contact</p>
+    <h2 class="sec-h rev">Say hello —<br/><em style="font-style:italic">I don't bite.</em></h2>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem;max-width:460px;line-height:1.7;" class="rev">Whether you want to talk about circuits, shows, books, or just life in general — I'm always happy to hear from someone interesting.</p>
+    <form class="cform rev" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Jane Doe" required/></div>
+      <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
+      <div class="fg full"><label>Subject</label><input type="text" name="subject" placeholder="What's on your mind?"/></div>
+      <div class="fg full"><label>Message</label><textarea name="message" placeholder="Your message..." required></textarea></div>
+      <button type="submit" class="csub">Send Message</button>
+    </form>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Brycis</div>
-    <div class="footer-links">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#blog">Blog</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <p class="footer-copy">© 2026 Brycis. All rights reserved.</p>
-  </footer>
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="#home">Home</a><a href="#about">About</a><a href="#interests">Interests</a>
+    <a href="#blog">Blog</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
 
-  <script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
-    });
-    function animRing() {
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
-      requestAnimationFrame(animRing);
-    }
-    animRing();
-
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    reveals.forEach(r => observer.observe(r));
-
-    // Smooth active nav
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
-      navLinks.forEach(a => {
-        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
-      });
-    });
-  </script>
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    cur.style.transform=`translate(${mx-4}px,${my-4}px)`;
+  });
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+  const secs=document.querySelectorAll('section[id]'),nas=document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll',()=>{
+    let c='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;});
+    nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--rust)':'';});
+  });
+</script>
 </body>
 </html>
