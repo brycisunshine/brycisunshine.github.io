@@ -5,68 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Quiet Architect of Becoming — Brycis</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
-    html{scroll-behavior:smooth;}
-    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
-    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
-    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
-    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
-    .nav-links{display:flex;gap:2rem;list-style:none;}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
-    .nav-links a:hover{color:var(--rust);}
-    /* BLOG HERO */
-    .blog-hero{min-height:55vh;display:flex;align-items:flex-end;padding:10rem 5rem 4rem;position:relative;overflow:hidden;background:var(--paper2);}
-    .blog-hero-img{position:absolute;inset:0;overflow:hidden;}
-    .blog-hero-img img{width:100%;height:100%;object-fit:cover;opacity:0.25;}
-    .blog-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--paper2) 30%,transparent);}
-    .blog-hero-inner{position:relative;z-index:1;max-width:750px;}
-    .back-link{display:inline-flex;align-items:center;gap:0.5rem;color:var(--rust);text-decoration:none;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2rem;transition:gap 0.2s;}
-    .back-link:hover{gap:0.75rem;}
-    .blog-cat-badge{display:inline-block;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;background:var(--rust);color:var(--paper);padding:0.25rem 0.7rem;margin-bottom:1.25rem;}
-    .blog-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.05;margin-bottom:1.25rem;}
-    .blog-hero-title em{font-style:italic;color:var(--rust);}
-    .blog-meta{display:flex;align-items:center;gap:1.5rem;color:var(--muted);font-size:0.78rem;letter-spacing:0.08em;}
-    .blog-meta span::before{content:'·';margin-right:1.5rem;}
-    .blog-meta span:first-child::before{display:none;}
-    /* BLOG BODY */
-    .blog-body-wrap{max-width:700px;margin:0 auto;padding:5rem 2rem 7rem;}
-    .blog-body-wrap p{font-size:1.05rem;line-height:1.9;color:var(--muted);margin-bottom:1.75rem;}
-    .blog-body-wrap p strong{color:var(--ink);font-weight:500;}
-    .blog-body-wrap p em{font-style:italic;}
-    .blog-pullquote{margin:3rem 0;padding:2rem 2.5rem;border-left:3px solid var(--rust);background:var(--paper2);}
-    .blog-pullquote p{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--ink);line-height:1.5;margin:0;}
-    .blog-pullquote cite{display:block;font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.75rem;font-style:normal;}
-    .blog-divider{width:60px;height:1px;background:var(--rust);margin:3rem auto;}
-    /* OTHER POSTS */
-    .other-posts{background:var(--paper2);padding:5rem;}
-    .other-posts-wrap{max-width:1000px;margin:0 auto;}
-    .other-posts h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:2rem;}
-    .other-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-    .ocard{display:block;text-decoration:none;color:inherit;background:var(--paper);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
-    .ocard:hover{transform:translateY(-4px);border-color:var(--rust);}
-    .ocard-thumb{aspect-ratio:16/9;background:var(--paper3);display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;overflow:hidden;}
-    .ocard-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-    .ocard-body{padding:1.25rem;}
-    .ocard-date{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
-    .ocard-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;line-height:1.25;margin-bottom:0.5rem;}
-    .ocard-link{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);}
-    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
-    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
-    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
-    .fn a:hover{color:var(--rust2);}
-    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .blog-hero-inner>*{animation:fadeUp 0.8s ease both;}
-    .blog-hero-inner>.back-link{animation-delay:0s;}
-    .blog-hero-inner>.blog-cat-badge{animation-delay:0.1s;}
-    .blog-hero-inner>.blog-hero-title{animation-delay:0.2s;}
-    .blog-hero-inner>.blog-meta{animation-delay:0.3s;}
-    @media(max-width:900px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}.blog-hero{padding:8rem 1.5rem 3rem;}.blog-body-wrap{padding:3rem 1.5rem 5rem;}.other-posts{padding:3rem 1.5rem;}.other-grid{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}}
-  </style>
+  <link rel="stylesheet" href="blog-style.css"/>
 </head>
 <body>
 <div class="cur" id="cur"></div>
@@ -77,81 +16,95 @@
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#blog" style="color:var(--rust)">Blog</a></li>
-    <li><a href="index.html#gallery">Gallery</a></li>
+    <li><a href="blog.html" style="color:var(--rust)">Blog</a></li>
+    <li><a href="music.html">Music</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
 </nav>
 
-<div class="blog-hero">
-  <div class="blog-hero-img"><img src="images/blog/blog1.jpg" alt="" onerror="this.parentElement.style.display='none'"/></div>
-  <div class="blog-hero-overlay"></div>
-  <div class="blog-hero-inner">
-    <a href="index.html#blog" class="back-link">← Back to Blog</a>
-    <div class="blog-cat-badge">Self · Growth</div>
-    <h1 class="blog-hero-title">The Quiet <em>Architect</em><br/>of Becoming</h1>
-    <div class="blog-meta">
+<div class="post-hero">
+  <div class="post-hero-img">
+    <div class="fb">🌱</div>
+    <img src="images/blog/blog1.jpg" alt="" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
+  </div>
+  <div class="post-hero-overlay"></div>
+  <div class="post-hero-inner">
+    <a href="blog.html" class="back-link">← Back to Blog</a>
+    <div class="post-tag">Self · Growth</div>
+    <h1 class="post-title">The Quiet <em>Architect</em><br/>of Becoming</h1>
+    <div class="post-meta">
       <span>April 12, 2026</span>
+      <span class="post-meta-dot"></span>
       <span>8 min read</span>
     </div>
   </div>
 </div>
 
-<div class="blog-body-wrap">
-  <p>Some people move through life loudly, announcing every victory, every wound, every dream. And then there are people like this one — someone whose life unfolds in subtler ways, where growth happens in silence and strength is built behind closed doors.</p>
+<div class="post-body">
 
-  <p>From the outside, they may seem ordinary. Just another person navigating responsibilities, routines, conversations, and expectations. But beneath that surface lives a mind constantly observing, questioning, improving, and trying to understand both the world and themselves. Their life has never really been about appearances — it has been about depth.</p>
+  <p>I was sitting in the library at 1am last semester — surrounded by people who all looked like they had their lives together — and I remember thinking: <em>why does everyone else seem to just know what they're doing?</em></p>
 
-  <div class="blog-pullquote">
-    <p>"People aren't home, they never will be. People are rivers — always changing, forever flowing. They will disappear with everything you put inside them."</p>
+  <p>The guy next to me was on a call with some startup. The girl across from me was filling out a research application. Everyone had a direction, a plan, a next step written somewhere. And I was just sitting there with three browser tabs open and no idea which one actually mattered.</p>
+
+  <p>That feeling — that quiet, suffocating kind of confusion — is something I don't think people talk about enough. Not the dramatic breakdowns. Not the obvious rock bottoms. Just the ordinary, unremarkable feeling of being lost in the middle of a life that looks perfectly fine from the outside.</p>
+
+  <h3>The version of you nobody sees</h3>
+
+  <p>Here's the thing nobody tells you when you're working hard and still feeling stuck: <strong>most of the growing you do is completely invisible.</strong> It doesn't show up on a resume. It doesn't get announced. It just happens — quietly, privately, often in moments you're not even paying attention to.</p>
+
+  <p>There's a version of me that exists only in my own head. The version that reads something at 2am and thinks <em>oh, that's exactly it.</em> The version that replays conversations trying to figure out where things went wrong. The version that makes silent promises to himself in the middle of the night. That version never makes it into any introduction or LinkedIn bio. But that's the version that's actually doing most of the work.</p>
+
+  <p>I've spent a lot of time being hard on myself for not moving fast enough. For not knowing enough. For still being in the middle of figuring it out. But I think I'm starting to understand that this — the confusion, the slowly-building clarity, the quiet daily effort — this <em>is</em> the process. Not the thing before the process. The process itself.</p>
+
+  <h3>What I've actually learned</h3>
+
+  <p>I used to think becoming someone meant a moment. A single decision, a single opportunity, a single day where everything clicked. But it's not like that at all. It's more like — you change in small increments, so slowly you don't even notice, until one day you look back and realise you're not who you were six months ago. And you can't really point to when it happened.</p>
+
+  <p>The times I've grown the most haven't been the most successful times. They've been the times I failed quietly, sat with it, and had to figure out how to keep going without anyone knowing I was struggling. The times I had to show up fully even when I felt empty. The times I chose to try again without telling anyone I was trying.</p>
+
+  <p>That's the stuff that actually shapes you. Not the wins. Not the milestones. The quiet, unglamorous decision to keep going when stopping would have been easier and no one would have blamed you for it.</p>
+
+  <div class="pullquote">
+    <p>"Most of the growing you'll ever do happens in rooms nobody else is in — at hours nobody else is awake — in moments nobody else will ever know about."</p>
   </div>
 
-  <p>They are someone who has known what it means to carry thoughts no one else can see. The kind of person who can smile while fighting internal battles, who can show up while feeling exhausted, who can continue while uncertain. Their resilience is not flashy. It is not the kind people applaud. It is the kind that quietly keeps a person going when nobody notices how hard it is.</p>
+  <p>I'm still figuring it out. I think that's okay. I think maybe that's the whole point — not arriving, but the ongoing, sometimes exhausting, sometimes quietly beautiful act of building yourself while the rest of the world is just watching the surface.</p>
 
-  <p>There have been seasons of confusion. Times when the future felt blurry, when motivation disappeared, when comparing themselves to others felt impossible to avoid. Yet even in those moments, something inside refused to disappear completely. A spark remained. Sometimes small, sometimes hidden — but alive.</p>
+  <p>If you're in the middle of a season that looks like nothing from the outside — trust it. Something is being built. You just can't see it yet.</p>
 
-  <div class="blog-pullquote">
-    <p>"I know your friend group randomly deciding they hate you is a canon event — but it's still genuinely the worst thing ever, and nothing could prepare me."</p>
-  </div>
+  <div class="post-divider"></div>
+  <p class="post-end">Thanks for reading. If this hit close to home, <a href="thoughts.html" style="color:var(--rust);text-decoration:none;">my Thoughts page</a> has more honest lines like this.</p>
 
-  <p>This person is not driven only by success. They are driven by meaning. They want more than money, more than titles, more than surface-level validation. They want a life that feels <em>real</em>. A life where they can respect themselves, where effort matters, where peace exists, where the people they love are safe, where dreams become something tangible.</p>
-
-  <p>They may not always say it aloud, but they care deeply. They care about proving they can become better. They care about making something of their life. They care about not wasting their potential. They care about being understood, even when they struggle to explain themselves.</p>
-
-  <div class="blog-pullquote">
-    <p>"Kitna bhi kuch karlu pagle, end me tu yaad aa hi jata hain."</p>
-    <cite>— some feelings don't have translations, they just exist</cite>
-  </div>
-
-  <p>Their story is not one dramatic event — it is a collection of moments: getting back up after disappointment, learning from mistakes, surviving lonely days, imagining a better future, trying again after failure, and continuing when stopping would have been easier.</p>
-
-  <p>"<em>I think I miss that one friend I used to share everything with. You were my safe zone.</em>" And sometimes, that loss is the quietest grief — the kind no one writes sympathy cards for, the kind you carry in your chest on ordinary Tuesdays.</p>
-
-  <div class="blog-divider"></div>
-
-  <p>This is a person in progress. Not finished. Not behind. Not broken. <strong>Just becoming.</strong></p>
-
-  <p>And perhaps that is the most honest kind of life story: not perfection, not certainty, but the courage to keep building yourself while the world only sees the unfinished version.</p>
 </div>
 
 <div class="other-posts">
-  <div class="other-posts-wrap">
-    <h3>More to read —</h3>
+  <div class="other-wrap">
+    <h3>More from the blog —</h3>
     <div class="other-grid">
       <a href="blog2.html" class="ocard">
-        <div class="ocard-thumb"><img src="images/blog/blog2.jpg" alt="" onerror="this.style.display='none'"/>🌊</div>
+        <div class="ocard-thumb">
+          <div class="fb">🌊</div>
+          <img src="images/blog/blog2.jpg" alt="" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
+        </div>
         <div class="ocard-body">
-          <div class="ocard-date">March 3, 2026</div>
+          <span class="ocard-tag">Dreams</span>
+          <span class="ocard-date">March 3, 2026</span>
           <div class="ocard-title">A Soul Caught Between Dreams and Reality</div>
-          <div class="ocard-link">Read →</div>
+          <span class="ocard-link">Read →</span>
         </div>
       </a>
       <a href="blog3.html" class="ocard">
-        <div class="ocard-thumb"><img src="images/blog/blog3.jpg" alt="" onerror="this.style.display='none'"/>✨</div>
+        <div class="ocard-thumb">
+          <div class="fb">✨</div>
+          <img src="images/blog/blog3.jpg" alt="" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
+        </div>
         <div class="ocard-body">
-          <div class="ocard-date">Jan 18, 2026</div>
+          <span class="ocard-tag">Life</span>
+          <span class="ocard-date">January 18, 2026</span>
           <div class="ocard-title">The Unwritten Greatness of an Ordinary Life</div>
-          <div class="ocard-link">Read →</div>
+          <span class="ocard-link">Read →</span>
         </div>
       </a>
     </div>
@@ -160,7 +113,12 @@
 
 <footer>
   <div class="fl">Brycis</div>
-  <nav class="fn"><a href="index.html">Home</a><a href="index.html#blog">Blog</a><a href="index.html#contact">Contact</a></nav>
+  <nav class="fn">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="thoughts.html">Thoughts</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
   <p class="fc">© 2026 Brycis. Built with curiosity.</p>
 </footer>
 

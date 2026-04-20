@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thoughts — Brycis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rust);}
+
+    /* PAGE HERO */
+    .page-hero{padding:9rem 5rem 5rem;background:var(--paper2);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .page-hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--border) 39px,var(--border) 40px);opacity:0.4;}
+    .page-hero-inner{position:relative;z-index:1;max-width:700px;}
+    .page-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;animation:fadeUp 0.8s ease both;}
+    .page-eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .page-eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.0;margin-bottom:1.25rem;animation:fadeUp 0.8s ease 0.1s both;}
+    h1.page-title em{font-style:italic;color:var(--rust);}
+    .page-desc{color:var(--muted);font-size:1rem;line-height:1.75;max-width:520px;animation:fadeUp 0.8s ease 0.2s both;}
+
+    /* THOUGHTS CONTAINER */
+    .thoughts-wrap{max-width:780px;margin:0 auto;padding:5rem 2rem 8rem;}
+
+    /* CATEGORY LABEL */
+    .t-category{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--rust);margin:4rem 0 2rem;display:flex;align-items:center;gap:0.75rem;}
+    .t-category::after{content:'';flex:1;height:1px;background:var(--border);}
+    .t-category:first-child{margin-top:0;}
+
+    /* THOUGHT CARD */
+    .thought{padding:2rem 2.5rem;border-left:3px solid var(--border);margin-bottom:1.5rem;background:var(--paper2);transition:border-color 0.3s,transform 0.3s;}
+    .thought:hover{border-color:var(--rust);transform:translateX(4px);}
+    .thought.highlight{border-left-color:var(--rust);background:linear-gradient(to right,rgba(181,69,27,0.04),transparent);}
+    .thought-text{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-style:italic;color:var(--ink);line-height:1.6;margin-bottom:0.75rem;}
+    .thought-tag{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);}
+
+    /* SMALL THOUGHTS — one liners */
+    .thought-small{padding:1.25rem 2rem;border-left:2px solid var(--border);margin-bottom:1rem;transition:border-color 0.3s;}
+    .thought-small:hover{border-color:var(--rust);}
+    .thought-small p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--ink);line-height:1.5;}
+    .thought-small .t-tag{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;display:block;}
+
+    /* ADD HINT */
+    .add-hint{margin-top:4rem;padding:1.5rem 2rem;border:1px dashed rgba(181,69,27,0.3);background:rgba(181,69,27,0.03);}
+    .add-hint h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--rust);margin-bottom:0.5rem;}
+    .add-hint p{font-size:0.8rem;color:var(--muted);line-height:1.7;}
+    .add-hint code{background:var(--paper2);padding:0.1rem 0.4rem;font-size:0.73rem;color:var(--ink);}
+
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem;}.nav-links{display:none;}
+      .page-hero{padding:7rem 1.5rem 3rem;}
+      .thoughts-wrap{padding:3rem 1.5rem 5rem;}
+      footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+    }
+  </style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="music.html">Music</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="thoughts.html" class="active">Thoughts</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-lines"></div>
+  <div class="page-hero-inner">
+    <div class="page-eyebrow"><div class="page-eyebrow-line"></div><span>Thoughts</span></div>
+    <h1 class="page-title">Lines that<br/><em>stayed with me.</em></h1>
+    <p class="page-desc">Not blog posts. Not essays. Just honest fragments — things I thought, felt, heard, or wrote at odd hours that I didn't want to lose. Some are mine. Some found me. All of them meant something.</p>
+  </div>
+</div>
+
+<!-- ============================================================
+  HOW TO ADD A NEW THOUGHT:
+  Copy any .thought or .thought-small block below,
+  paste it under the right category, change the text.
+  To add a new category, copy a .t-category line and update it.
+  That's it. No other file needs to change. ✅
+============================================================ -->
+<div class="thoughts-wrap">
+
+  <!-- CATEGORY: ON PEOPLE -->
+  <div class="t-category rev">On People</div>
+
+  <div class="thought highlight rev">
+    <p class="thought-text">"People aren't home, they never will be. People are rivers — always changing, forever flowing. They will disappear with everything you put inside them."</p>
+    <span class="thought-tag">on connection · something that hit hard</span>
+  </div>
+
+  <div class="thought rev">
+    <p class="thought-text">"I think I miss that one friend I used to share everything with. You were my safe zone."</p>
+    <span class="thought-tag">on friendship · the losses nobody writes cards for</span>
+  </div>
+
+  <div class="thought-small rev">
+    <p>"I know your friend group randomly deciding they hate you is a canon event — but it's still genuinely the worst thing ever, and nothing could prepare me."</p>
+    <span class="t-tag">on betrayal</span>
+  </div>
+
+  <!-- CATEGORY: ON FEELINGS -->
+  <div class="t-category rev">On Feelings</div>
+
+  <div class="thought highlight rev">
+    <p class="thought-text">"Kitna bhi kuch karlu pagle, end me tu yaad aa hi jata hain."</p>
+    <span class="thought-tag">in Hindi because some feelings don't translate · on someone you can't forget</span>
+  </div>
+
+  <div class="thought rev">
+    <p class="thought-text">"There's a specific kind of loneliness that comes from being surrounded by people who know you but don't really see you. That one takes a while to name."</p>
+    <span class="thought-tag">on being unseen</span>
+  </div>
+
+  <div class="thought-small rev">
+    <p>"Some days I'm okay. Some days the weight of everything I haven't said yet feels like a lot."</p>
+    <span class="t-tag">honest tuesday</span>
+  </div>
+
+  <!-- CATEGORY: ON GROWING UP -->
+  <div class="t-category rev">On Growing Up</div>
+
+  <div class="thought rev">
+    <p class="thought-text">"Nobody tells you that growing up isn't one moment — it's a hundred small ones you don't even notice until you look back and realise you're not who you were."</p>
+    <span class="thought-tag">on becoming</span>
+  </div>
+
+  <div class="thought-small rev">
+    <p>"Figure it out as you go — that's the only plan worth having."</p>
+    <span class="t-tag">the only life advice i actually believe</span>
+  </div>
+
+  <div class="thought-small rev d1">
+    <p>"I used to think I'd feel ready one day. I'm starting to think ready is a myth and you just go anyway."</p>
+    <span class="t-tag">on starting things</span>
+  </div>
+
+  <!-- CATEGORY: ON LATE NIGHTS -->
+  <div class="t-category rev">On Late Nights</div>
+
+  <div class="thought highlight rev">
+    <p class="thought-text">"There's a version of you that only shows up after midnight. More honest. More scared. More real. I've been trying to listen to that version more."</p>
+    <span class="thought-tag">on the 2am self</span>
+  </div>
+
+  <div class="thought-small rev">
+    <p>"The dangerous thing about late nights is how honest they make you with yourself."</p>
+    <span class="t-tag">3:17am thought</span>
+  </div>
+
+  <div class="thought-small rev d1">
+    <p>"I do my best thinking between 11pm and 2am and my worst decision-making in exactly the same window."</p>
+    <span class="t-tag">a contradiction I've made peace with</span>
+  </div>
+
+  <!-- CATEGORY: ON WANTING THINGS -->
+  <div class="t-category rev">On Wanting Things</div>
+
+  <div class="thought rev">
+    <p class="thought-text">"The hardest part isn't the wanting. It's wanting things while still being in the middle of becoming someone who's allowed to want them."</p>
+    <span class="thought-tag">on ambition and timing</span>
+  </div>
+
+  <div class="thought-small rev">
+    <p>"I don't want to look back and realise I spent all my time being impressive instead of being alive."</p>
+    <span class="t-tag">on priorities</span>
+  </div>
+
+  <!-- ADD NEW THOUGHTS HINT -->
+  <div class="add-hint rev">
+    <h4>💭 Adding a new thought</h4>
+    <p>
+      For a longer thought: copy a <code>.thought</code> block, update the text and tag.<br/>
+      For a one-liner: copy a <code>.thought-small</code> block, update the text and tag.<br/>
+      For a new category: copy a <code>.t-category</code> line and rename it.<br/>
+      No other file needs to change. ✅
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="thoughts.html">Thoughts</a>
+    <a href="music.html">Music</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
+
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

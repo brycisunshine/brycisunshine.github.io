@@ -5,145 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Unwritten Greatness of an Ordinary Life — Brycis</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
-    html{scroll-behavior:smooth;}
-    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
-    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
-    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
-    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
-    .nav-links{display:flex;gap:2rem;list-style:none;}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
-    .nav-links a:hover{color:var(--rust);}
-    .blog-hero{min-height:55vh;display:flex;align-items:flex-end;padding:10rem 5rem 4rem;position:relative;overflow:hidden;background:var(--paper2);}
-    .blog-hero-img{position:absolute;inset:0;overflow:hidden;}
-    .blog-hero-img img{width:100%;height:100%;object-fit:cover;opacity:0.25;}
-    .blog-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--paper2) 30%,transparent);}
-    .blog-hero-inner{position:relative;z-index:1;max-width:750px;}
-    .back-link{display:inline-flex;align-items:center;gap:0.5rem;color:var(--rust);text-decoration:none;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2rem;transition:gap 0.2s;}
-    .back-link:hover{gap:0.75rem;}
-    .blog-cat-badge{display:inline-block;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;background:var(--rust);color:var(--paper);padding:0.25rem 0.7rem;margin-bottom:1.25rem;}
-    .blog-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.05;margin-bottom:1.25rem;}
-    .blog-hero-title em{font-style:italic;color:var(--rust);}
-    .blog-meta{display:flex;align-items:center;gap:1.5rem;color:var(--muted);font-size:0.78rem;letter-spacing:0.08em;}
-    .blog-meta span::before{content:'·';margin-right:1.5rem;}
-    .blog-meta span:first-child::before{display:none;}
-    .blog-body-wrap{max-width:700px;margin:0 auto;padding:5rem 2rem 7rem;}
-    .blog-body-wrap p{font-size:1.05rem;line-height:1.9;color:var(--muted);margin-bottom:1.75rem;}
-    .blog-body-wrap p strong{color:var(--ink);font-weight:500;}
-    .blog-body-wrap p em{font-style:italic;}
-    .blog-pullquote{margin:3rem 0;padding:2rem 2.5rem;border-left:3px solid var(--rust);background:var(--paper2);}
-    .blog-pullquote p{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--ink);line-height:1.5;margin:0;}
-    .blog-pullquote cite{display:block;font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.75rem;font-style:normal;}
-    .blog-divider{width:60px;height:1px;background:var(--rust);margin:3rem auto;}
-    .other-posts{background:var(--paper2);padding:5rem;}
-    .other-posts-wrap{max-width:1000px;margin:0 auto;}
-    .other-posts h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:2rem;}
-    .other-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
-    .ocard{display:block;text-decoration:none;color:inherit;background:var(--paper);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
-    .ocard:hover{transform:translateY(-4px);border-color:var(--rust);}
-    .ocard-thumb{aspect-ratio:16/9;background:var(--paper3);display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;overflow:hidden;}
-    .ocard-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-    .ocard-body{padding:1.25rem;}
-    .ocard-date{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
-    .ocard-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;line-height:1.25;margin-bottom:0.5rem;}
-    .ocard-link{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);}
-    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
-    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
-    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
-    .fn a:hover{color:var(--rust2);}
-    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    .blog-hero-inner>*{animation:fadeUp 0.8s ease both;}
-    .blog-hero-inner>.back-link{animation-delay:0s;}
-    .blog-hero-inner>.blog-cat-badge{animation-delay:0.1s;}
-    .blog-hero-inner>.blog-hero-title{animation-delay:0.2s;}
-    .blog-hero-inner>.blog-meta{animation-delay:0.3s;}
-    @media(max-width:900px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}.blog-hero{padding:8rem 1.5rem 3rem;}.blog-body-wrap{padding:3rem 1.5rem 5rem;}.other-posts{padding:3rem 1.5rem;}.other-grid{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}}
-  </style>
+  <link rel="stylesheet" href="blog-style.css"/>
 </head>
 <body>
 <div class="cur" id="cur"></div>
 <div class="cur-ring" id="curRing"></div>
+
 <nav>
   <a href="index.html" class="nav-logo">Brycis</a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
-    <li><a href="index.html#blog" style="color:var(--rust)">Blog</a></li>
-    <li><a href="index.html#gallery">Gallery</a></li>
+    <li><a href="blog.html" style="color:var(--rust)">Blog</a></li>
+    <li><a href="music.html">Music</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
 </nav>
 
-<div class="blog-hero">
-  <div class="blog-hero-img"><img src="images/blog/blog3.jpg" alt="" onerror="this.parentElement.style.display='none'"/></div>
-  <div class="blog-hero-overlay"></div>
-  <div class="blog-hero-inner">
-    <a href="index.html#blog" class="back-link">← Back to Blog</a>
-    <div class="blog-cat-badge">Life · Ordinary · Greatness</div>
-    <h1 class="blog-hero-title">The Unwritten Greatness<br/>of an <em>Ordinary Life</em></h1>
-    <div class="blog-meta"><span>January 18, 2026</span><span>10 min read</span></div>
+<div class="post-hero">
+  <div class="post-hero-img">
+    <div class="fb">✨</div>
+    <img src="images/blog/blog3.jpg" alt="" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
+  </div>
+  <div class="post-hero-overlay"></div>
+  <div class="post-hero-inner">
+    <a href="blog.html" class="back-link">← Back to Blog</a>
+    <div class="post-tag">Life · Ordinary</div>
+    <h1 class="post-title">The Unwritten Greatness<br/>of an <em>Ordinary Life</em></h1>
+    <div class="post-meta">
+      <span>January 18, 2026</span>
+      <span class="post-meta-dot"></span>
+      <span>10 min read</span>
+    </div>
   </div>
 </div>
 
-<div class="blog-body-wrap">
-  <p>Some lives look simple until you listen closely.</p>
+<div class="post-body">
 
-  <p>At first glance, this may seem like the story of an ordinary person — someone living through common days, handling normal responsibilities, facing the same routines as everyone else. No headlines. No dramatic spotlight. No obvious signs of extraordinary destiny.</p>
+  <p>My grandmother never did anything the world would call remarkable. She didn't build a company or give a TED talk or get written about anywhere. She just — lived. Carefully, fully, with an attention to small things that I've never quite seen in anyone else.</p>
 
-  <p>But many of the most meaningful lives look ordinary from the outside.</p>
+  <p>She could tell you which neighbour was having a hard week just by the way they walked past the window. She remembered everyone's birthdays without a phone. She made the same dal every Thursday and somehow it tasted different every time — better, somehow, depending on how your day had gone. I don't know how she did that. I don't think she knew either. She just paid attention.</p>
 
-  <p>This is the story of someone who has had to grow in places where no one was watching. Someone who learned lessons through disappointment instead of instruction. Someone who discovered strength not because life was easy, but because difficulty kept arriving and they kept responding.</p>
+  <p>I think about her a lot when I'm deep in the middle of chasing things. When I'm measuring myself against people who are moving faster, doing more, building bigger. There's this strange pressure — especially where I am, especially at this age — to be doing something extraordinary. To have a vision. To be optimising something. And I feel it. I'm not immune to it. Some days I feel it so strongly it's hard to breathe.</p>
 
-  <div class="blog-pullquote">
-    <p>"I know your friend group randomly deciding they hate you is a canon event — but it's still genuinely the worst thing ever, and nothing could prepare me."</p>
-    <cite>— on the losses nobody warns you about</cite>
+  <h3>The ordinary days that actually matter</h3>
+
+  <p>But then I think about what I actually remember. Not the nights before exams that I aced. Not the projects that got recognition. I remember specific random Tuesdays. I remember a conversation I had walking back from the mess at 11pm that somehow turned into one of the best hours of my life. I remember lying on the roof of the hostel watching the city do its thing and feeling — for no particular reason — completely okay.</p>
+
+  <p>Those moments weren't remarkable. They wouldn't make a highlight reel. Nobody was watching. And yet they're the ones that actually feel like <em>my life</em> — not a performance of it, not a version built for an audience. Just the thing itself.</p>
+
+  <p>I think there's a version of a good life that doesn't look impressive on paper. A version where you're kind to the people around you, where you notice things, where you show up consistently even when it's unglamorous, where you build something slowly and carefully and without needing anyone to narrate it for you. That version doesn't get celebrated very much. But I'm not sure it needs to be.</p>
+
+  <h3>What I'm still learning</h3>
+
+  <p>I'm still figuring out how to want the big things without letting the wanting ruin the small ones. How to be ambitious without being so focused on where I'm going that I miss what's actually here. It's a balance I don't always get right. Some weeks I'm terrible at it.</p>
+
+  <p>But I keep coming back to my grandmother. To the way a person can live a whole, full, deeply human life — and leave a mark on everyone who knew them — without ever doing anything the world would call great.</p>
+
+  <div class="pullquote">
+    <p>"Not all greatness announces itself. Some of it just quietly shows up every day and does the work of being human."</p>
   </div>
 
-  <p>There is a quiet maturity in people who have suffered privately. They understand pain without needing to advertise it. They recognize loneliness, pressure, uncertainty, and self-doubt because they have sat with those emotions themselves. They know what it feels like to question direction, to wonder whether they are enough, to fear time is moving faster than progress.</p>
+  <p>I want to be the kind of person who remembers that. Who builds something meaningful, sure — but who also pays attention to the Thursday dal. Who notices how someone is walking. Who shows up for the ordinary Tuesday like it matters.</p>
 
-  <p>And still — they continue. That continuation says everything.</p>
+  <p>Because I think it does. I think it might be the whole thing.</p>
 
-  <p>This person may carry invisible burdens: expectations they never asked for, standards they set for themselves, memories they still think about, goals they have not yet reached, and the constant desire to become better than yesterday. Even rest can feel complicated when the mind is always thinking about what comes next.</p>
+  <div class="post-divider"></div>
+  <p class="post-end">Written while thinking about all the people quietly doing extraordinary things with their ordinary days.</p>
 
-  <div class="blog-pullquote">
-    <p>"Kitna bhi kuch karlu pagle, end me tu yaad aa hi jata hain."</p>
-    <cite>— some people become the background music of your entire life</cite>
-  </div>
-
-  <p>Yet despite inner pressure, they still care deeply about life. They still hope. They still imagine success. They still want to build something meaningful. They still believe that effort can create a better future. Even after discouragement, some part of them refuses to go numb.</p>
-
-  <p>That refusal is powerful. Because many people stop believing long before they stop breathing. But this person has kept belief alive — even if quietly, even if inconsistently, even if only in small moments.</p>
-
-  <div class="blog-pullquote">
-    <p>"People aren't home, they never will be. People are rivers — always changing, forever flowing. They will disappear with everything you put inside them."</p>
-  </div>
-
-  <p>They are likely harder on themselves than others realize. They notice flaws quickly, compare progress unfairly, and judge themselves during seasons that actually require patience. But beneath that harsh self-evaluation is someone who simply wants to do well, live well, and become someone they can respect.</p>
-
-  <p>Their story is still unfolding. Not all greatness begins with dramatic talent or immediate success. Sometimes greatness begins with endurance. Sometimes it begins with surviving years that taught discipline. Sometimes it begins with carrying unseen battles and still choosing to move forward.</p>
-
-  <div class="blog-divider"></div>
-
-  <p>This life may look ordinary now.</p>
-  <p><strong>But many extraordinary stories do — right before the turning point.</strong></p>
 </div>
 
 <div class="other-posts">
-  <div class="other-posts-wrap">
-    <h3>More to read —</h3>
+  <div class="other-wrap">
+    <h3>More from the blog —</h3>
     <div class="other-grid">
       <a href="blog1.html" class="ocard">
-        <div class="ocard-thumb"><img src="images/blog/blog1.jpg" alt="" onerror="this.style.display='none'"/>🌱</div>
-        <div class="ocard-body"><div class="ocard-date">April 12, 2026</div><div class="ocard-title">The Quiet Architect of Becoming</div><div class="ocard-link">Read →</div></div>
+        <div class="ocard-thumb">
+          <div class="fb">🌱</div>
+          <img src="images/blog/blog1.jpg" alt="" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
+        </div>
+        <div class="ocard-body">
+          <span class="ocard-tag">Self</span>
+          <span class="ocard-date">April 12, 2026</span>
+          <div class="ocard-title">The Quiet Architect of Becoming</div>
+          <span class="ocard-link">Read →</span>
+        </div>
       </a>
       <a href="blog2.html" class="ocard">
-        <div class="ocard-thumb"><img src="images/blog/blog2.jpg" alt="" onerror="this.style.display='none'"/>🌊</div>
-        <div class="ocard-body"><div class="ocard-date">March 3, 2026</div><div class="ocard-title">A Soul Caught Between Dreams and Reality</div><div class="ocard-link">Read →</div></div>
+        <div class="ocard-thumb">
+          <div class="fb">🌊</div>
+          <img src="images/blog/blog2.jpg" alt="" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
+        </div>
+        <div class="ocard-body">
+          <span class="ocard-tag">Dreams</span>
+          <span class="ocard-date">March 3, 2026</span>
+          <div class="ocard-title">A Soul Caught Between Dreams and Reality</div>
+          <span class="ocard-link">Read →</span>
+        </div>
       </a>
     </div>
   </div>
@@ -151,9 +111,15 @@
 
 <footer>
   <div class="fl">Brycis</div>
-  <nav class="fn"><a href="index.html">Home</a><a href="index.html#blog">Blog</a><a href="index.html#contact">Contact</a></nav>
+  <nav class="fn">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="thoughts.html">Thoughts</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
   <p class="fc">© 2026 Brycis. Built with curiosity.</p>
 </footer>
+
 <script>
   const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
   let mx=0,my=0,rx=0,ry=0;

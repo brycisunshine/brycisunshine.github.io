@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery — Brycis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+    .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rust);}
+
+    /* PAGE HERO */
+    .page-hero{padding:9rem 5rem 4rem;background:var(--paper2);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .page-hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,transparent,transparent 79px,var(--border) 79px,var(--border) 80px);opacity:0.4;}
+    .page-hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;}
+    .page-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;animation:fadeUp 0.8s ease both;}
+    .page-eyebrow-line{width:40px;height:1px;background:var(--rust);}
+    .page-eyebrow span{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);}
+    h1.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.0;margin-bottom:1.25rem;animation:fadeUp 0.8s ease 0.1s both;}
+    h1.page-title em{font-style:italic;color:var(--rust);}
+    .page-desc{color:var(--muted);font-size:1rem;line-height:1.7;max-width:500px;animation:fadeUp 0.8s ease 0.2s both;}
+
+    /* FILTER BAR */
+    .filter-bar{max-width:1100px;margin:0 auto;padding:2.5rem 5rem 0;display:flex;gap:0.75rem;flex-wrap:wrap;}
+    .filter-btn{padding:0.45rem 1.1rem;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid var(--border);background:none;color:var(--muted);cursor:none;transition:all 0.2s;font-family:'Outfit',sans-serif;}
+    .filter-btn:hover,.filter-btn.active{background:var(--rust);color:var(--paper);border-color:var(--rust);}
+
+    /* GALLERY WRAP */
+    .gallery-wrap{max-width:1100px;margin:0 auto;padding:3rem 5rem 7rem;}
+
+    /* SECTION HEADER */
+    .gal-section{margin-bottom:4rem;}
+    .gal-section-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;}
+    .gal-section-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;}
+    .gal-section-title em{font-style:italic;color:var(--rust);}
+    .gal-section-line{flex:1;height:1px;background:var(--border);}
+    .gal-count{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+
+    /* MASONRY GRID */
+    .masonry{columns:3;gap:1.2rem;}
+    .gitem{break-inside:avoid;margin-bottom:1.2rem;position:relative;overflow:hidden;cursor:none;border:1px solid var(--border);}
+    .gitem:hover .gover{opacity:1;}
+    .gitem:hover .gimg{transform:scale(1.04);}
+
+    /* IMAGE FIX — emoji hidden when real image loads */
+    .gfallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--paper3);z-index:0;}
+    .gimg{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1;transition:transform 0.4s;}
+    .gitem-inner{position:relative;overflow:hidden;}
+    .gitem-inner.tall{height:300px;}
+    .gitem-inner.mid{height:210px;}
+    .gitem-inner.short{height:155px;}
+
+    .gover{position:absolute;inset:0;background:rgba(26,22,18,0.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;opacity:0;transition:opacity 0.3s;z-index:2;}
+    .gover-label{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--paper);}
+    .gover-caption{font-size:0.75rem;color:rgba(245,240,232,0.65);font-style:italic;}
+
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;background:rgba(26,22,18,0.92);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+    .lightbox.open{opacity:1;pointer-events:all;}
+    .lightbox-img{max-width:85vw;max-height:85vh;object-fit:contain;border:1px solid rgba(245,240,232,0.1);}
+    .lightbox-close{position:absolute;top:2rem;right:2rem;color:var(--paper);font-size:1.5rem;cursor:none;opacity:0.7;transition:opacity 0.2s;background:none;border:none;font-family:'Outfit',sans-serif;}
+    .lightbox-close:hover{opacity:1;}
+    .lightbox-caption{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(245,240,232,0.6);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;}
+
+    /* ADD HINT */
+    .add-hint{padding:1.25rem 1.75rem;border:1px dashed rgba(181,69,27,0.3);background:rgba(181,69,27,0.03);margin-top:1rem;}
+    .add-hint h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--rust);margin-bottom:0.4rem;}
+    .add-hint p{font-size:0.78rem;color:var(--muted);line-height:1.7;}
+    .add-hint code{background:var(--paper2);padding:0.1rem 0.4rem;font-size:0.72rem;color:var(--ink);}
+
+    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
+    .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a:hover{color:var(--rust2);}
+    .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .rev{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease;}
+    .rev.vis{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem;}.nav-links{display:none;}
+      .page-hero{padding:7rem 1.5rem 3rem;}
+      .filter-bar{padding:2rem 1.5rem 0;}
+      .gallery-wrap{padding:2rem 1.5rem 5rem;}
+      .masonry{columns:2;}
+      footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+    }
+    @media(max-width:500px){.masonry{columns:1;}}
+  </style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose">✕</button>
+  <img class="lightbox-img" id="lbImg" src="" alt=""/>
+  <div class="lightbox-caption" id="lbCaption"></div>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Brycis</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="music.html">Music</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-lines"></div>
+  <div class="page-hero-inner">
+    <div class="page-eyebrow"><div class="page-eyebrow-line"></div><span>Gallery</span></div>
+    <h1 class="page-title">Moments,<br/><em>not poses.</em></h1>
+    <p class="page-desc">Nature that stopped me mid-walk. Things I made with my hands. Places that felt like something. Photographs are just memories with better memory.</p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="nature">🌿 Nature</button>
+  <button class="filter-btn" data-filter="arts">🎨 Arts & Creative</button>
+</div>
+
+<!-- GALLERY -->
+<!-- ============================================================
+  HOW TO ADD A NEW PHOTO:
+  1. Save your photo e.g. images/nature/nature4.jpg
+  2. Copy any .gitem block below
+  3. Change: src, data-caption, and height class (tall/mid/short)
+  4. Set data-category="nature" or "arts"
+  5. Save gallery.html — index.html never needs to change ✅
+============================================================ -->
+<div class="gallery-wrap">
+
+  <!-- NATURE SECTION -->
+  <div class="gal-section" data-section="nature">
+    <div class="gal-section-head rev">
+      <div class="gal-section-title">🌿 <em>Nature</em></div>
+      <div class="gal-section-line"></div>
+      <div class="gal-count">3 photos</div>
+    </div>
+
+    <div class="masonry rev">
+
+      <!-- NATURE 1 -->
+      <div class="gitem" data-category="nature" data-src="images/nature/nature1.jpg" data-caption="Nature · Photo 1">
+        <div class="gitem-inner tall">
+          <div class="gfallback" style="font-size:3rem;">🌅</div>
+          <img class="gimg" src="images/nature/nature1.jpg" alt="Nature 1"
+            onload="this.previousElementSibling.style.display='none'"
+            onerror="this.remove()"/>
+          <div class="gover">
+            <span class="gover-label">View</span>
+            <span class="gover-caption">Nature · 1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE 2 -->
+      <div class="gitem" data-category="nature" data-src="images/nature/nature2.jpg" data-caption="Nature · Photo 2">
+        <div class="gitem-inner mid">
+          <div class="gfallback" style="font-size:3rem;">🌿</div>
+          <img class="gimg" src="images/nature/nature2.jpg" alt="Nature 2"
+            onload="this.previousElementSibling.style.display='none'"
+            onerror="this.remove()"/>
+          <div class="gover">
+            <span class="gover-label">View</span>
+            <span class="gover-caption">Nature · 2</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NATURE 3 -->
+      <div class="gitem" data-category="nature" data-src="images/nature/nature3.jpg" data-caption="Nature · Photo 3">
+        <div class="gitem-inner short">
+          <div class="gfallback" style="font-size:3rem;">🌊</div>
+          <img class="gimg" src="images/nature/nature3.jpg" alt="Nature 3"
+            onload="this.previousElementSibling.style.display='none'"
+            onerror="this.remove()"/>
+          <div class="gover">
+            <span class="gover-label">View</span>
+            <span class="gover-caption">Nature · 3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD MORE NATURE PHOTOS HERE — copy the block above -->
+
+    </div>
+
+    <div class="add-hint rev">
+      <h4>🌿 Adding a nature photo</h4>
+      <p>
+        Save as <code>images/nature/nature4.jpg</code> →
+        copy any nature <code>.gitem</code> block above →
+        change <code>src</code> to <code>nature4.jpg</code> →
+        update <code>data-caption</code> →
+        pick height: <code>tall</code> / <code>mid</code> / <code>short</code>.
+        Done ✅
+      </p>
+    </div>
+  </div>
+
+  <!-- ARTS SECTION -->
+  <div class="gal-section" data-section="arts">
+    <div class="gal-section-head rev">
+      <div class="gal-section-title">🎨 <em>Arts & Creative</em></div>
+      <div class="gal-section-line"></div>
+      <div class="gal-count">2 photos</div>
+    </div>
+
+    <div class="masonry rev">
+
+      <!-- ART 1 -->
+      <div class="gitem" data-category="arts" data-src="images/arts/art1.jpg" data-caption="Arts & Creative · 1">
+        <div class="gitem-inner tall">
+          <div class="gfallback" style="font-size:3rem;">🎨</div>
+          <img class="gimg" src="images/arts/art1.jpg" alt="Art 1"
+            onload="this.previousElementSibling.style.display='none'"
+            onerror="this.remove()"/>
+          <div class="gover">
+            <span class="gover-label">View</span>
+            <span class="gover-caption">Arts & Creative · 1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ART 2 -->
+      <div class="gitem" data-category="arts" data-src="images/arts/art2.jpg" data-caption="Arts & Creative · 2">
+        <div class="gitem-inner mid">
+          <div class="gfallback" style="font-size:3rem;">✏️</div>
+          <img class="gimg" src="images/arts/art2.jpg" alt="Art 2"
+            onload="this.previousElementSibling.style.display='none'"
+            onerror="this.remove()"/>
+          <div class="gover">
+            <span class="gover-label">View</span>
+            <span class="gover-caption">Arts & Creative · 2</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD MORE ART PHOTOS HERE — copy the block above -->
+
+    </div>
+
+    <div class="add-hint rev">
+      <h4>🎨 Adding an art photo</h4>
+      <p>
+        Save as <code>images/arts/art3.jpg</code> →
+        copy any arts <code>.gitem</code> block above →
+        change <code>src</code> to <code>art3.jpg</code> →
+        update <code>data-caption</code> to describe your work →
+        pick height: <code>tall</code> / <code>mid</code> / <code>short</code>.
+        Done ✅
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fl">Brycis</div>
+  <nav class="fn">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="music.html">Music</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <p class="fc">© 2026 Brycis. Built with curiosity.</p>
+</footer>
+
+<script>
+  // Cursor
+  const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
+
+  // Scroll reveal
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+  // Filter
+  const btns=document.querySelectorAll('.filter-btn');
+  const items=document.querySelectorAll('.gitem');
+  const sections=document.querySelectorAll('.gal-section');
+  btns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      btns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f=btn.dataset.filter;
+      if(f==='all'){
+        sections.forEach(s=>s.style.display='');
+        items.forEach(i=>i.style.display='');
+      } else {
+        sections.forEach(s=>{
+          s.style.display=s.dataset.section===f?'':'none';
+        });
+        items.forEach(i=>i.style.display=i.dataset.category===f?'':'none');
+      }
+    });
+  });
+
+  // Lightbox
+  const lb=document.getElementById('lightbox');
+  const lbImg=document.getElementById('lbImg');
+  const lbCaption=document.getElementById('lbCaption');
+  const lbClose=document.getElementById('lbClose');
+
+  document.querySelectorAll('.gitem').forEach(item=>{
+    item.addEventListener('click',()=>{
+      const src=item.dataset.src;
+      const cap=item.dataset.caption||'';
+      lbImg.src=src;
+      lbCaption.textContent=cap;
+      lb.classList.add('open');
+      document.body.style.overflow='hidden';
+    });
+  });
+
+  function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+  lbClose.addEventListener('click',closeLb);
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+</script>
+</body>
+</html>
