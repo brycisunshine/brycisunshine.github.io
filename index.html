@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brycis — My World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #12121a;
+      --bg3: #1a1a26;
+      --accent: #c8a96e;
+      --accent2: #7c6fd4;
+      --text: #e8e4d9;
+      --muted: #7a7a8a;
+      --border: rgba(200,169,110,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transition: transform 0.1s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transition: transform 0.15s, width 0.2s, height 0.2s;
+      opacity: 0.5;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* HERO */
+    #home {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 6rem 4rem 4rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(124,111,212,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(200,169,110,0.08) 0%, transparent 50%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--border);
+      padding: 0.4rem 1rem; border-radius: 2px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease 0.15s both;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); max-width: 500px;
+      line-height: 1.7; margin-bottom: 3rem;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.45s both;
+    }
+    .btn {
+      padding: 0.85rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; cursor: none;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--bg);
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: #e0bf80; transform: translateY(-2px); }
+    .btn-ghost {
+      border: 1px solid var(--border); color: var(--text);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--muted); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      animation: fadeUp 1s ease 1s both;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    /* SECTIONS COMMON */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      margin-bottom: 1rem; line-height: 1.1;
+    }
+    .section-sub { color: var(--muted); max-width: 500px; line-height: 1.7; margin-bottom: 3rem; }
+
+    /* ABOUT */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-image-box {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative; overflow: hidden;
+    }
+    .about-image-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(200,169,110,0.1), transparent);
+    }
+    .about-deco {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      width: 80%; aspect-ratio: 3/4;
+      border: 1px solid var(--border); z-index: -1;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .stat-box {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; color: var(--accent); display: block;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* BLOG */
+    #blog { max-width: 1200px; margin: 0 auto; }
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .blog-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      overflow: hidden; transition: transform 0.3s, border-color 0.3s;
+      cursor: none;
+    }
+    .blog-card:hover { transform: translateY(-6px); border-color: var(--accent); }
+    .blog-card-top {
+      aspect-ratio: 16/9;
+      background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .blog-cat {
+      position: absolute; top: 1rem; left: 1rem;
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      background: var(--accent); color: var(--bg);
+      padding: 0.25rem 0.6rem;
+    }
+    .blog-body { padding: 1.5rem; }
+    .blog-date { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .blog-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; margin-bottom: 0.75rem; line-height: 1.3;
+    }
+    .blog-excerpt { font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .blog-read {
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .blog-read::after { content: '→'; transition: transform 0.2s; }
+    .blog-read:hover::after { transform: translateX(4px); }
+
+    /* GALLERY */
+    #gallery { background: var(--bg2); }
+    .gallery-wrap { max-width: 1200px; margin: 0 auto; }
+    .gallery-grid {
+      columns: 3; gap: 1rem;
+    }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 1rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      overflow: hidden; cursor: none;
+      position: relative;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-inner {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: var(--muted);
+    }
+    .gallery-inner.tall { height: 280px; }
+    .gallery-inner.short { height: 180px; }
+    .gallery-inner.mid { height: 220px; }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,10,15,0.7);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
+    }
+
+    /* CONTACT */
+    #contact { max-width: 700px; margin: 0 auto; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .form-input, .form-textarea {
+      background: var(--bg2); border: 1px solid var(--border);
+      color: var(--text); padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      transition: border-color 0.3s; outline: none; resize: none;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+    .form-textarea { height: 140px; }
+    .form-submit {
+      align-self: flex-start;
+      background: var(--accent); color: var(--bg);
+      border: none; padding: 0.9rem 2.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 500; cursor: none; transition: all 0.3s;
+    }
+    .form-submit:hover { background: #e0bf80; transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--border);
+      padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--accent);
+    }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { color: var(--muted); font-size: 0.8rem; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #home { padding: 5rem 1.5rem 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .gallery-grid { columns: 2; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">Brycis</a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Welcome to my world</div>
+      <h1 class="hero-title">
+        Stories,<br/>
+        <em>thoughts</em> &<br/>
+        moments.
+      </h1>
+      <p class="hero-sub">A personal space where I write about life, share photography, and explore ideas that matter to me.</p>
+      <div class="hero-cta">
+        <a href="#blog" class="btn btn-primary">Read the Blog</a>
+        <a href="#about" class="btn btn-ghost">About Me</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-image-wrap reveal">
+        <div class="about-image-box">🌿</div>
+        <div class="about-deco"></div>
+      </div>
+      <div class="reveal">
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">Hello, I'm <em style="font-style:italic;color:var(--accent)">Brycis</em></h2>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:1rem;">
+          I'm a curious soul who loves writing, photography, and finding beauty in everyday moments. This website is my little corner of the internet — a place to share stories, ideas, and things I find interesting.
+        </p>
+        <p style="color:var(--muted);line-height:1.8;">
+          When I'm not writing, you'll find me exploring new places, reading books, or chasing the perfect light for a photograph.
+        </p>
+        <div class="about-stats">
+          <div class="stat-box">
+            <span class="stat-num">42+</span>
+            <span class="stat-label">Blog Posts</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">8+</span>
+            <span class="stat-label">Years Writing</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">200+</span>
+            <span class="stat-label">Photos</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Stories to Tell</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" style="padding:6rem 4rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal">
+        <p class="section-label">Latest Writing</p>
+        <h2 class="section-title">From the Blog</h2>
+        <p class="section-sub">Thoughts, stories, and observations from my daily life and beyond.</p>
+      </div>
+      <div class="blog-grid">
+        <div class="blog-card reveal">
+          <div class="blog-card-top">
+            <span>🌱</span>
+            <span class="blog-cat">Life</span>
+          </div>
+          <div class="blog-body">
+            <p class="blog-date">April 12, 2026</p>
+            <h3 class="blog-title">A seed in spring</h3>
+            <p class="blog-excerpt">Through lifeless winter, under layers of snow, a seed lay curled in, feeling cold, alone...</p>
+            <a href="#" class="blog-read">Read more</a>
+          </div>
+        </div>
+        <div class="blog-card reveal">
+          <div class="blog-card-top">
+            <span>🌳</span>
+            <span class="blog-cat">Nature</span>
+          </div>
+          <div class="blog-body">
+            <p class="blog-date">February 15, 2026</p>
+            <h3 class="blog-title">A swing in the park</h3>
+            <p class="blog-excerpt">I ambled in the park on a bright spring day. What joy it is to watch the children play...</p>
+            <a href="#" class="blog-read">Read more</a>
+          </div>
+        </div>
+        <div class="blog-card reveal">
+          <div class="blog-card-top">
+            <span>✨</span>
+            <span class="blog-cat">Thoughts</span>
+          </div>
+          <div class="blog-body">
+            <p class="blog-date">January 5, 2026</p>
+            <h3 class="blog-title">On finding stillness</h3>
+            <p class="blog-excerpt">In a world that never stops moving, learning to be still is perhaps the greatest art of all...</p>
+            <a href="#" class="blog-read">Read more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-wrap">
+      <div class="reveal">
+        <p class="section-label">Visual Stories</p>
+        <h2 class="section-title">Gallery</h2>
+        <p class="section-sub">Moments captured through my lens — places, people, and the poetry of light.</p>
+      </div>
+      <div class="gallery-grid reveal">
+        <div class="gallery-item"><div class="gallery-inner tall">🌅</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner short">🏙️</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner mid">🌿</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner short">🌊</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner tall">🌸</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner mid">🦋</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner short">🌙</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner mid">⛰️</div><div class="gallery-overlay">View</div></div>
+        <div class="gallery-item"><div class="gallery-inner short">🌻</div><div class="gallery-overlay">View</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="padding:6rem 4rem;">
+    <div style="max-width:700px;margin:0 auto;">
+      <div class="reveal">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Say Hello</h2>
+        <p class="section-sub">Have a thought, a question, or just want to connect? I'd love to hear from you.</p>
+      </div>
+      <form class="contact-form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" name="name" placeholder="Jane Doe" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Email</label>
+            <input type="email" class="form-input" name="email" placeholder="jane@email.com" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input type="text" class="form-input" name="subject" placeholder="What's on your mind?"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" name="message" placeholder="Your message..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Brycis</div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#blog">Blog</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Brycis. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+    });
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+
+    // Smooth active nav
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
