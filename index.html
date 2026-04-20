@@ -7,23 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    :root {
-      --ink:#1a1612; --paper:#f5f0e8; --paper2:#ede8dc; --paper3:#e4ddd0;
-      --rust:#b5451b; --rust2:#d4622e; --muted:#8a8075; --border:rgba(26,22,18,0.12);
-    }
+    :root { --ink:#1a1612; --paper:#f5f0e8; --paper2:#ede8dc; --paper3:#e4ddd0; --rust:#b5451b; --rust2:#d4622e; --muted:#8a8075; --border:rgba(26,22,18,0.12); }
     html{scroll-behavior:smooth;}
     body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
     .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
     .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
-
-    /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
     .nav-links{display:flex;gap:2rem;list-style:none;}
     .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
     .nav-links a:hover{color:var(--rust);}
-
-    /* HERO */
     #home{min-height:100vh;display:flex;align-items:center;padding:8rem 5rem 5rem;position:relative;overflow:hidden;}
     .hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--border) 39px,var(--border) 40px);opacity:0.5;}
     .hero-glow{position:absolute;right:-5%;top:5%;width:600px;height:600px;background:radial-gradient(ellipse,rgba(181,69,27,0.07) 0%,transparent 70%);border-radius:50%;}
@@ -43,8 +36,6 @@
     .btn-out:hover{border-color:var(--rust);color:var(--rust);transform:translateY(-2px);}
     .scroll-hint{position:absolute;bottom:2.5rem;left:5rem;display:flex;align-items:center;gap:1rem;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);animation:fadeUp 1s ease 0.6s both;}
     .scroll-line{width:50px;height:1px;background:var(--muted);}
-
-    /* SHARED */
     .padded{padding:7rem 5rem;}
     .wrap{max-width:1100px;margin:0 auto;}
     .bg2{background:var(--paper2);}
@@ -53,7 +44,6 @@
     h2.sec-h{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem;}
     .sub-p{color:var(--muted);font-size:0.9rem;line-height:1.7;max-width:460px;margin-bottom:2.5rem;}
     .cat-label{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin:3rem 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
-
     /* ABOUT */
     .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:6rem;align-items:start;margin-bottom:5rem;}
     .about-p{font-size:1rem;color:var(--muted);line-height:1.85;margin-bottom:1rem;}
@@ -61,7 +51,7 @@
     .about-img-wrap{position:relative;}
     .about-img{aspect-ratio:4/5;background:var(--paper3);border:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;}
     .about-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-    .about-img-hint{position:absolute;bottom:0;left:0;right:0;background:rgba(26,22,18,0.6);text-align:center;padding:0.75rem;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,232,0.7);}
+    .about-img-hint{position:absolute;bottom:0;left:0;right:0;background:rgba(26,22,18,0.55);text-align:center;padding:0.6rem;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,232,0.7);}
     .about-img-deco{position:absolute;bottom:-1.5rem;right:-1.5rem;width:85%;aspect-ratio:4/5;border:1px solid var(--border);z-index:-1;}
     .traits{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
     .trait{padding:1.75rem;background:var(--paper);border:1px solid var(--border);transition:border-color 0.3s,transform 0.3s;}
@@ -69,7 +59,6 @@
     .trait-icon{font-size:1.8rem;margin-bottom:1rem;}
     .trait-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;margin-bottom:0.5rem;}
     .trait-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;}
-
     /* SHOWS */
     .shows-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:1rem;}
     .show-card{background:var(--paper2);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
@@ -82,7 +71,6 @@
     .show-note{font-size:0.75rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;}
     .show-stars{color:var(--rust);font-size:0.75rem;}
     .more-tag{display:inline-block;padding:0.5rem 1.2rem;border:1px dashed var(--border);font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:1rem;}
-
     /* MUSIC */
     .music-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:1.5rem;}
     .singer-card{background:var(--paper2);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
@@ -92,8 +80,6 @@
     .singer-body{padding:0.9rem 1rem;}
     .singer-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.2rem;}
     .singer-genre{font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
-
-    /* TOP SONGS */
     .songs-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;margin-bottom:1.5rem;}
     .song-item{display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--paper2);border:1px solid var(--border);transition:border-color 0.3s;}
     .song-item:hover{border-color:var(--rust);}
@@ -102,10 +88,9 @@
     .song-title{font-size:0.88rem;font-weight:400;margin-bottom:0.15rem;}
     .song-artist{font-size:0.75rem;color:var(--muted);}
     .song-note{font-size:0.7rem;color:var(--rust);margin-left:auto;letter-spacing:0.05em;}
-
     /* BLOG */
     .blog-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:1.5rem;}
-    .bcard{background:var(--paper);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
+    .bcard{background:var(--paper);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;text-decoration:none;color:inherit;display:block;}
     .bcard:hover{transform:translateY(-5px);border-color:var(--rust);}
     .bcard.feat{grid-row:span 2;}
     .bthumb{aspect-ratio:16/9;background:var(--paper3);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:3rem;}
@@ -117,9 +102,7 @@
     .btitle{font-family:'Cormorant Garamond',serif;font-size:1.25rem;line-height:1.25;margin-bottom:0.6rem;}
     .bcard.feat .btitle{font-size:1.65rem;}
     .bexcerpt{font-size:0.82rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
-    .blink{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);text-decoration:none;}
-    .blink:hover{text-decoration:underline;}
-
+    .blink{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);}
     /* GALLERY */
     .gallery-section-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;}
     .gallery-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
@@ -127,11 +110,10 @@
     .gitem{break-inside:avoid;margin-bottom:1.2rem;background:var(--paper2);border:1px solid var(--border);overflow:hidden;position:relative;cursor:none;}
     .gitem:hover .gover{opacity:1;}
     .ginner{display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:var(--paper3);}
-    .ginner.t{height:260px;} .ginner.m{height:190px;} .ginner.s{height:150px;}
+    .ginner.t{height:260px;}.ginner.m{height:190px;}.ginner.s{height:150px;}
     .ginner img{width:100%;height:100%;object-fit:cover;}
     .gover{position:absolute;inset:0;background:rgba(26,22,18,0.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;}
     .gover span{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--paper);}
-
     /* CONTACT */
     .cform{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:700px;}
     .fg{display:flex;flex-direction:column;gap:0.45rem;}
@@ -142,21 +124,19 @@
     textarea{height:130px;}
     .csub{grid-column:span 2;justify-self:start;background:var(--rust);color:var(--paper);border:none;padding:0.9rem 2.5rem;font-family:'Outfit',sans-serif;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:500;cursor:none;transition:all 0.3s;}
     .csub:hover{background:var(--rust2);transform:translateY(-2px);}
-
+    .form-success{display:none;padding:1.25rem;background:rgba(74,94,79,0.1);border:1px solid rgba(74,94,79,0.3);color:#4a5e4f;font-size:0.88rem;margin-top:1rem;}
     footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
     .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
     .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
     .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
     .fn a:hover{color:var(--rust2);}
     .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
-
     @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
     .rev{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
     .rev.vis{opacity:1;transform:translateY(0);}
     .d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
-
     @media(max-width:900px){
-      nav{padding:1rem 1.5rem;} .nav-links{display:none;}
+      nav{padding:1rem 1.5rem;}.nav-links{display:none;}
       #home,.padded{padding:4rem 1.5rem;}
       .about-grid{grid-template-columns:1fr;gap:3rem;}
       .traits,.shows-grid,.music-grid{grid-template-columns:1fr 1fr;}
@@ -170,13 +150,11 @@
   </style>
 </head>
 <body>
-
 <div class="cur" id="cur"></div>
 <div class="cur-ring" id="curRing"></div>
 
-<!-- NAV -->
 <nav>
-  <a href="#home" class="nav-logo">Brycis</a>
+  <a href="index.html" class="nav-logo">Brycis</a>
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
@@ -213,23 +191,23 @@
         <h2 class="sec-h rev">More than just<br/><em style="font-style:italic">an engineer.</em></h2>
         <p class="about-p rev">I'm someone who genuinely can't pick just one thing to be passionate about — and I've stopped trying. By training I'm an <strong>electrical engineer at IIT Bombay</strong>, deep in the world of circuits, signals, and silicon. But that's only part of the story.</p>
         <p class="about-p rev">The other part? I'm obsessed with <strong>how stories work</strong> — in TV shows, in songs, in books, in conversations at odd hours. The same curiosity that pulls me toward a circuit also pulls me toward a character's emotional arc at 2am.</p>
-        <p class="about-p rev">I've done research at IIT Bombay and <strong>NUS Singapore</strong>, built things from RC planes to chip-level signal equalizers, and somewhere in between also learned that the best engineers are the most curious humans. That's what this space is about.</p>
+        <p class="about-p rev">I've done research at IIT Bombay and <strong>NUS Singapore</strong>, built things from RC planes to chip-level signal equalizers, and learned somewhere in between that the best engineers are the most curious humans. That's what this space is about.</p>
         <p class="about-p rev" style="color:var(--rust);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;">"Figure it out as you go — that's the only plan worth having."</p>
       </div>
       <div class="about-img-wrap rev">
         <div class="about-img">
+          <img src="images/me.jpg" alt="Brycis" onerror="this.style.display='none'"/>
           🧑‍💻
-          <!-- TO ADD YOUR PHOTO: replace the emoji above with: <img src="images/me.jpg" alt="Brycis"/> -->
-          <div class="about-img-hint">Add your photo → images/me.jpg</div>
+          <div class="about-img-hint">Replace with → images/me.jpg</div>
         </div>
         <div class="about-img-deco"></div>
       </div>
     </div>
     <div class="traits">
-      <div class="trait rev"><div class="trait-icon">⚡</div><div class="trait-name">The Engineer</div><div class="trait-desc">VLSI, analog circuits, high-speed signal chains — I spend a lot of time making electrons behave exactly as I want.</div></div>
-      <div class="trait rev d1"><div class="trait-icon">📖</div><div class="trait-name">The Reader</div><div class="trait-desc">Books are how I travel without moving. I'll read anything that rewires how I think about something.</div></div>
-      <div class="trait rev d2"><div class="trait-icon">🎬</div><div class="trait-name">The Binge-Watcher</div><div class="trait-desc">I take shows seriously — the writing, the arcs, the characters. I'm absolutely that person who over-analyses everything.</div></div>
-      <div class="trait rev d3"><div class="trait-icon">🌍</div><div class="trait-name">The Explorer</div><div class="trait-desc">New cities, new food, new perspectives. Singapore taught me the world is bigger and more interesting than any textbook.</div></div>
+      <div class="trait rev"><div class="trait-icon">⚡</div><div class="trait-name">The Engineer</div><div class="trait-desc">VLSI, analog circuits, high-speed signal chains — making electrons behave exactly as I want.</div></div>
+      <div class="trait rev d1"><div class="trait-icon">📖</div><div class="trait-name">The Reader</div><div class="trait-desc">Books are how I travel without moving. I'll read anything that rewires how I think.</div></div>
+      <div class="trait rev d2"><div class="trait-icon">🎬</div><div class="trait-name">The Binge-Watcher</div><div class="trait-desc">I take shows seriously. The writing, the arcs — I'm absolutely that person who over-analyses everything.</div></div>
+      <div class="trait rev d3"><div class="trait-icon">🌍</div><div class="trait-name">The Explorer</div><div class="trait-desc">New cities, new food, new perspectives. Singapore taught me the world is bigger than any textbook.</div></div>
     </div>
   </div>
 </section>
@@ -240,51 +218,22 @@
     <p class="sec-label rev">What I Watch</p>
     <h2 class="sec-h rev">Shows that<br/><em style="font-style:italic">wrecked me (in the best way).</em></h2>
     <p class="sub-p rev">I watch TV the way some people read literature — slowly, with opinions, and too much emotional investment in fictional people.</p>
-
     <div class="shows-grid">
       <div class="show-card rev">
-        <div class="show-img">
-          <img src="images/shows/modern-family.jpg" alt="Modern Family" onerror="this.style.display='none'"/>
-          🏠<span class="show-badge">Comedy</span>
-        </div>
-        <div class="show-body">
-          <div class="show-name">Modern Family</div>
-          <div class="show-note">Proof that family is chaotic, hilarious, and the realest thing you'll ever have. Jay Pritchett is one of TV's best written characters — change my mind.</div>
-          <div class="show-stars">★★★★★ · Will rewatch forever</div>
-        </div>
+        <div class="show-img"><img src="images/shows/modern-family.jpg" alt="Modern Family" onerror="this.style.display='none'"/>🏠<span class="show-badge">Comedy</span></div>
+        <div class="show-body"><div class="show-name">Modern Family</div><div class="show-note">Proof that family is chaotic, hilarious, and the realest thing you'll ever have. Jay Pritchett is one of TV's best written characters — change my mind.</div><div class="show-stars">★★★★★ · Will rewatch forever</div></div>
       </div>
       <div class="show-card rev d1">
-        <div class="show-img">
-          <img src="images/shows/suits.jpg" alt="Suits" onerror="this.style.display='none'"/>
-          ⚖️<span class="show-badge">Drama</span>
-        </div>
-        <div class="show-body">
-          <div class="show-name">Suits</div>
-          <div class="show-note">Harvey Specter taught me more about sharp thinking and confidence than most real people I've met. The dialogue is genuinely elite-level writing.</div>
-          <div class="show-stars">★★★★★ · Peak TV writing</div>
-        </div>
+        <div class="show-img"><img src="images/shows/suits.jpg" alt="Suits" onerror="this.style.display='none'"/>⚖️<span class="show-badge">Drama</span></div>
+        <div class="show-body"><div class="show-name">Suits</div><div class="show-note">Harvey Specter taught me more about sharp thinking than most real people I've met. The dialogue is genuinely elite-level writing.</div><div class="show-stars">★★★★★ · Peak TV writing</div></div>
       </div>
       <div class="show-card rev d2">
-        <div class="show-img">
-          <img src="images/shows/gossip-girl.jpg" alt="Gossip Girl" onerror="this.style.display='none'"/>
-          🗽<span class="show-badge">Drama</span>
-        </div>
-        <div class="show-body">
-          <div class="show-name">Gossip Girl</div>
-          <div class="show-note">Guilty pleasure? Absolutely. But the plotting, the fashion, the drama — Blair Waldorf is iconic and I will die on that hill.</div>
-          <div class="show-stars">★★★★☆ · Unironically great</div>
-        </div>
+        <div class="show-img"><img src="images/shows/gossip-girl.jpg" alt="Gossip Girl" onerror="this.style.display='none'"/>🗽<span class="show-badge">Drama</span></div>
+        <div class="show-body"><div class="show-name">Gossip Girl</div><div class="show-note">Blair Waldorf is iconic and I will die on that hill. The plotting, the fashion, the drama — unironically great.</div><div class="show-stars">★★★★☆ · Guilty pleasure</div></div>
       </div>
       <div class="show-card rev d3">
-        <div class="show-img">
-          <img src="images/shows/gilmore-girls.jpg" alt="Gilmore Girls" onerror="this.style.display='none'"/>
-          ☕<span class="show-badge">Drama</span>
-        </div>
-        <div class="show-body">
-          <div class="show-name">Gilmore Girls</div>
-          <div class="show-note">Coffee, books, fast dialogue, and complicated mother-daughter love. Lorelai and Rory made me want to live in Stars Hollow and drink more coffee.</div>
-          <div class="show-stars">★★★★★ · Comfort show forever</div>
-        </div>
+        <div class="show-img"><img src="images/shows/gilmore-girls.jpg" alt="Gilmore Girls" onerror="this.style.display='none'"/>☕<span class="show-badge">Drama</span></div>
+        <div class="show-body"><div class="show-name">Gilmore Girls</div><div class="show-note">Coffee, books, fast dialogue, and complicated love. Made me want to live in Stars Hollow permanently.</div><div class="show-stars">★★★★★ · Comfort show forever</div></div>
       </div>
     </div>
     <div class="more-tag rev">+ Many more on the watchlist — always open to recommendations 📺</div>
@@ -296,48 +245,22 @@
   <div class="wrap">
     <p class="sec-label rev">What I Listen To</p>
     <h2 class="sec-h rev">Music that<br/><em style="font-style:italic">lives in my head rent-free.</em></h2>
-    <p class="sub-p rev">My taste is all over the place — Coldplay at sunrise, Radiohead at midnight, AR Rahman when I'm homesick, Billie Eilish when I need to feel something. No apologies.</p>
-
+    <p class="sub-p rev">Coldplay at sunrise, Radiohead at midnight, AR Rahman when I'm homesick, Billie Eilish when I need to feel something. No apologies.</p>
     <div class="cat-label rev">Artists I Love</div>
     <div class="music-grid">
-      <div class="singer-card rev">
-        <div class="singer-img"><img src="images/music/singer1.jpg" alt="Troye Sivan" onerror="this.style.display='none'"/>🎤</div>
-        <div class="singer-body"><div class="singer-name">Troye Sivan</div><div class="singer-genre">Pop · Indie</div></div>
-      </div>
-      <div class="singer-card rev d1">
-        <div class="singer-img"><img src="images/music/singer2.jpg" alt="Joshua Bassett" onerror="this.style.display='none'"/>🎸</div>
-        <div class="singer-body"><div class="singer-name">Joshua Bassett</div><div class="singer-genre">Pop · Singer-Songwriter</div></div>
-      </div>
-      <div class="singer-card rev d2">
-        <div class="singer-img"><img src="images/music/singer3.jpg" alt="Billie Eilish" onerror="this.style.display='none'"/>🎵</div>
-        <div class="singer-body"><div class="singer-name">Billie Eilish</div><div class="singer-genre">Alt-Pop · Dark Pop</div></div>
-      </div>
-      <div class="singer-card rev d3">
-        <div class="singer-img"><img src="images/music/singer4.jpg" alt="Shawn Mendes" onerror="this.style.display='none'"/>🎙️</div>
-        <div class="singer-body"><div class="singer-name">Shawn Mendes</div><div class="singer-genre">Pop · Acoustic</div></div>
-      </div>
-      <div class="singer-card rev">
-        <div class="singer-img"><img src="images/music/singer5.jpg" alt="The Smiths" onerror="this.style.display='none'"/>🎸</div>
-        <div class="singer-body"><div class="singer-name">The Smiths</div><div class="singer-genre">Indie Rock · Post-Punk</div></div>
-      </div>
-      <div class="singer-card rev d1">
-        <div class="singer-img"><img src="images/music/singer6.jpg" alt="Mitski" onerror="this.style.display='none'"/>🎹</div>
-        <div class="singer-body"><div class="singer-name">Mitski</div><div class="singer-genre">Indie Rock · Art Rock</div></div>
-      </div>
-      <div class="singer-card rev d2">
-        <div class="singer-img"><img src="images/music/singer7.jpg" alt="Shreya Ghoshal" onerror="this.style.display='none'"/>🎶</div>
-        <div class="singer-body"><div class="singer-name">Shreya Ghoshal</div><div class="singer-genre">Bollywood · Classical</div></div>
-      </div>
-      <div class="singer-card rev d3">
-        <div class="singer-img"><img src="images/music/singer8.jpg" alt="ABBA" onerror="this.style.display='none'"/>✨</div>
-        <div class="singer-body"><div class="singer-name">ABBA</div><div class="singer-genre">Pop · Disco</div></div>
-      </div>
+      <div class="singer-card rev"><div class="singer-img"><img src="images/music/singer1.jpg" alt="Troye Sivan" onerror="this.style.display='none'"/>🎤</div><div class="singer-body"><div class="singer-name">Troye Sivan</div><div class="singer-genre">Pop · Indie</div></div></div>
+      <div class="singer-card rev d1"><div class="singer-img"><img src="images/music/singer2.jpg" alt="Joshua Bassett" onerror="this.style.display='none'"/>🎸</div><div class="singer-body"><div class="singer-name">Joshua Bassett</div><div class="singer-genre">Pop · Singer-Songwriter</div></div></div>
+      <div class="singer-card rev d2"><div class="singer-img"><img src="images/music/singer3.jpg" alt="Billie Eilish" onerror="this.style.display='none'"/>🎵</div><div class="singer-body"><div class="singer-name">Billie Eilish</div><div class="singer-genre">Alt-Pop · Dark Pop</div></div></div>
+      <div class="singer-card rev d3"><div class="singer-img"><img src="images/music/singer4.jpg" alt="Shawn Mendes" onerror="this.style.display='none'"/>🎙️</div><div class="singer-body"><div class="singer-name">Shawn Mendes</div><div class="singer-genre">Pop · Acoustic</div></div></div>
+      <div class="singer-card rev"><div class="singer-img"><img src="images/music/singer5.jpg" alt="The Smiths" onerror="this.style.display='none'"/>🎸</div><div class="singer-body"><div class="singer-name">The Smiths</div><div class="singer-genre">Indie Rock · Post-Punk</div></div></div>
+      <div class="singer-card rev d1"><div class="singer-img"><img src="images/music/singer6.jpg" alt="Mitski" onerror="this.style.display='none'"/>🎹</div><div class="singer-body"><div class="singer-name">Mitski</div><div class="singer-genre">Indie Rock · Art Rock</div></div></div>
+      <div class="singer-card rev d2"><div class="singer-img"><img src="images/music/singer7.jpg" alt="Shreya Ghoshal" onerror="this.style.display='none'"/>🎶</div><div class="singer-body"><div class="singer-name">Shreya Ghoshal</div><div class="singer-genre">Bollywood · Classical</div></div></div>
+      <div class="singer-card rev d3"><div class="singer-img"><img src="images/music/singer8.jpg" alt="ABBA" onerror="this.style.display='none'"/>✨</div><div class="singer-body"><div class="singer-name">ABBA</div><div class="singer-genre">Pop · Disco</div></div></div>
     </div>
-    <div class="more-tag rev">+ Coldplay, AR Rahman, Lana Del Rey, Radiohead, Adele, Gregory Alan Isakov, Aditya Rikhari, HONNE, RADWIMPS, Lata Mangeshkar & many more 🎵</div>
-
+    <div class="more-tag rev">+ Coldplay, AR Rahman, Lana Del Rey, Radiohead, Adele, Gregory Alan Isakov, Aditya Rikhari, HONNE, RADWIMPS, Lata Mangeshkar, The Beatles & many more 🎵</div>
     <div class="cat-label rev" style="margin-top:3.5rem;">My Top Songs — Spotify Wrapped 2025</div>
     <div class="songs-list">
-      <div class="song-item rev"><span class="song-num">01</span><div class="song-info"><div class="song-title">The Greatest</div><div class="song-artist">Sia</div></div><span class="song-note">♥ favourite</span></div>
+      <div class="song-item rev"><span class="song-num">01</span><div class="song-info"><div class="song-title">The Greatest</div><div class="song-artist">Sia</div></div><span class="song-note">♥ fav</span></div>
       <div class="song-item rev d1"><span class="song-num">02</span><div class="song-info"><div class="song-title">Back to Friends</div><div class="song-artist">Somber</div></div></div>
       <div class="song-item rev"><span class="song-num">03</span><div class="song-info"><div class="song-title">Ava</div><div class="song-artist">Famy</div></div></div>
       <div class="song-item rev d1"><span class="song-num">04</span><div class="song-info"><div class="song-title">Farq Hai</div><div class="song-artist">Suzonn</div></div></div>
@@ -346,19 +269,19 @@
       <div class="song-item rev"><span class="song-num">07</span><div class="song-info"><div class="song-title">What's Up?</div><div class="song-artist">4 Non Blondes</div></div></div>
       <div class="song-item rev d1"><span class="song-num">08</span><div class="song-info"><div class="song-title">Sahiba</div><div class="song-artist">Aditya Rikhari</div></div></div>
       <div class="song-item rev"><span class="song-num">09</span><div class="song-info"><div class="song-title">WILDFLOWER</div><div class="song-artist">Billie Eilish</div></div></div>
-      <div class="song-item rev d1"><span class="song-num">10</span><div class="song-info"><div class="song-title">Deslocado</div><div class="song-artist">NAPA</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">10</span><div class="song-info"><div class="song-title">Summertime Sadness</div><div class="song-artist">Lana Del Rey</div></div></div>
       <div class="song-item rev"><span class="song-num">11</span><div class="song-info"><div class="song-title">Tu Bin Bataye</div><div class="song-artist">A.R. Rahman, Madhushree</div></div></div>
-      <div class="song-item rev d1"><span class="song-num">12</span><div class="song-info"><div class="song-title">la la la that's how it goes</div><div class="song-artist">HONNE</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">12</span><div class="song-info"><div class="song-title">Creep</div><div class="song-artist">Radiohead</div></div></div>
       <div class="song-item rev"><span class="song-num">13</span><div class="song-info"><div class="song-title">Unse Jaake Kehdo</div><div class="song-artist">Justh</div></div></div>
-      <div class="song-item rev d1"><span class="song-num">14</span><div class="song-info"><div class="song-title">Summertime Sadness</div><div class="song-artist">Lana Del Rey</div></div></div>
-      <div class="song-item rev"><span class="song-num">15</span><div class="song-info"><div class="song-title">Creep</div><div class="song-artist">Radiohead</div></div></div>
-      <div class="song-item rev d1"><span class="song-num">16</span><div class="song-info"><div class="song-title">Tera Mera Pyar Amar</div><div class="song-artist">Lata Mangeshkar</div></div></div>
-      <div class="song-item rev"><span class="song-num">17</span><div class="song-info"><div class="song-title">I Bet on Losing Dogs</div><div class="song-artist">Mitski</div></div></div>
-      <div class="song-item rev d1"><span class="song-num">18</span><div class="song-info"><div class="song-title">Sparkle (movie ver.)</div><div class="song-artist">RADWIMPS</div></div></div>
-      <div class="song-item rev"><span class="song-num">19</span><div class="song-info"><div class="song-title">Set Fire to the Rain</div><div class="song-artist">Adele</div></div></div>
-      <div class="song-item rev d1"><span class="song-num">20</span><div class="song-info"><div class="song-title">american wedding</div><div class="song-artist">dopuu</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">14</span><div class="song-info"><div class="song-title">I Bet on Losing Dogs</div><div class="song-artist">Mitski</div></div></div>
+      <div class="song-item rev"><span class="song-num">15</span><div class="song-info"><div class="song-title">Sparkle (movie ver.)</div><div class="song-artist">RADWIMPS</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">16</span><div class="song-info"><div class="song-title">Set Fire to the Rain</div><div class="song-artist">Adele</div></div></div>
+      <div class="song-item rev"><span class="song-num">17</span><div class="song-info"><div class="song-title">la la la that's how it goes</div><div class="song-artist">HONNE</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">18</span><div class="song-info"><div class="song-title">Tera Mera Pyar Amar</div><div class="song-artist">Lata Mangeshkar</div></div></div>
+      <div class="song-item rev"><span class="song-num">19</span><div class="song-info"><div class="song-title">Two Of Us</div><div class="song-artist">The Beatles</div></div></div>
+      <div class="song-item rev d1"><span class="song-num">20</span><div class="song-info"><div class="song-title">Jhol — Acoustic</div><div class="song-artist">Maanu, Annural Khalid</div></div></div>
     </div>
-    <div class="more-tag rev">+ Two Of Us (The Beatles), In This Shirt (The Irrepressibles), Jhol Acoustic (Maanu, Annural Khalid) & many more 🎧</div>
+    <div class="more-tag rev">+ american wedding (dopuu), Deslocado (NAPA), In This Shirt (The Irrepressibles) & many more 🎧</div>
   </div>
 </section>
 
@@ -369,42 +292,33 @@
     <h2 class="sec-h rev">From the blog —<br/><em style="font-style:italic">thoughts out loud.</em></h2>
     <p class="sub-p rev">Things I find interesting, things that confused me, things that made me feel something. No fixed topic. Just honest writing.</p>
     <div class="blog-grid">
-      <div class="bcard feat rev">
-        <div class="bthumb">
-          <img src="images/blog/blog1.jpg" alt="A seed in spring" onerror="this.style.display='none'"/>
-          🌱<span class="btag">Life</span>
-        </div>
+      <a href="blog1.html" class="bcard feat rev">
+        <div class="bthumb"><img src="images/blog/blog1.jpg" alt="Blog 1" onerror="this.style.display='none'"/>🌱<span class="btag">Self</span></div>
         <div class="bbody">
           <p class="bdate">April 12, 2026</p>
-          <h3 class="btitle">A seed in spring</h3>
-          <p class="bexcerpt">There's something quietly miraculous about a seed. It sits in the dark all winter — cold, still, seemingly dead — and yet somewhere inside it, something is waiting. Not impatiently. Just waiting. I think about that a lot. About the seasons in a person's life that look like nothing from the outside, but are secretly everything on the inside. The winter before the bloom.</p>
-          <a href="#" class="blink">Read more →</a>
+          <h3 class="btitle">The Quiet Architect of Becoming</h3>
+          <p class="bexcerpt">Some people move through life loudly, announcing every victory, every wound, every dream. And then there are people like this one — someone whose life unfolds in subtler ways, where growth happens in silence...</p>
+          <span class="blink">Read more →</span>
         </div>
-      </div>
-      <div class="bcard rev d1">
-        <div class="bthumb" style="font-size:2.2rem;">
-          <img src="images/blog/blog2.jpg" alt="The 2am version of you" onerror="this.style.display='none'"/>
-          🌙<span class="btag">Thoughts</span>
-        </div>
+      </a>
+      <a href="blog2.html" class="bcard rev d1">
+        <div class="bthumb" style="font-size:2.2rem;"><img src="images/blog/blog2.jpg" alt="Blog 2" onerror="this.style.display='none'"/>🌊<span class="btag">Dreams</span></div>
         <div class="bbody">
           <p class="bdate">March 3, 2026</p>
-          <h3 class="btitle">The 2am version of you</h3>
-          <p class="bexcerpt">There's a version of you that only shows up late at night. More honest. More scared. More real. I've been trying to listen to that person more.</p>
-          <a href="#" class="blink">Read more →</a>
+          <h3 class="btitle">A Soul Caught Between Dreams and Reality</h3>
+          <p class="bexcerpt">There are certain people who live two lives at once. One visible to the world. One hidden — made of ambition, longing, and quiet belief...</p>
+          <span class="blink">Read more →</span>
         </div>
-      </div>
-      <div class="bcard rev d2">
-        <div class="bthumb" style="font-size:2.2rem;">
-          <img src="images/blog/blog3.jpg" alt="On the art of beginning" onerror="this.style.display='none'"/>
-          ✨<span class="btag">Musings</span>
-        </div>
+      </a>
+      <a href="blog3.html" class="bcard rev d2">
+        <div class="bthumb" style="font-size:2.2rem;"><img src="images/blog/blog3.jpg" alt="Blog 3" onerror="this.style.display='none'"/>✨<span class="btag">Life</span></div>
         <div class="bbody">
           <p class="bdate">Jan 18, 2026</p>
-          <h3 class="btitle">On the art of beginning</h3>
-          <p class="bexcerpt">Starting is the hardest part. Not because you don't know how — but because beginning means admitting you care. And caring is terrifying.</p>
-          <a href="#" class="blink">Read more →</a>
+          <h3 class="btitle">The Unwritten Greatness of an Ordinary Life</h3>
+          <p class="bexcerpt">Some lives look simple until you listen closely. This is the story of someone who has had to grow in places where no one was watching...</p>
+          <span class="blink">Read more →</span>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -414,19 +328,17 @@
   <div class="wrap">
     <p class="sec-label rev">Visual World</p>
     <h2 class="sec-h rev">Gallery —<br/><em style="font-style:italic">moments, not poses.</em></h2>
-
     <div class="gallery-section-title rev">🌿 Nature</div>
     <div class="gallery-grid rev">
       <div class="gitem"><div class="ginner t"><img src="images/nature/nature1.jpg" alt="Nature 1" onerror="this.style.display='none'"/>🌅</div><div class="gover"><span>View</span></div></div>
       <div class="gitem"><div class="ginner m"><img src="images/nature/nature2.jpg" alt="Nature 2" onerror="this.style.display='none'"/>🌿</div><div class="gover"><span>View</span></div></div>
       <div class="gitem"><div class="ginner s"><img src="images/nature/nature3.jpg" alt="Nature 3" onerror="this.style.display='none'"/>🌊</div><div class="gover"><span>View</span></div></div>
     </div>
-
     <div class="gallery-section-title rev">🎨 Arts & Creative</div>
     <div class="gallery-grid rev">
       <div class="gitem"><div class="ginner t"><img src="images/arts/art1.jpg" alt="Art 1" onerror="this.style.display='none'"/>🎨</div><div class="gover"><span>View</span></div></div>
       <div class="gitem"><div class="ginner m"><img src="images/arts/art2.jpg" alt="Art 2" onerror="this.style.display='none'"/>✏️</div><div class="gover"><span>View</span></div></div>
-      <div class="gitem"><div class="ginner s" style="background:var(--paper3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;">More coming soon</div></div>
+      <div class="gitem"><div class="ginner s" style="display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;height:150px;">More coming soon</div></div>
     </div>
   </div>
 </section>
@@ -436,14 +348,15 @@
   <div class="wrap">
     <p class="sec-label rev">Contact</p>
     <h2 class="sec-h rev">Say hello —<br/><em style="font-style:italic">I don't bite.</em></h2>
-    <p class="sub-p rev">Whether you want to talk about circuits, shows, music, books, or just life in general — I'm always happy to hear from someone interesting.</p>
-    <form class="cform rev" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <p class="sub-p rev">Whether you want to talk about circuits, shows, music, books, or just life — I'm always happy to hear from someone interesting.</p>
+    <form class="cform rev" id="contactForm" action="https://formspree.io/f/mrerazyr" method="POST">
       <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Jane Doe" required/></div>
       <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
       <div class="fg full"><label>Subject</label><input type="text" name="subject" placeholder="What's on your mind?"/></div>
       <div class="fg full"><label>Message</label><textarea name="message" placeholder="Your message..." required></textarea></div>
       <button type="submit" class="csub">Send Message</button>
     </form>
+    <div class="form-success" id="formSuccess">✓ Message sent! I'll get back to you soon.</div>
   </div>
 </section>
 
@@ -459,12 +372,25 @@
 <script>
   const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
   let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{ mx=e.clientX;my=e.clientY; cur.style.transform=`translate(${mx-4}px,${my-4}px)`; });
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
   (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
   const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
   document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
   const secs=document.querySelectorAll('section[id]'),nas=document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll',()=>{ let c=''; secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;}); nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--rust)':'';}); });
+  window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;});nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--rust)':'';});});
+  // Contact form with Formspree
+  const form=document.getElementById('contactForm');
+  form.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const btn=form.querySelector('.csub');
+    btn.textContent='Sending...';btn.disabled=true;
+    const data=new FormData(form);
+    try{
+      const res=await fetch(form.action,{method:'POST',body:data,headers:{'Accept':'application/json'}});
+      if(res.ok){form.style.display='none';document.getElementById('formSuccess').style.display='block';}
+      else{btn.textContent='Send Message';btn.disabled=false;alert('Something went wrong. Please try again.');}
+    }catch{btn.textContent='Send Message';btn.disabled=false;}
+  });
 </script>
 </body>
 </html>
