@@ -10,16 +10,14 @@
     :root{--ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8dc;--paper3:#e4ddd0;--rust:#b5451b;--rust2:#d4622e;--muted:#8a8075;--border:rgba(26,22,18,0.12);}
     html{scroll-behavior:smooth;}
     body{background:var(--paper);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
-
-    /* CURSOR */
     .cur{width:8px;height:8px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
     .cur-ring{width:32px;height:32px;border:1.5px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
 
     /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 5rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 4rem;background:rgba(245,240,232,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
     .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--rust);text-decoration:none;}
-    .nav-links{display:flex;gap:2rem;list-style:none;}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
+    .nav-links{display:flex;gap:1.75rem;list-style:none;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s;}
     .nav-links a:hover{color:var(--rust);}
 
     /* HERO */
@@ -43,7 +41,7 @@
     .scroll-hint{position:absolute;bottom:2.5rem;left:5rem;display:flex;align-items:center;gap:1rem;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);animation:fadeUp 1s ease 0.6s both;}
     .scroll-line{width:50px;height:1px;background:var(--muted);}
 
-    /* SHARED SECTION STYLES */
+    /* SHARED */
     .padded{padding:7rem 5rem;}
     .wrap{max-width:1100px;margin:0 auto;}
     .bg2{background:var(--paper2);}
@@ -55,25 +53,33 @@
     .view-all:hover{gap:0.8rem;}
 
     /* ABOUT */
-    .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:6rem;align-items:start;margin-bottom:5rem;}
-    .about-p{font-size:1rem;color:var(--muted);line-height:1.85;margin-bottom:1rem;}
+    .about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start;margin-bottom:4rem;}
+    .about-p{font-size:1rem;color:var(--muted);line-height:1.9;margin-bottom:1rem;}
     .about-p strong{color:var(--ink);font-weight:500;}
+    .about-p em{font-style:italic;}
     .about-img-wrap{position:relative;}
-
-    /* IMAGE FIX: emoji hidden when real image loads */
     .img-wrap{position:relative;overflow:hidden;background:var(--paper3);border:1px solid var(--border);}
     .img-wrap .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:5rem;z-index:0;}
     .img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
-    .img-wrap img.loaded{display:block;}
-
     .about-img-box{aspect-ratio:4/5;}
     .about-img-deco{position:absolute;bottom:-1.5rem;right:-1.5rem;width:85%;aspect-ratio:4/5;border:1px solid var(--border);z-index:-1;}
-    .traits{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
-    .trait{padding:1.75rem;background:var(--paper);border:1px solid var(--border);transition:border-color 0.3s,transform 0.3s;}
+
+    /* TRAITS — fun, not engineer-heavy */
+    .traits{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;}
+    .trait{padding:1.5rem;background:var(--paper);border:1px solid var(--border);transition:border-color 0.3s,transform 0.3s;}
     .trait:hover{border-color:var(--rust);transform:translateY(-4px);}
-    .trait-icon{font-size:1.8rem;margin-bottom:1rem;}
-    .trait-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;margin-bottom:0.5rem;}
-    .trait-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+    .trait-icon{font-size:1.6rem;margin-bottom:0.75rem;}
+    .trait-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:0.4rem;}
+    .trait-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;}
+
+    /* QUICK LINKS — new pages preview */
+    .quick-links{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:1rem;}
+    .ql-card{display:block;text-decoration:none;padding:1.75rem;background:var(--paper);border:1px solid var(--border);transition:border-color 0.3s,transform 0.3s;color:inherit;cursor:none;}
+    .ql-card:hover{border-color:var(--rust);transform:translateY(-3px);}
+    .ql-icon{font-size:1.5rem;margin-bottom:0.75rem;}
+    .ql-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:0.3rem;}
+    .ql-desc{font-size:0.78rem;color:var(--muted);line-height:1.55;}
+    .ql-link{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);margin-top:0.75rem;display:block;}
 
     /* BLOG PREVIEW */
     .blog-preview-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:1.5rem;}
@@ -92,16 +98,16 @@
     .bexcerpt{font-size:0.82rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
     .blink{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);}
 
-    /* MUSIC TEASER */
-    .music-teaser{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
-    .mt-card{background:var(--paper);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
-    .mt-card:hover{transform:translateY(-3px);border-color:var(--rust);}
-    .mt-img{aspect-ratio:1/1;position:relative;overflow:hidden;}
-    .mt-img .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;background:var(--paper3);z-index:0;}
-    .mt-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
-    .mt-body{padding:0.75rem 0.9rem;}
-    .mt-name{font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:0.15rem;}
-    .mt-genre{font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+    /* COLLECTION TEASER */
+    .collection-teaser{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+    .ct-card{background:var(--paper);border:1px solid var(--border);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:none;}
+    .ct-card:hover{transform:translateY(-3px);border-color:var(--rust);}
+    .ct-img{aspect-ratio:1/1;position:relative;overflow:hidden;}
+    .ct-img .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;background:var(--paper3);z-index:0;}
+    .ct-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
+    .ct-body{padding:0.75rem 0.9rem;}
+    .ct-name{font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:0.1rem;}
+    .ct-genre{font-size:0.66rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
 
     /* GALLERY TEASER */
     .gallery-teaser{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
@@ -126,10 +132,10 @@
     .form-success{display:none;padding:1.25rem;background:rgba(74,94,79,0.1);border:1px solid rgba(74,94,79,0.3);color:#4a5e4f;font-size:0.88rem;margin-top:1rem;max-width:700px;}
 
     /* FOOTER */
-    footer{background:var(--ink);color:var(--paper);padding:3rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    footer{background:var(--ink);color:var(--paper);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
     .fl{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--rust2);}
     .fn{display:flex;gap:1.5rem;flex-wrap:wrap;}
-    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.75rem;letter-spacing:0.1em;transition:color 0.3s;}
+    .fn a{color:rgba(245,240,232,0.5);text-decoration:none;font-size:0.72rem;letter-spacing:0.1em;transition:color 0.3s;}
     .fn a:hover{color:var(--rust2);}
     .fc{font-size:0.72rem;color:rgba(245,240,232,0.35);}
 
@@ -143,9 +149,10 @@
       #home,.padded{padding:4rem 1.5rem;}
       .about-grid{grid-template-columns:1fr;gap:3rem;}
       .traits{grid-template-columns:1fr 1fr;}
+      .quick-links{grid-template-columns:1fr;}
       .blog-preview-grid{grid-template-columns:1fr;}
       .bcard.feat{grid-row:auto;}
-      .music-teaser{grid-template-columns:1fr 1fr;}
+      .collection-teaser{grid-template-columns:1fr 1fr;}
       .gallery-teaser{grid-template-columns:1fr 1fr;}
       .cform{grid-template-columns:1fr;}
       .fg.full,.csub{grid-column:auto;}
@@ -157,19 +164,20 @@
 <div class="cur" id="cur"></div>
 <div class="cur-ring" id="curRing"></div>
 
+<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">Brycis</a>
   <ul class="nav-links">
-  <li><a href="#home">Home</a></li>
-  <li><a href="#about">About</a></li>
-  <li><a href="blog.html">Blog</a></li>
-  <li><a href="collection.html">Collection</a></li>
-  <li><a href="currently.html">Currently</a></li>
-  <li><a href="places.html">Places</a></li>
-  <li><a href="letters.html">Letters</a></li>
-  <li><a href="thoughts.html">Thoughts</a></li>
-  <li><a href="#contact">Contact</a></li>
-</ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li><a href="currently.html">Currently</a></li>
+    <li><a href="places.html">Places</a></li>
+    <li><a href="letters.html">Letters</a></li>
+    <li><a href="thoughts.html">Thoughts</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
@@ -179,7 +187,7 @@
   <div class="hero-inner">
     <div class="eyebrow"><div class="eyebrow-line"></div><span>A life in progress</span></div>
     <h1 class="big">Curious.<br/><em>Creative.</em><br/><span class="out">Human.</span></h1>
-    <p class="hero-p">Engineering circuits by day, chasing stories by night. I build things, break things, read things, watch things — and occasionally write about all of it here.</p>
+    <p class="hero-p">I like books, late nights, good TV, even better conversations, and figuring things out as I go. This is my little corner of the internet — come look around.</p>
     <div class="hero-btns">
       <a href="#about" class="btn btn-fill">Get to know me</a>
       <a href="blog.html" class="btn btn-out">Read my blog</a>
@@ -194,33 +202,98 @@
     <div class="about-grid">
       <div>
         <p class="sec-label rev">About Me</p>
-        <h2 class="sec-h rev">More than just<br/><em style="font-style:italic">an engineer.</em></h2>
-        <p class="about-p rev">I'm someone who genuinely can't pick just one thing to be passionate about — and I've stopped trying. By training I'm an <strong>electrical engineer at IIT Bombay</strong>, deep in the world of circuits, signals, and silicon. But that's only part of the story.</p>
-        <p class="about-p rev">The other part? I'm obsessed with <strong>how stories work</strong> — in TV shows, in songs, in books, in conversations at odd hours. The same curiosity that pulls me toward a circuit also pulls me toward a character's emotional arc at 2am.</p>
-        <p class="about-p rev">I've done research at IIT Bombay and <strong>NUS Singapore</strong>, built things from RC planes to chip-level signal equalizers, and learned somewhere in between that the best engineers are the most curious humans. That's what this space is about.</p>
+        <h2 class="sec-h rev">Hi, I'm <em style="font-style:italic">Brycis.</em></h2>
+        <p class="about-p rev">I'm someone who's genuinely terrible at picking just one thing to love — and I've made peace with that. On any given day I might be deep in a research paper, rewatching the same show for the third time, finding a new song I'll play on repeat for two weeks, or writing something at midnight that I wasn't planning to write.</p>
+        <p class="about-p rev">I find people fascinating. I find stories fascinating. I find the way small things — a song, a line in a book, a random Tuesday conversation — can completely shift how you see something, absolutely fascinating.</p>
+        <p class="about-p rev">This site is basically just me, out loud. The things I'm reading, watching, thinking about, writing, feeling. No particular theme. No particular agenda. Just honest.</p>
         <p class="about-p rev" style="color:var(--rust);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;">"Figure it out as you go — that's the only plan worth having."</p>
       </div>
       <div class="about-img-wrap rev">
         <div class="img-wrap about-img-box">
-          <div class="fallback">🧑‍💻</div>
-          <img src="images/me.jpg" alt="Brycis" onload="this.classList.add('loaded');this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
+          <div class="fallback">🙂</div>
+          <img src="images/me.jpg" alt="Brycis" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/>
         </div>
         <div class="about-img-deco"></div>
       </div>
     </div>
+
+    <!-- TRAITS — fun, not engineer-heavy -->
     <div class="traits">
-      <div class="trait rev"><div class="trait-icon">⚡</div><div class="trait-name">The Engineer</div><div class="trait-desc">VLSI, analog circuits, high-speed signal chains — making electrons behave exactly as I want.</div></div>
-      <div class="trait rev d1"><div class="trait-icon">📖</div><div class="trait-name">The Reader</div><div class="trait-desc">Books are how I travel without moving. I'll read anything that rewires how I think.</div></div>
-      <div class="trait rev d2"><div class="trait-icon">🎬</div><div class="trait-name">The Binge-Watcher</div><div class="trait-desc">I take shows seriously. The writing, the arcs — I'm that person who over-analyses everything.</div></div>
-      <div class="trait rev d3"><div class="trait-icon">🌍</div><div class="trait-name">The Explorer</div><div class="trait-desc">New cities, new food, new perspectives. Singapore taught me the world is bigger than any textbook.</div></div>
+      <div class="trait rev">
+        <div class="trait-icon">📖</div>
+        <div class="trait-name">The Reader</div>
+        <div class="trait-desc">Books are how I travel without moving. I read slowly, argue with the pages, and always have one on the go.</div>
+      </div>
+      <div class="trait rev d1">
+        <div class="trait-icon">🎬</div>
+        <div class="trait-name">The Binge-Watcher</div>
+        <div class="trait-desc">I take shows way too seriously. The writing, the characters, the arcs — I'm that person who analyses everything.</div>
+      </div>
+      <div class="trait rev d2">
+        <div class="trait-icon">🎵</div>
+        <div class="trait-name">The Music Person</div>
+        <div class="trait-desc">My taste is all over the place and I make no apologies for it. Every song is attached to a feeling or a specific time.</div>
+      </div>
+      <div class="trait rev d3">
+        <div class="trait-icon">✍️</div>
+        <div class="trait-name">The Writer</div>
+        <div class="trait-desc">I write to understand things. Mostly myself. Sometimes the world. Occasionally both at the same time.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- BLOG PREVIEW — static 3 cards, never changes -->
-<section id="blog-preview" class="padded">
+<!-- EXPLORE THE SITE — quick links to all new pages -->
+<section class="padded">
   <div class="wrap">
-    <p class="sec-label rev">Writing</p>
+    <p class="sec-label rev">Explore</p>
+    <h2 class="sec-h rev">What's on<br/><em style="font-style:italic">this site.</em></h2>
+    <p class="sub-p rev">A bunch of different things. Pick what sounds most like you.</p>
+    <div class="quick-links">
+      <a href="blog.html" class="ql-card rev">
+        <div class="ql-icon">✍️</div>
+        <div class="ql-title">Blog</div>
+        <div class="ql-desc">Stories from college, honest writing about figuring things out, and things that made me think. No fixed topic.</div>
+        <span class="ql-link">Read posts →</span>
+      </a>
+      <a href="collection.html" class="ql-card rev d1">
+        <div class="ql-icon">🗂️</div>
+        <div class="ql-title">The Collection</div>
+        <div class="ql-desc">Artists, songs, shows, movies, books — everything I love, curated on one shelf. Tabs for each category.</div>
+        <span class="ql-link">Browse the shelf →</span>
+      </a>
+      <a href="currently.html" class="ql-card rev d2">
+        <div class="ql-icon">📍</div>
+        <div class="ql-title">Currently</div>
+        <div class="ql-desc">What I'm reading, watching, and listening to right now. Updated whenever something new takes over my brain.</div>
+        <span class="ql-link">See what's on →</span>
+      </a>
+      <a href="places.html" class="ql-card rev">
+        <div class="ql-icon">🗺️</div>
+        <div class="ql-title">Places</div>
+        <div class="ql-desc">Not travel writing. Just honest stories about cities that left something behind in me — or took something away.</div>
+        <span class="ql-link">Read the stories →</span>
+      </a>
+      <a href="letters.html" class="ql-card rev d1">
+        <div class="ql-icon">✉️</div>
+        <div class="ql-title">Letters</div>
+        <div class="ql-desc">Unsent letters to a lost friend, my past self, and late nights. Writing as a way of letting go.</div>
+        <span class="ql-link">Read the letters →</span>
+      </a>
+      <a href="thoughts.html" class="ql-card rev d2">
+        <div class="ql-icon">💭</div>
+        <div class="ql-title">Thoughts</div>
+        <div class="ql-desc">Honest fragments. Lines I thought or felt or heard at odd hours that I didn't want to lose.</div>
+        <span class="ql-link">See the thoughts →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section class="padded bg2">
+  <div class="wrap">
+    <p class="sec-label rev">Latest Writing</p>
     <h2 class="sec-h rev">From the blog —<br/><em style="font-style:italic">thoughts out loud.</em></h2>
     <p class="sub-p rev">Honest writing. No fixed topic. Just things that made me think, feel, or laugh.</p>
     <div class="blog-preview-grid">
@@ -233,7 +306,7 @@
         <div class="bbody">
           <p class="bdate">April 12, 2026</p>
           <h3 class="btitle">The Quiet Architect of Becoming</h3>
-          <p class="bexcerpt">Some people move through life loudly. And then there are those whose growth happens in silence, behind closed doors, where no one is watching...</p>
+          <p class="bexcerpt">I was sitting in the library at 1am surrounded by people who all looked like they had their lives together — and I remember thinking: why does everyone else seem to just know what they're doing?</p>
           <span class="blink">Read more →</span>
         </div>
       </a>
@@ -246,7 +319,7 @@
         <div class="bbody">
           <p class="bdate">March 3, 2026</p>
           <h3 class="btitle">A Soul Caught Between Dreams and Reality</h3>
-          <p class="bexcerpt">There are certain people who live two lives at once — one visible, one hidden...</p>
+          <p class="bexcerpt">There's a conversation I keep having with myself. It usually starts around midnight, when everything's quiet...</p>
           <span class="blink">Read more →</span>
         </div>
       </a>
@@ -259,7 +332,7 @@
         <div class="bbody">
           <p class="bdate">Jan 18, 2026</p>
           <h3 class="btitle">The Unwritten Greatness of an Ordinary Life</h3>
-          <p class="bexcerpt">Some lives look simple until you listen closely...</p>
+          <p class="bexcerpt">My grandmother never did anything the world would call remarkable. She just — lived. Carefully, fully, with an attention to small things...</p>
           <span class="blink">Read more →</span>
         </div>
       </a>
@@ -268,28 +341,28 @@
   </div>
 </section>
 
-<!-- MUSIC TEASER -->
-<section class="padded bg2">
+<!-- COLLECTION TEASER -->
+<section class="padded">
   <div class="wrap">
-    <p class="sec-label rev">Music</p>
-    <h2 class="sec-h rev">Artists I love —<br/><em style="font-style:italic">living in my head rent-free.</em></h2>
-    <p class="sub-p rev">Coldplay at sunrise, Radiohead at midnight, AR Rahman when I'm homesick. No apologies.</p>
-    <div class="music-teaser">
-      <div class="mt-card rev">
-        <div class="mt-img"><div class="fallback">🎤</div><img src="images/music/singer1.jpg" alt="Troye Sivan" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
-        <div class="mt-body"><div class="mt-name">Troye Sivan</div><div class="mt-genre">Pop · Indie</div></div>
+    <p class="sec-label rev">The Collection</p>
+    <h2 class="sec-h rev">Artists living in<br/><em style="font-style:italic">my head rent-free.</em></h2>
+    <p class="sub-p rev">Coldplay at sunrise, Radiohead at midnight, AR Rahman when I'm homesick. Also shows, movies, books. All on the shelf.</p>
+    <div class="collection-teaser">
+      <div class="ct-card rev">
+        <div class="ct-img"><div class="fallback">🎤</div><img src="images/music/singer1.jpg" alt="Troye Sivan" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="ct-body"><div class="ct-name">Troye Sivan</div><div class="ct-genre">Pop · Indie</div></div>
       </div>
-      <div class="mt-card rev d1">
-        <div class="mt-img"><div class="fallback">🎵</div><img src="images/music/singer3.jpg" alt="Billie Eilish" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
-        <div class="mt-body"><div class="mt-name">Billie Eilish</div><div class="mt-genre">Alt-Pop · Dark Pop</div></div>
+      <div class="ct-card rev d1">
+        <div class="ct-img"><div class="fallback">🎵</div><img src="images/music/singer3.jpg" alt="Billie Eilish" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="ct-body"><div class="ct-name">Billie Eilish</div><div class="ct-genre">Alt-Pop · Dark Pop</div></div>
       </div>
-      <div class="mt-card rev d2">
-        <div class="mt-img"><div class="fallback">🎹</div><img src="images/music/singer6.jpg" alt="Mitski" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
-        <div class="mt-body"><div class="mt-name">Mitski</div><div class="mt-genre">Indie Rock · Art Rock</div></div>
+      <div class="ct-card rev d2">
+        <div class="ct-img"><div class="fallback">🎹</div><img src="images/music/singer6.jpg" alt="Mitski" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="ct-body"><div class="ct-name">Mitski</div><div class="ct-genre">Indie Rock · Art Rock</div></div>
       </div>
-      <div class="mt-card rev d3">
-        <div class="mt-img"><div class="fallback">🎶</div><img src="images/music/singer7.jpg" alt="Shreya Ghoshal" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
-        <div class="mt-body"><div class="mt-name">Shreya Ghoshal</div><div class="mt-genre">Bollywood · Classical</div></div>
+      <div class="ct-card rev d3">
+        <div class="ct-img"><div class="fallback">🎶</div><img src="images/music/singer7.jpg" alt="Shreya Ghoshal" onload="this.previousElementSibling.style.display='none'" onerror="this.remove()"/></div>
+        <div class="ct-body"><div class="ct-name">Shreya Ghoshal</div><div class="ct-genre">Bollywood · Classical</div></div>
       </div>
     </div>
     <a href="collection.html" class="view-all rev">Explore the full collection →</a>
@@ -297,11 +370,11 @@
 </section>
 
 <!-- GALLERY TEASER -->
-<section class="padded">
+<section class="padded bg2">
   <div class="wrap">
     <p class="sec-label rev">Gallery</p>
     <h2 class="sec-h rev">Moments —<br/><em style="font-style:italic">not poses.</em></h2>
-    <p class="sub-p rev">Nature, arts, and the things I find beautiful.</p>
+    <p class="sub-p rev">Nature, arts, and the things I find beautiful enough to keep.</p>
     <div class="gallery-teaser">
       <div class="gt-item rev">
         <div class="fallback">🌅</div>
@@ -324,11 +397,11 @@
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="padded bg2">
+<section id="contact" class="padded">
   <div class="wrap">
     <p class="sec-label rev">Contact</p>
     <h2 class="sec-h rev">Say hello —<br/><em style="font-style:italic">I don't bite.</em></h2>
-    <p class="sub-p rev">Whether you want to talk about circuits, shows, music, books, or just life — I'm always happy to hear from someone interesting.</p>
+    <p class="sub-p rev">Whether you want to talk about shows, books, music, or just life — I'm always happy to hear from someone interesting.</p>
     <form class="cform rev" id="contactForm" action="https://formspree.io/f/mrerazyr" method="POST">
       <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Jane Doe" required/></div>
       <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
@@ -343,34 +416,27 @@
 <footer>
   <div class="fl">Brycis</div>
   <nav class="fn">
-  <a href="index.html">Home</a>
-  <a href="blog.html">Blog</a>
-  <a href="collection.html">Collection</a>
-  <a href="currently.html">Currently</a>
-  <a href="places.html">Places</a>
-  <a href="letters.html">Letters</a>
-  <a href="thoughts.html">Thoughts</a>
-  <a href="#contact">Contact</a>
-</nav>
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="collection.html">Collection</a>
+    <a href="currently.html">Currently</a>
+    <a href="places.html">Places</a>
+    <a href="letters.html">Letters</a>
+    <a href="thoughts.html">Thoughts</a>
+    <a href="#contact">Contact</a>
+  </nav>
   <p class="fc">© 2026 Brycis. Built with curiosity.</p>
 </footer>
 
 <script>
-  // Cursor
   const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-4}px,${my-4}px)`;});
   (function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(a);})();
-
-  // Scroll reveal
   const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.07});
   document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
-
-  // Nav active highlight
   const secs=document.querySelectorAll('section[id]'),nas=document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;});nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--rust)':'';});});
-
-  // Contact form — Formspree AJAX
   const form=document.getElementById('contactForm');
   form.addEventListener('submit',async(e)=>{
     e.preventDefault();
